@@ -1,13 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OrderingForm extends StatelessWidget {
+class OrderingForm extends StatefulWidget {
   const OrderingForm({Key? key}) : super(key: key);
+
+  @override
+  State<OrderingForm> createState() => _OrderingFormState();
+}
+
+class _OrderingFormState extends State<OrderingForm> {
+  final GlobalKey<FormState> _formState = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Form(
+        key: _formState,
+        autovalidateMode: AutovalidateMode.always,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -42,7 +51,6 @@ class OrderingForm extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-
             // const SizedBox(height: 20)
           ],
         ),

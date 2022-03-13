@@ -1,7 +1,7 @@
-import 'package:deepvr/booking_page_item.dart';
-import 'package:deepvr/page_func_widget/form.dart';
-import 'package:deepvr/page_func_widget/players_counter.dart';
-import 'package:deepvr/page_func_widget/time_picker.dart';
+import 'package:deepvr/page_widgets/booking_page_maket.dart';
+import 'package:deepvr/page_widgets/page_func_widget/form_page/form.dart';
+import 'package:deepvr/page_widgets/page_func_widget/players_counter_page/players_counter.dart';
+import 'package:deepvr/page_widgets/page_func_widget/time_picker_page/time_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +28,7 @@ class Booking extends StatefulWidget {
 class _BookingState extends State<Booking> {
   final pageController = PageController(initialPage: 0);
 
+
   int count = 1;
 
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class _BookingState extends State<Booking> {
           scrollDirection: Axis.horizontal,
           controller: pageController,
           children: [
-            BookingPageItem(
+            BookingPageMaket(
                 stepNumber: 1,
                 content: PlayerCounter(
                   count: count,
@@ -62,7 +63,7 @@ class _BookingState extends State<Booking> {
                       duration: const Duration(seconds: 1),
                       curve: Curves.easeInOut);
                 }),
-            BookingPageItem(
+            BookingPageMaket(
               stepNumber: 2,
               content: const OrderingForm(),
               stepTitle: 'Выберите удобный для вас день',
@@ -72,7 +73,7 @@ class _BookingState extends State<Booking> {
                     curve: Curves.easeInOut);
               },
             ),
-            BookingPageItem(
+            BookingPageMaket(
                 stepNumber: 3,
                 content: const TimePicker(),
                 stepTitle: 'Выберите удобное для вас время',
