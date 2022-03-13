@@ -24,13 +24,14 @@ class BookingPageItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           const SizedBox(height: 33),
-          Column(
+          Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.all(6),
-                width: 76,
-                height: 76,
+                //Ширина полоски с градиентом
+                padding: const EdgeInsets.all(3),
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
                     gradient: const LinearGradient(colors: [
@@ -45,21 +46,23 @@ class BookingPageItem extends StatelessWidget {
                     child: Text(
                       stepNumber.toString(),
                       style: const TextStyle(
-                        fontSize: 36,
+                        fontSize: 12,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 36),
-              Text(
-                stepTitle,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 46,
-                  letterSpacing: 1,
-                  fontWeight: FontWeight.bold,
+              const SizedBox(width: 24),
+              Expanded(
+                child: Text(
+                  stepTitle,
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    letterSpacing: 1,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
