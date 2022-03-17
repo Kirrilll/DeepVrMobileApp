@@ -1,7 +1,9 @@
 import 'package:deepvr/page_widgets/booking_page_maket.dart';
-import 'package:deepvr/page_widgets/page_func_widget/form_page/form.dart';
-import 'package:deepvr/page_widgets/page_func_widget/players_counter_page/players_counter.dart';
-import 'package:deepvr/page_widgets/page_func_widget/time_picker_page/time_picker.dart';
+import 'package:deepvr/page_widgets/booking_pages/form_page/form.dart';
+import 'package:deepvr/page_widgets/booking_pages/game_type_page/game_type_container.dart';
+import 'package:deepvr/page_widgets/booking_pages/players_counter_page/players_counter.dart';
+import 'package:deepvr/page_widgets/booking_pages/players_counter_page/players_counter_page.dart';
+import 'package:deepvr/page_widgets/booking_pages/time_picker_page/time_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,13 +28,22 @@ class Booking extends StatefulWidget {
 }
 
 class _BookingState extends State<Booking> {
-  final pageController = PageController(initialPage: 0);
 
+  int minPlayers = 4;
+  int maxPlayers = 10;
 
-  int count = 1;
+  final pageController = PageController();
 
+  late int count;
+
+  @override
+  void initState() {
+    super.initState();
+    count = minPlayers;
+  }
+
+  @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Scaffold(
         body: PageView(
@@ -40,29 +51,19 @@ class _BookingState extends State<Booking> {
           scrollDirection: Axis.horizontal,
           controller: pageController,
           children: [
-            BookingPageMaket(
-                stepNumber: 1,
-                content: PlayerCounter(
-                  count: count,
-                  increment: () {
-                    setState(() {
-                      count += 1;
-                    });
-                  },
-                  decrement: () {
-                    if (count > 1) {
-                      setState(() {
-                        count -= 1;
-                      });
-                    }
-                  },
-                ),
-                stepTitle: 'Выберите количесвто игроков',
-                action: () {
-                  pageController.nextPage(
-                      duration: const Duration(seconds: 1),
-                      curve: Curves.easeInOut);
-                }),
+            PlayersCounterPage(
+                count: count,
+                page: 0,
+                pagesLength: 3,
+                setCount: (int value){
+                  setState(() {
+                    count = value;
+                  });
+                },
+                pageController: pageController,
+                maxPlayers: maxPlayers,
+                minPlayers: minPlayers
+            ),
             BookingPageMaket(
               stepNumber: 2,
               content: const OrderingForm(),
@@ -72,6 +73,16 @@ class _BookingState extends State<Booking> {
                     duration: const Duration(seconds: 1),
                     curve: Curves.easeInOut);
               },
+            ),
+            BookingPageMaket(
+                stepNumber: 3,
+                content: GameTypeContainer(),
+                stepTitle: 'Выберите VR Зал',
+                action: () {
+                  pageController.nextPage(
+                      duration: const Duration(seconds: 1),
+                      curve: Curves.easeInOut);
+                }
             ),
             BookingPageMaket(
                 stepNumber: 3,

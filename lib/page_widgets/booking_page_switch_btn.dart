@@ -8,6 +8,8 @@ class BookPageSwitchingBtn extends StatelessWidget {
     required this.text
   }) : super(key: key);
 
+  //Прокидывать сюда controller, создать enum buttonType(next, back, confirm)
+
   final void Function() action;
   final String text;
 

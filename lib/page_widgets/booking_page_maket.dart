@@ -10,15 +10,18 @@ class BookingPageMaket extends StatelessWidget {
     required this.stepNumber,
     required this.content,
     required this.stepTitle,
-    required this.action
+    required this.action,
+    this.isFirst = false,
+    this.isLast = false
   }) : super(key: key);
 
   final Widget content;
   final int stepNumber;
   final String stepTitle;
   final void Function() action;
-  final bool isLast = false;
-  final bool isFirst = false;
+  final bool isLast;
+  final bool isFirst;
+
 
   @override
   Widget build(BuildContext context) {
