@@ -1,5 +1,6 @@
 import 'package:deepvr/page_widgets/booking_page_maket.dart';
 import 'package:deepvr/page_widgets/booking_pages/form_page/form.dart';
+import 'package:deepvr/page_widgets/booking_pages/game_picker_page/game_card_container.dart';
 import 'package:deepvr/page_widgets/booking_pages/game_type_page/game_type_container.dart';
 import 'package:deepvr/page_widgets/booking_pages/players_counter_page/players_counter.dart';
 import 'package:deepvr/page_widgets/booking_pages/players_counter_page/players_counter_page.dart';
@@ -76,8 +77,18 @@ class _BookingState extends State<Booking> {
             ),
             BookingPageMaket(
                 stepNumber: 3,
-                content: GameTypeContainer(),
+                content: const GameTypeContainer(),
                 stepTitle: 'Выберите VR Зал',
+                action: () {
+                  pageController.nextPage(
+                      duration: const Duration(seconds: 1),
+                      curve: Curves.easeInOut);
+                }
+            ),
+            BookingPageMaket(
+                stepNumber: 4,
+                content: const GameCardContainer(),
+                stepTitle: 'Выберите VR игру',
                 action: () {
                   pageController.nextPage(
                       duration: const Duration(seconds: 1),
