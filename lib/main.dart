@@ -1,10 +1,11 @@
-import 'package:deepvr/page_widgets/booking_page_maket.dart';
-import 'package:deepvr/page_widgets/booking_pages/form_page/form.dart';
-import 'package:deepvr/page_widgets/booking_pages/game_picker_page/game_card_container.dart';
-import 'package:deepvr/page_widgets/booking_pages/game_type_page/game_type_container.dart';
-import 'package:deepvr/page_widgets/booking_pages/players_counter_page/players_counter.dart';
-import 'package:deepvr/page_widgets/booking_pages/players_counter_page/players_counter_page.dart';
-import 'package:deepvr/page_widgets/booking_pages/time_picker_page/time_picker.dart';
+import 'package:deepvr/booking_page_widgets/booking_page_maket.dart';
+import 'package:deepvr/booking_page_widgets/booking_pages/form_page/form.dart';
+import 'package:deepvr/booking_page_widgets/booking_pages/game_picker_page/game_card_container.dart';
+import 'package:deepvr/booking_page_widgets/booking_pages/game_picker_page/game_page.dart';
+import 'package:deepvr/booking_page_widgets/booking_pages/game_type_page/game_type_container.dart';
+import 'package:deepvr/booking_page_widgets/booking_pages/players_counter_page/players_counter.dart';
+import 'package:deepvr/booking_page_widgets/booking_pages/players_counter_page/players_counter_page.dart';
+import 'package:deepvr/booking_page_widgets/booking_pages/time_picker_page/time_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -65,43 +66,7 @@ class _BookingState extends State<Booking> {
                 maxPlayers: maxPlayers,
                 minPlayers: minPlayers
             ),
-            BookingPageMaket(
-              stepNumber: 2,
-              content: const OrderingForm(),
-              stepTitle: 'Выберите удобный для вас день',
-              action: () {
-                pageController.nextPage(
-                    duration: const Duration(seconds: 1),
-                    curve: Curves.easeInOut);
-              },
-            ),
-            BookingPageMaket(
-                stepNumber: 3,
-                content: const GameTypeContainer(),
-                stepTitle: 'Выберите VR Зал',
-                action: () {
-                  pageController.nextPage(
-                      duration: const Duration(seconds: 1),
-                      curve: Curves.easeInOut);
-                }
-            ),
-            BookingPageMaket(
-                stepNumber: 4,
-                content: const GameCardContainer(),
-                stepTitle: 'Выберите VR игру',
-                action: () {
-                  pageController.nextPage(
-                      duration: const Duration(seconds: 1),
-                      curve: Curves.easeInOut);
-                }
-            ),
-            BookingPageMaket(
-                stepNumber: 3,
-                content: const TimePicker(),
-                stepTitle: 'Выберите удобное для вас время',
-                action: () {
-                  print('Confim');
-                }),
+          GameCardPage(gameTypeId: 0, setGame: (id){print('sfsf');}, pageController: pageController)
           ],
         ),
       ),

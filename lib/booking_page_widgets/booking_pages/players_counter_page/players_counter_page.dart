@@ -1,5 +1,6 @@
-import 'package:deepvr/page_widgets/booking_page_maket.dart';
-import 'package:deepvr/page_widgets/booking_pages/players_counter_page/players_counter.dart';
+
+import 'package:deepvr/booking_page_widgets/booking_page_maket.dart';
+import 'package:deepvr/booking_page_widgets/booking_pages/players_counter_page/players_counter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -46,17 +47,16 @@ class PlayersCounterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BookingPageMaket(
-        stepNumber: page + 1,
-        content: PlayerCounter(
-          count: count,
-          decrement: _decrement,
-          increment: _increment,
-        ),
-        stepTitle: 'Выберите количесвто игроков',
-        isFirst: page == 0,
-        isLast: page == pagesLength - 1,
-        action: next
+    return BookingPageMaket.first(
+        key,
+        PlayerCounter(
+              count: count,
+              decrement: _decrement,
+              increment: _increment,
+            ),
+         page +1,
+        'Выберите количесвто игроков',
+        pageController
     );
   }
 }
