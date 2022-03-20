@@ -3,6 +3,7 @@ import 'package:deepvr/booking_page_widgets/booking_pages/form_page/form.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/game_picker_page/game_card_container.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/game_picker_page/game_page.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/game_type_page/game_type_container.dart';
+import 'package:deepvr/booking_page_widgets/booking_pages/game_type_page/game_type_page.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/players_counter_page/players_counter.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/players_counter_page/players_counter_page.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/time_picker_page/time_picker.dart';
@@ -44,6 +45,8 @@ class _BookingState extends State<Booking> {
     count = minPlayers;
   }
 
+  //TabController tabController = new TabController(length: 2, vsync: );
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -53,22 +56,49 @@ class _BookingState extends State<Booking> {
           scrollDirection: Axis.horizontal,
           controller: pageController,
           children: [
+            GameTypesPage(setGameType: (id){}),
             PlayersCounterPage(
                 count: count,
-                page: 0,
-                pagesLength: 3,
+                page: 1,
                 setCount: (int value){
                   setState(() {
                     count = value;
                   });
                 },
-                pageController: pageController,
                 maxPlayers: maxPlayers,
                 minPlayers: minPlayers
             ),
           GameCardPage(gameTypeId: 0, setGame: (id){print('sfsf');}, pageController: pageController)
           ],
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          items: [
+            BottomNavigationBarItem(
+                icon: IconButton(
+                  iconSize: 24,
+                  icon: const Icon( Icons.arrow_back),
+                  onPressed: () => pageController.previousPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.ease
+                  ),
+                ),
+              label: 'adad'
+            ),
+            BottomNavigationBarItem(
+                icon: IconButton(
+                  iconSize: 24,
+                  icon: const Icon( Icons.arrow_forward),
+                  onPressed: () => pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.ease
+                  ),
+                ),
+                label: 'adad'
+            ),
+          ],
+        )
       ),
     );
   }

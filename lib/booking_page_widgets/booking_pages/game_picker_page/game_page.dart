@@ -35,11 +35,10 @@ class _GameCardPageState extends State<GameCardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BookingPageMaket(
+    return const BookingPageMaket(
         stepNumber: 2,
-        content: const GameCardContainer(),
+        content:  GameCardContainer(),
         stepTitle: 'Выберите VR-игру',
-        pageController: widget.pageController
     );
   }
 }

@@ -9,11 +9,9 @@ class PlayersCounterPage extends StatelessWidget {
     Key? key,
     required this.count,
     required this.setCount,
-    required this.pageController,
     required this.maxPlayers,
     required this.minPlayers,
     required this.page,
-    required this.pagesLength
   }) : super(key: key);
 
   final int maxPlayers;
@@ -21,8 +19,6 @@ class PlayersCounterPage extends StatelessWidget {
   final int count;
   final void Function(int newCount) setCount;
   final int page;
-  final int pagesLength;
-  final PageController pageController;
 
   //В теории сюда поступает id игры, здесь происходит запрос и не нужно прокидывать max и min
 
@@ -38,25 +34,16 @@ class PlayersCounterPage extends StatelessWidget {
     }
   }
 
-  void next(){
-    pageController.nextPage(
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeIn
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BookingPageMaket.first(
-        key,
-        PlayerCounter(
+    return BookingPageMaket(
+        content: PlayerCounter(
               count: count,
               decrement: _decrement,
               increment: _increment,
             ),
-         page +1,
-        'Выберите количесвто игроков',
-        pageController
+         stepNumber: page +1,
+        stepTitle: 'Выберите количесвто игроков',
     );
   }
 }
