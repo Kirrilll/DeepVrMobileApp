@@ -21,7 +21,22 @@ class _GameTypeContainerState extends State<GameTypeContainer> {
   int? activeId;
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    print('dispose');
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    print('init');
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print(activeId);
     return ListView.separated(
         itemCount: list.length,
         itemBuilder: (context, index) {

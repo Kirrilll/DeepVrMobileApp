@@ -11,14 +11,12 @@ class PlayersCounterPage extends StatelessWidget {
     required this.setCount,
     required this.maxPlayers,
     required this.minPlayers,
-    required this.page,
   }) : super(key: key);
 
   final int maxPlayers;
   final int minPlayers;
   final int count;
   final void Function(int newCount) setCount;
-  final int page;
 
   //В теории сюда поступает id игры, здесь происходит запрос и не нужно прокидывать max и min
 
@@ -42,7 +40,7 @@ class PlayersCounterPage extends StatelessWidget {
               decrement: _decrement,
               increment: _increment,
             ),
-         stepNumber: page +1,
+        stepNumber: 2,
         stepTitle: 'Выберите количесвто игроков',
     );
   }
