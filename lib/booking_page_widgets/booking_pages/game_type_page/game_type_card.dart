@@ -58,9 +58,9 @@ class GameTypeCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  gameType.minPlayers.toString() +
+                  gameType.guestMin.toString() +
                       '-' +
-                      gameType.maxPlayers.toString(),
+                      gameType.guestMax.toString(),
                   style: const TextStyle(fontSize: 17, color: Colors.white),
                 )
               ],
@@ -75,7 +75,7 @@ class GameTypeCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  gameType.duration.toString(),
+                  gameType.timeDuration.toString(),
                   style: const TextStyle(fontSize: 17, color: Colors.white),
                 )
               ],

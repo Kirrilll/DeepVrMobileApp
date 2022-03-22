@@ -4,19 +4,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GameTypeContainer extends StatefulWidget {
-  const GameTypeContainer({Key? key}) : super(key: key);
+  const GameTypeContainer({
+    Key? key,
+    required this.gameTypes
+  }) : super(key: key);
+
+  final List<GameTypeModel> gameTypes;
 
   @override
   State<GameTypeContainer> createState() => _GameTypeContainerState();
 }
 
 class _GameTypeContainerState extends State<GameTypeContainer> {
-  //В теории если ничто не выбрано, кнопка далее должна быть заблочена.
-  final List<GameTypeModel> list = [
-    GameTypeModel('VR Классика', 60, 1, 10),
-    GameTypeModel('Полное погружение', 40, 2, 4),
-    GameTypeModel('VR Арена', 40, 2, 10)
-  ];
+  //В теории если ничто не выбрано, кнопка далее должна быть заблочена
 
   int? activeId;
 
@@ -38,10 +38,10 @@ class _GameTypeContainerState extends State<GameTypeContainer> {
   Widget build(BuildContext context) {
     print(activeId);
     return ListView.separated(
-        itemCount: list.length,
+        itemCount: widget.gameTypes.length,
         itemBuilder: (context, index) {
           return GameTypeCard(
-            gameType: list[index],
+            gameType: widget.gameTypes[index],
             isActive: index == activeId,
             setIsActive: () {
               setState(() {

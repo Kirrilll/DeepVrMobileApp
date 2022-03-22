@@ -1,4 +1,5 @@
 import 'package:deepvr/booking_page_widgets/booking_page_maket.dart';
+import 'package:deepvr/booking_page_widgets/booking_pages/date_picker_page/date_picker_page.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/form_page/form.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/game_picker_page/game_card_container.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/game_picker_page/game_page.dart';
@@ -8,6 +9,7 @@ import 'package:deepvr/booking_page_widgets/booking_pages/players_counter_page/p
 import 'package:deepvr/booking_page_widgets/booking_pages/players_counter_page/players_counter_page.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/time_picker_page/time_picker_container.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/time_picker_page/time_picker_page.dart';
+import 'package:deepvr/models/game_type_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -25,86 +27,3 @@ void main() {
       home: const Booking()));
 }
 
-class Booking extends StatefulWidget {
-  const Booking({Key? key}) : super(key: key);
-
-  @override
-  _BookingState createState() => _BookingState();
-}
-
-class _BookingState extends State<Booking> {
-  int minPlayers = 4;
-  int maxPlayers = 10;
-
-  final pageController = PageController();
-
-  late int count;
-
-  @override
-  void initState() {
-    super.initState();
-    count = minPlayers;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          body: PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            controller: pageController,
-            children: [
-              GameTypesPage(setGameType: (id) {}),
-              PlayersCounterPage(
-                  count: count,
-                  setCount: (int value) {
-                    setState(() {
-                      count = value;
-                    });
-                  },
-                  maxPlayers: maxPlayers,
-                  minPlayers: minPlayers),
-              GameCardPage(
-                  gameTypeId: 0,
-                  setGame: (id) {
-                    print('sfsf');
-                  },
-                  pageController: pageController),
-              TimePickerPage(
-                setTime: (id) => print(id),
-              )
-            ],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: 1,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            items: [
-              BottomNavigationBarItem(
-                  icon: IconButton(
-                    iconSize: 24,
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed:  () => pageController.previousPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.ease),
-                  ),
-                  label: 'adad'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.album),
-                label: 'home'
-              ),
-              BottomNavigationBarItem(
-                  icon: IconButton(
-                    iconSize: 24,
-                    icon: const Icon(Icons.arrow_forward),
-                    onPressed: () => pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.ease),
-                  ),
-                  label: 'adad'),
-            ],
-          )),
-    );
-  }
-}
