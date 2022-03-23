@@ -10,6 +10,7 @@ import 'package:deepvr/booking_page_widgets/booking_pages/players_counter_page/p
 import 'package:deepvr/booking_page_widgets/booking_pages/time_picker_page/time_picker_container.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/time_picker_page/time_picker_page.dart';
 import 'package:deepvr/models/game_type_model.dart';
+import 'package:deepvr/pages/booking_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,7 @@ void main() {
         ),
       ),
 
-      home: const Booking()));
+      home: const Booking()
+  ));
 }
 

@@ -4,7 +4,7 @@ import 'package:deepvr/booking_page_widgets/booking_pages/players_counter_page/p
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PlayersCounterPage extends StatelessWidget {
+class PlayersCounterPage extends StatefulWidget {
   const PlayersCounterPage({
     Key? key,
     required this.count,
@@ -18,17 +18,29 @@ class PlayersCounterPage extends StatelessWidget {
   final int count;
   final void Function(int newCount) setCount;
 
+  @override
+  State<PlayersCounterPage> createState() => _PlayersCounterPageState();
+}
+
+class _PlayersCounterPageState extends State<PlayersCounterPage> {
   //В теории сюда поступает id игры, здесь происходит запрос и не нужно прокидывать max и min
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+
   void _increment(){
-    if(count < maxPlayers){
-      setCount(count + 1);
+    if(widget.count < widget.maxPlayers){
+      widget.setCount(widget.count + 1);
     }
   }
 
   void _decrement(){
-    if(count > minPlayers){
-      setCount(count -1);
+    if(widget.count > widget.minPlayers){
+      widget.setCount(widget.count -1);
     }
   }
 
@@ -36,7 +48,7 @@ class PlayersCounterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BookingPageMaket(
         content: PlayerCounter(
-              count: count,
+              count: widget.count,
               decrement: _decrement,
               increment: _increment,
             ),

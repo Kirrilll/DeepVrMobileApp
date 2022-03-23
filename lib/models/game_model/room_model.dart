@@ -1,5 +1,6 @@
-import 'package:deepvr/models/pivot.dart';
 import 'dart:convert';
+
+import 'package:deepvr/models/game_model/pivot.dart';
 
 class Room {
   int? id;

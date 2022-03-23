@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:deepvr/booking_page_widgets/booking_page_maket.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/game_picker_page/game_card_container.dart';
-import 'package:deepvr/models/game_model.dart';
+import 'package:deepvr/models/game_model/game_model.dart';
 import 'package:deepvr/services/remote_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

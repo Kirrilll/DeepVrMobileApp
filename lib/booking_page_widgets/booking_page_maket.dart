@@ -20,6 +20,10 @@ class BookingPageMaket extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height,
+          maxWidth: MediaQuery.of(context).size.width
+      ),
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

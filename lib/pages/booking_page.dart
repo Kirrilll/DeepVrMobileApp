@@ -1,3 +1,4 @@
+import 'package:deepvr/booking_page_widgets/booking_pages/date_picker_page/date_picker_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,10 @@ class Booking extends StatefulWidget {
 }
 
 class _BookingState extends State<Booking> {
+
   GameTypeModel? _chosenType;
+
+
   final pageController = PageController();
 
   late int count;
@@ -23,18 +27,26 @@ class _BookingState extends State<Booking> {
   @override
   void initState() {
     super.initState();
+    count = 4;
+    //count = _chosenType != null ?_chosenType!.guestMin: 2;
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: PageView(
+          body: ListView(
             physics: const NeverScrollableScrollPhysics(),
             scrollDirection: Axis.horizontal,
             controller: pageController,
             children: [
-              GameTypesPage(setGameType: (id) {}),
+              GameTypesPage(setGameType: (id) => print('ad')),
+              GameCardPage(
+                gameTypeId: 2,
+                setGame: (id) {
+                  print('sfsf');
+                },
+              ),
               PlayersCounterPage(
                   count: count,
                   setCount: (int value) {
@@ -42,17 +54,13 @@ class _BookingState extends State<Booking> {
                       count = value;
                     });
                   },
-                  maxPlayers: _chosenType!.guestMax,
-                  minPlayers: _chosenType!.guestMin),
-              GameCardPage(
-                gameTypeId: 2,
-                setGame: (id) {
-                  print('sfsf');
-                },),
+                  maxPlayers: _chosenType?.guestMax ?? 10,
+                  minPlayers: _chosenType?.guestMin ?? 4
+              ),
+              const DatePickerPage(),
               TimePickerPage(
                 setTime: (id) => print(id),
               ),
-              //const DatePickerPage()
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -64,15 +72,13 @@ class _BookingState extends State<Booking> {
                   icon: IconButton(
                     iconSize: 24,
                     icon: const Icon(Icons.arrow_back),
-                    onPressed:  () => pageController.previousPage(
+                    onPressed: () => pageController.previousPage(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.ease),
                   ),
                   label: 'adad'),
               const BottomNavigationBarItem(
-                  icon: Icon(Icons.album),
-                  label: 'home'
-              ),
+                  icon: Icon(Icons.album), label: 'home'),
               BottomNavigationBarItem(
                   icon: IconButton(
                     iconSize: 24,

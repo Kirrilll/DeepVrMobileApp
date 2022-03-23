@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:deepvr/models/room_model.dart';
+import 'package:deepvr/models/game_model/room_model.dart';
 
-import 'game_type_model.dart';
+import '../game_type_model.dart';
 
 class GameModel {
   int id;
