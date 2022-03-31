@@ -1,20 +1,18 @@
 import 'package:deepvr/models/game_type_model.dart';
+import 'package:deepvr/providers/booking_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class GameTypeCard extends StatelessWidget {
   const GameTypeCard(
       {Key? key,
-      required this.gameType,
-      required this.isActive,
-      required this.setIsActive})
-      : super(key: key);
+        required this.gameType,
+      }) : super(key: key);
 
   final GameTypeModel gameType;
-  final bool isActive;
-  final void Function() setIsActive;
 
-  get _buildBoxDecoration => (context) {
+  get _buildBoxDecoration => (context, isActive) {
         BoxDecoration boxDecoration = BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Theme.of(context).colorScheme.secondaryContainer);
@@ -32,11 +30,12 @@ class GameTypeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var bookingProvider = Provider.of<BookingProvider>(context);
     return GestureDetector(
-      onTap: setIsActive,
+      onTap: () => bookingProvider.setSelectedGameType(gameType),
       child: Container(
         padding: const EdgeInsets.fromLTRB(36, 40, 21, 38),
-        decoration: _buildBoxDecoration(context),
+        decoration: _buildBoxDecoration(context, bookingProvider.selectedGameType?.id == gameType.id),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceAround,

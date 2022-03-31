@@ -11,21 +11,32 @@ import 'package:deepvr/booking_page_widgets/booking_pages/time_picker_page/time_
 import 'package:deepvr/booking_page_widgets/booking_pages/time_picker_page/time_picker_page.dart';
 import 'package:deepvr/models/game_type_model.dart';
 import 'package:deepvr/pages/booking_page.dart';
+import 'package:deepvr/providers/booking_provider.dart';
+import 'package:deepvr/providers/games_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MaterialApp(
-      theme: ThemeData.from(
-        colorScheme: ThemeData.dark().colorScheme.copyWith(
-            primary: Colors.white,
-            secondary: const Color(0xFFABAFE5),
-            background: Colors.black,
-            secondaryContainer: const Color(0xFF1F2032)
-        ),
-      ),
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(
+          create: (_) => GamesProvider()..getGames(),
+          lazy: false,
+      )
+    ],
+      child: MaterialApp(
+          theme: ThemeData.from(
+            colorScheme: ThemeData.dark().colorScheme.copyWith(
+                primary: Colors.white,
+                secondary: const Color(0xFFABAFE5),
+                background: Colors.black,
+                secondaryContainer: const Color(0xFF1F2032)
+            ),
+          ),
+          home: const Booking()
+      )),
+    );
 
-      home: const Booking()
-  ));
 }
 

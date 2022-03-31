@@ -1,21 +1,17 @@
+import 'package:deepvr/providers/booking_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 class PlayerCounter extends StatelessWidget {
-  const PlayerCounter({
-    Key? key,
-    required this.count,
-    required this.increment,
-    required this.decrement,
-  }) : super(key: key);
+  const PlayerCounter({Key? key,}) : super(key: key);
 
-  final int count;
-  final void Function() increment;
-  final void Function() decrement;
 
   @override
   Widget build(BuildContext context) {
+    var booking = Provider.of<BookingProvider>(context, listen: true);
+
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Row(
@@ -24,7 +20,7 @@ class PlayerCounter extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           IconButton(
-              onPressed: () => decrement(),
+              onPressed: () => booking.decrement(),
               icon: const Icon(
                 Icons.remove,
                 size: 20,
@@ -40,7 +36,7 @@ class PlayerCounter extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                count.toString(),
+                booking.guestCount.toString(),
                 style: const TextStyle(
                     fontSize: 24
                 ),
@@ -49,7 +45,7 @@ class PlayerCounter extends StatelessWidget {
           ),
 
           IconButton(
-              onPressed: () => increment(),
+              onPressed: () => booking.increment(),
               icon: const Icon(
                 Icons.add,
                 size: 20,

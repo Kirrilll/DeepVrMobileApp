@@ -18,8 +18,6 @@ class GameCardContainer extends StatefulWidget {
 
 class _GameCardContainerState extends State<GameCardContainer> {
 
-  int? activeId;
-
   @override
   Widget build(BuildContext context) {
     return GridView(
@@ -30,7 +28,7 @@ class _GameCardContainerState extends State<GameCardContainer> {
         mainAxisExtent: 315
       ),
       children: widget.games
-          .map((game) => GameCard(gameModel: game, isActive: false, setIsActive: () => print('ad')))
+          .map((game) => GameCard(gameModel: game))
           .toList()
     );
   }

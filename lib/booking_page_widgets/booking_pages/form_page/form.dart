@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../booking_page_switch_btn.dart';
+
 class OrderingForm extends StatefulWidget {
   const OrderingForm({Key? key}) : super(key: key);
 
@@ -13,47 +15,47 @@ class _OrderingFormState extends State<OrderingForm> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Form(
-        key: _formState,
-        autovalidateMode: AutovalidateMode.always,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            TextFormField(
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
+    return Form(
+      key: _formState,
+      autovalidateMode: AutovalidateMode.always,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          TextFormField(
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(
+              filled: true,
+              contentPadding: const EdgeInsets.all(16),
+              prefixIcon:  const Icon(Icons.account_circle),
+              fillColor: Theme.of(context).colorScheme.secondaryContainer,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide.none
+              ),
+              hintText: 'Введите ваше имя'
+            ),
+          ),
+          const SizedBox(height: 10),
+          TextFormField(
+            keyboardType: TextInputType.phone,
+            decoration: InputDecoration(
                 filled: true,
                 contentPadding: const EdgeInsets.all(16),
-                prefixIcon:  const Icon(Icons.account_circle),
+                prefixIcon:  const Icon(Icons.phone),
                 fillColor: Theme.of(context).colorScheme.secondaryContainer,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide.none
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none
                 ),
-                hintText: 'Введите ваше имя'
-              ),
+                hintText: '+7 (___) ___-__-__'
             ),
-            const SizedBox(height: 10),
-            TextFormField(
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                  filled: true,
-                  contentPadding: const EdgeInsets.all(16),
-                  prefixIcon:  const Icon(Icons.phone),
-                  fillColor: Theme.of(context).colorScheme.secondaryContainer,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide.none
-                  ),
-                  hintText: '+7 (___) ___-__-__'
-              ),
-            ),
-            const SizedBox(height: 10),
-            // const SizedBox(height: 20)
-          ],
-        ),
+          ),
+          // const SizedBox(height: 10),
+          const Spacer(),
+          BookPageSwitchingBtn(text: 'Отправить', action: () => print('confirm'),)
+          // const SizedBox(height: 20)
+        ],
       ),
     );
   }

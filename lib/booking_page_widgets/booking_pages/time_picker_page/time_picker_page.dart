@@ -6,15 +6,13 @@ import 'package:flutter/material.dart';
 class TimePickerPage extends StatelessWidget {
   const TimePickerPage({
     Key? key,
-    required this.setTime
   }) : super(key: key);
 
-  final void Function(int) setTime;
 
   @override
   Widget build(BuildContext context) {
     return const BookingPageMaket(
-        stepNumber: 4,
+        stepNumber: 5,
         content:  TimePickerContainer(),
         stepTitle: 'Выберите подходящее время'
     );

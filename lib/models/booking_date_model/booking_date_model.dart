@@ -17,7 +17,6 @@ class BookingDateModel {
   factory BookingDateModel.fromJson(Map<String, dynamic> json) {
     Map<String, Map<String, List<int>>> schedule = {};
     Map<int, Room> rooms = {};
-    //schedule.map((key, value) => MapEntry(key, value))
 
     json['schedule'].forEach((key, value) {
       schedule.putIfAbsent(key, () {

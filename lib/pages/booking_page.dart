@@ -1,6 +1,9 @@
 import 'package:deepvr/booking_page_widgets/booking_pages/date_picker_page/date_picker_page.dart';
+import 'package:deepvr/booking_page_widgets/booking_pages/form_page/form_page.dart';
+import 'package:deepvr/providers/booking_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../booking_page_widgets/booking_pages/game_picker_page/game_page.dart';
 import '../booking_page_widgets/booking_pages/game_type_page/game_type_page.dart';
@@ -16,80 +19,59 @@ class Booking extends StatefulWidget {
 }
 
 class _BookingState extends State<Booking> {
-
-  GameTypeModel? _chosenType;
-
-
   final pageController = PageController();
-
-  late int count;
-
-  @override
-  void initState() {
-    super.initState();
-    count = 4;
-    //count = _chosenType != null ?_chosenType!.guestMin: 2;
-  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          body: ListView(
-            physics: const NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            controller: pageController,
-            children: [
-              GameTypesPage(setGameType: (id) => print('ad')),
-              GameCardPage(
-                gameTypeId: 2,
-                setGame: (id) {
-                  print('sfsf');
-                },
-              ),
-              PlayersCounterPage(
-                  count: count,
-                  setCount: (int value) {
-                    setState(() {
-                      count = value;
-                    });
-                  },
-                  maxPlayers: _chosenType?.guestMax ?? 10,
-                  minPlayers: _chosenType?.guestMin ?? 4
-              ),
-              const DatePickerPage(),
-              TimePickerPage(
-                setTime: (id) => print(id),
-              ),
-            ],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: 1,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            items: [
-              BottomNavigationBarItem(
-                  icon: IconButton(
-                    iconSize: 24,
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () => pageController.previousPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.ease),
-                  ),
-                  label: 'adad'),
-              const BottomNavigationBarItem(
-                  icon: Icon(Icons.album), label: 'home'),
-              BottomNavigationBarItem(
-                  icon: IconButton(
-                    iconSize: 24,
-                    icon: const Icon(Icons.arrow_forward),
-                    onPressed: () => pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.ease),
-                  ),
-                  label: 'adad'),
-            ],
-          )),
+    return ChangeNotifierProvider(
+      create: (context) => BookingProvider(),
+      child: SafeArea(
+        child: Scaffold(
+            body: PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              controller: pageController,
+              children: const [
+                GameTypesPage(),
+                GameCardPage(),
+                PlayersCounterPage(),
+                DatePickerPage(),
+                TimePickerPage(),
+                FormPage()
+              ],
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: 1,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              items: [
+                BottomNavigationBarItem(
+                    icon: IconButton(
+                      iconSize: 24,
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () => pageController.previousPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.ease),
+                    ),
+                    label: 'adad'),
+                const BottomNavigationBarItem(
+                    icon: Icon(Icons.album), label: 'home'),
+                const BottomNavigationBarItem(
+                    icon: Icon(Icons.widgets), label: 'games'),
+                BottomNavigationBarItem(
+                    icon: IconButton(
+                      iconSize: 24,
+                      icon: const Icon(Icons.arrow_forward),
+                      onPressed: () {
+                        pageController.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.ease);
+                      },
+                    ),
+                    label: 'adad'),
+              ],
+            )),
+      ),
     );
   }
 }
