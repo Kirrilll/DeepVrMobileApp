@@ -8,6 +8,8 @@ import 'package:deepvr/services/remote_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
+import '../entities/time_entity.dart';
+
 //Это менеджит что все то что selected
 //Возможно сделать это просто большим хранилищем
 class BookingProvider with ChangeNotifier{
@@ -26,6 +28,8 @@ class BookingProvider with ChangeNotifier{
   var _isLoadedDate = false;
   DateEntity? _selectedDate;
 
+  TimeEntity? _selectedTime;
+
   bool get isLoadedGameType => _isLoadedGameType;
   List<GameTypeModel>? get gameTypes => _gameTypes;
   GameTypeModel? get selectedGameType => _selectedGameType;
@@ -37,7 +41,9 @@ class BookingProvider with ChangeNotifier{
   BookingDateModel? get bookingDateModel => _bookingDateModel;
   bool get isLoadedDate => _isLoadedDate;
 
-  DateEntity get selectedDate => _selectedDate!;
+  DateEntity? get selectedDate => _selectedDate;
+
+  TimeEntity? get selectedTime => _selectedTime;
 
   void increment(){
     if(_guestCount! < _guestMax){
@@ -70,6 +76,12 @@ class BookingProvider with ChangeNotifier{
     _selectedDate = dateEntity;
     notifyListeners();
   }
+
+  void setSelectedTime(TimeEntity timeEntity){
+    _selectedTime = timeEntity;
+    notifyListeners();
+  }
+
 
 
   void getTypes() async{

@@ -20,7 +20,7 @@ class MonthEntity{
       DateEntity date = DateEntity.fromMap(MapEntry(key, value));
       //Если не пусто и месяца не совпадают
       if(tempMonth.isNotEmpty && tempMonth.first.date.month != date.date.month){
-        months.add(MonthEntity(days: tempMonth));
+        months.add(MonthEntity(days: List.from(tempMonth)));
         tempMonth.clear();
       }
       tempMonth.add(date);

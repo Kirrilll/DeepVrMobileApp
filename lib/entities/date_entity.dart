@@ -19,4 +19,14 @@ class DateEntity{
     // TODO: implement toString
     return date.toString();
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DateEntity &&
+          runtimeType == other.runtimeType &&
+          date == other.date;
+
+  @override
+  int get hashCode => date.hashCode;
 }

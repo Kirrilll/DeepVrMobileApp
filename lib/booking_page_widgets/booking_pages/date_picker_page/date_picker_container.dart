@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:deepvr/booking_page_widgets/booking_pages/date_picker_page/date_month_container.dart';
 import 'package:deepvr/entities/date_entity.dart';
 import 'package:deepvr/entities/month_entity.dart';
@@ -40,16 +42,18 @@ class DatePickerContainer extends StatelessWidget {
           ]
         ),
         const SizedBox(height: 36),
-        Container(
-          height: 300,
+        SizedBox(
+          height: 400,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            // physics: const NeverScrollableScrollPhysics(),
             children: calendar
                 .map((month) => DateMonthContainer(month: month.days))
                 .toList(),
           ),
         )
+        // DateMonthContainer(month: calendar.first.days)
       ],
     );
   }

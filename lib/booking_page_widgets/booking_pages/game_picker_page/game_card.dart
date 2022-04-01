@@ -45,11 +45,11 @@ class GameCard extends StatelessWidget {
                 gameModel.logo  == null
                     ? 'https://srt.vrbook.creatrix-digital.ru/storage/' + gameModel.gameType.image!
                     : 'https://srt.vrbook.creatrix-digital.ru/storage/' + gameModel.logo!,
-                fit: BoxFit.contain,
+                fit: BoxFit.fitHeight,
                 loadingBuilder: (context, child, progress) {
                   return progress == null
                       ? child
-                      : const CircularProgressIndicator();
+                      : const Center(child:  CircularProgressIndicator());
                 },
               ),
               decoration: _buildBoxDecoration(context, bookingProvider.selectedGame?.id == gameModel.id),

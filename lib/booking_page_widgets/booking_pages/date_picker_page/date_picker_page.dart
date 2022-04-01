@@ -22,6 +22,9 @@ class _DatePickerPageState extends State<DatePickerPage> {
   @override
   void initState() {
     Provider.of<BookingProvider>(context, listen: false).getDates();
+    //Test  2 api
+    // RemoteService.getInstance().getDates2(Provider.of<BookingProvider>(context, listen: false).selectedGame!.id)
+    //     .then((res) => log(res.toString()));
     super.initState();
   }
 
