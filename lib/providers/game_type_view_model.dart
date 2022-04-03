@@ -25,7 +25,7 @@ class GameTypeViewModel with ChangeNotifier implements BaseBookingViewModel{
   List<GameTypeModel>? get gameTypes => _gameTypes;
 
 
-  void setSelectedType(GameTypeModel type){
+  void selectType(GameTypeModel type){
     _selectedType = type;
     notifyListeners();
   }

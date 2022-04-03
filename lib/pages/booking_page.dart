@@ -51,10 +51,10 @@ class _BookingState extends State<Booking> {
                 GameTypesPage(),
                 GameCardPage(),
                 PlayersCounterPage(),
-                //DatePickerPage(),
-                //TimePickerPage(),
-                //FormPage(),
-                //BookingResultPage()
+                DatePickerPage(),
+                TimePickerPage(),
+                FormPage(),
+                BookingResultPage()
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(

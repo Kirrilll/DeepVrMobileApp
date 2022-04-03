@@ -1,5 +1,6 @@
 import 'package:deepvr/entities/time_entity.dart';
 import 'package:deepvr/providers/booking_provider.dart';
+import 'package:deepvr/providers/time_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +22,8 @@ class TimePickerItem extends StatelessWidget {
           style: TextStyle(color: Theme.of(context).colorScheme.secondary),
         ),
         const SizedBox(height: 12),
-        Consumer<BookingProvider>(
-          builder: (context, bookingProvider, _) => (ElevatedButton(
+        Consumer<TimeViewModel>(
+          builder: (context, viewModel, _) => (ElevatedButton(
             style: ElevatedButton.styleFrom(
                 primary: Theme.of(context).colorScheme.secondaryContainer,
                 onSurface: const Color(0xFF0F0F1D),
@@ -30,11 +31,13 @@ class TimePickerItem extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
-                    side: bookingProvider.selectedTime == time? const BorderSide(color: Color(0XFF8556FF), width: 2): BorderSide.none
+                    side: viewModel.selectedTime != null && viewModel.selectedTime == time
+                        ? const BorderSide(color: Color(0XFF8556FF), width: 2)
+                        : BorderSide.none
                 )),
             onPressed: isBooked
                 ? null
-                : () => bookingProvider.setSelectedTime(time),
+                : () => viewModel.selectTime(time),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

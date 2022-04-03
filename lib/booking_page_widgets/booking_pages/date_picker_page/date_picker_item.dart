@@ -1,8 +1,12 @@
 import 'package:deepvr/entities/date_entity.dart';
 import 'package:deepvr/providers/booking_provider.dart';
+import 'package:deepvr/providers/date_view_model.dart';
+import 'package:deepvr/providers/games_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../locator.dart';
 
 class DatePickerItem extends StatelessWidget {
   DatePickerItem({
@@ -47,15 +51,14 @@ class DatePickerItem extends StatelessWidget {
     return textStyle;
   }
 
+  final dateViewModel = locator<DateViewModel>();
   //Здесь 3 состояния экрана,
 
   @override
   Widget build(BuildContext context) {
     
-    var bookingProvider = Provider.of<BookingProvider>(context, listen: false);
-    
     return GestureDetector(
-      onTap: () =>  bookingProvider.setSelectedDate(dateEntity),
+      onTap: () =>  dateViewModel.selectDate(dateEntity),
       child: Container(
         padding: const EdgeInsets.all(6),
         width: 36,
@@ -67,7 +70,9 @@ class DatePickerItem extends StatelessWidget {
           style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w700,
-              color: bookingProvider.selectedDate == dateEntity? Colors.white: const Color(0xFF828188)
+              color: dateViewModel.selectedDate != null && dateViewModel.selectedDate == dateEntity
+                  ? Colors.white
+                  : const Color(0xFF828188)
           ),
         ),
       ),

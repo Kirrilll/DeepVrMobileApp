@@ -34,7 +34,7 @@ class GameTypeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => locator<GameTypeViewModel>().setSelectedType(gameType),
+      onTap: () => locator<GameTypeViewModel>().selectType(gameType),
       child: Container(
         padding: const EdgeInsets.fromLTRB(36, 40, 21, 38),
         decoration: _buildBoxDecoration(context, locator<GameTypeViewModel>().selectedType?.id == gameType.id),
