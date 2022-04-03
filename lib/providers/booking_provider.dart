@@ -10,6 +10,9 @@ import 'package:provider/provider.dart';
 
 import '../entities/time_entity.dart';
 
+//enum, показывающий какая на данный этап страница активна
+//изначально GAME_TYPE
+
 //Это менеджит что все то что selected
 //Возможно сделать это просто большим хранилищем
 class BookingProvider with ChangeNotifier{

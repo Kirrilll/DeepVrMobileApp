@@ -1,5 +1,6 @@
 import 'package:deepvr/models/game_model/game_model.dart';
 import 'package:deepvr/providers/booking_provider.dart';
+import 'package:deepvr/providers/games_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,39 +32,40 @@ class GameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var bookingProvider = Provider.of<BookingProvider>(context);
-    return GestureDetector(
-      onTap:() => bookingProvider.setSelectedGame(gameModel),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Container(
-              clipBehavior: Clip.hardEdge,
-              child: Image.network(
-                gameModel.logo  == null
-                    ? 'https://srt.vrbook.creatrix-digital.ru/storage/' + gameModel.gameType.image!
-                    : 'https://srt.vrbook.creatrix-digital.ru/storage/' + gameModel.logo!,
-                fit: BoxFit.fitHeight,
-                loadingBuilder: (context, child, progress) {
-                  return progress == null
-                      ? child
-                      : const Center(child:  CircularProgressIndicator());
-                },
+    return Consumer<GamesViewModel>(
+      builder: (context, viewModel, child) => GestureDetector(
+        onTap:() => viewModel.setSelectedGame(gameModel),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Container(
+                clipBehavior: Clip.hardEdge,
+                child: Image.network(
+                  gameModel.logo  == null
+                      ? 'https://srt.vrbook.creatrix-digital.ru/storage/' + gameModel.gameType.image!
+                      : 'https://srt.vrbook.creatrix-digital.ru/storage/' + gameModel.logo!,
+                  fit: BoxFit.fitHeight,
+                  loadingBuilder: (context, child, progress) {
+                    return progress == null
+                        ? child
+                        : const Center(child:  CircularProgressIndicator());
+                  },
+                ),
+                decoration: _buildBoxDecoration(context, viewModel.selectedGame?.id == gameModel.id),
               ),
-              decoration: _buildBoxDecoration(context, bookingProvider.selectedGame?.id == gameModel.id),
             ),
-          ),
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Text(
-              gameModel.title,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-          )
-        ],
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Text(
+                gameModel.title,
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -13,6 +13,7 @@ class GamesProvider with ChangeNotifier{
     RemoteService.getInstance().getGames().then((res){
       _games = res;
       _isLoaded = true;
+      notifyListeners();
     });
   }
 }

@@ -9,6 +9,7 @@ import 'package:deepvr/booking_page_widgets/booking_pages/players_counter_page/p
 import 'package:deepvr/booking_page_widgets/booking_pages/players_counter_page/players_counter_page.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/time_picker_page/time_picker_container.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/time_picker_page/time_picker_page.dart';
+import 'package:deepvr/locator.dart';
 import 'package:deepvr/models/game_type_model.dart';
 import 'package:deepvr/pages/booking_page.dart';
 import 'package:deepvr/providers/booking_provider.dart';
@@ -18,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  setup();
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(

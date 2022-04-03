@@ -41,13 +41,4 @@ class RemoteService{
       return BookingDateModel.fromJsonStr(json);
     }
   }
-
-  Future<String?> getDates2(int gameId) async {
-    var uri = Uri.parse(_apiUrl + 'quests/timetable/$gameId');
-    var response = await _client.get(uri);
-    if(response.statusCode == 200){
-      var json = response.body;
-      return json;
-    }
-  }
 }

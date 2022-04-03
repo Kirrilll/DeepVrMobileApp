@@ -1,8 +1,11 @@
 import 'package:deepvr/models/game_type_model.dart';
 import 'package:deepvr/providers/booking_provider.dart';
+import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../locator.dart';
 
 class GameTypeCard extends StatelessWidget {
   const GameTypeCard(
@@ -30,12 +33,11 @@ class GameTypeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var bookingProvider = Provider.of<BookingProvider>(context);
     return GestureDetector(
-      onTap: () => bookingProvider.setSelectedGameType(gameType),
+      onTap: () => locator<GameTypeViewModel>().setSelectedType(gameType),
       child: Container(
         padding: const EdgeInsets.fromLTRB(36, 40, 21, 38),
-        decoration: _buildBoxDecoration(context, bookingProvider.selectedGameType?.id == gameType.id),
+        decoration: _buildBoxDecoration(context, locator<GameTypeViewModel>().selectedType?.id == gameType.id),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceAround,

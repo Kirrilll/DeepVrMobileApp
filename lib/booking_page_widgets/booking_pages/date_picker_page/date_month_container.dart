@@ -30,15 +30,17 @@ class DateMonthContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.width);
     return SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: _buildWeeks()
-                .values
-                .toList()
-                .map((week) => WeekRow(week: week))
-                .toList()));
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: _buildWeeks()
+              .values
+              .toList()
+              .map((week) => WeekRow(week: week))
+              .toList()),
+    );
   }
 }
 
