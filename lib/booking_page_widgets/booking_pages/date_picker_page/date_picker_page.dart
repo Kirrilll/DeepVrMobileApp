@@ -4,7 +4,6 @@ import 'package:deepvr/booking_page_widgets/booking_page_maket.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/date_picker_page/date_picker_container.dart';
 import 'package:deepvr/entities/month_entity.dart';
 import 'package:deepvr/models/booking_date_model/booking_date_model.dart';
-import 'package:deepvr/providers/booking_provider.dart';
 import 'package:deepvr/providers/date_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/services/remote_service.dart';

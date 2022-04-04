@@ -1,5 +1,4 @@
 import 'package:deepvr/models/game_model/game_model.dart';
-import 'package:deepvr/providers/booking_provider.dart';
 import 'package:deepvr/providers/games_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

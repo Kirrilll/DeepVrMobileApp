@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 import '../locator.dart';
 import 'game_type_view_model.dart';
 
-class DateViewModel with ChangeNotifier implements BaseBookingViewModel{
+class DateViewModel with ChangeNotifier implements IBookingViewModel{
 
   DateEntity? _selectedDate;
   BookingDateModel? _calendar;
@@ -51,13 +51,13 @@ class DateViewModel with ChangeNotifier implements BaseBookingViewModel{
 
 
   @override
-  BaseBookingViewModel? getNext() {
+  IBookingViewModel? getNext() {
     // TODO: implement getNext
     throw UnimplementedError();
   }
 
   @override
-  BaseBookingViewModel? getPrev() {
+  IBookingViewModel? getPrev() {
     return locator<CounterViewModel>();
   }
 

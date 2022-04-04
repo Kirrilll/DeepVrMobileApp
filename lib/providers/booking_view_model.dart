@@ -4,14 +4,14 @@ import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class BookingViewModel with ChangeNotifier{
-  BaseBookingViewModel _activeViewModel = locator<GameTypeViewModel>();
+  IBookingViewModel _activeViewModel = locator<GameTypeViewModel>();
 
-  BaseBookingViewModel get activeViewModel{
+  IBookingViewModel get activeViewModel{
     print(_activeViewModel.isFinished());
     return _activeViewModel;
   }
 
-  set activeViewModel(BaseBookingViewModel value) {
+  set activeViewModel(IBookingViewModel value) {
     _activeViewModel = value;
     notifyListeners();
   }

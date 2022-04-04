@@ -13,7 +13,7 @@ import 'package:flutter/cupertino.dart';
 import '../locator.dart';
 
 //Может это оберткой над всеМ
-class BookingResultsViewModel with ChangeNotifier implements BaseBookingViewModel{
+class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
   PageState _pageState = PageState.loaded;
 
   late GameTypeModel _selectedType ;
@@ -85,13 +85,13 @@ class BookingResultsViewModel with ChangeNotifier implements BaseBookingViewMode
 
 
   @override
-  BaseBookingViewModel? getNext() {
+  IBookingViewModel? getNext() {
     // TODO: implement getNext
     throw UnimplementedError();
   }
 
   @override
-  BaseBookingViewModel? getPrev() {
+  IBookingViewModel? getPrev() {
     // TODO: implement getPrev
     throw UnimplementedError();
   }

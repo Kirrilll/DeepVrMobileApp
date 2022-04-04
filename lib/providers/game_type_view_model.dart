@@ -14,7 +14,7 @@ enum PageState{
   failed
 }
 
-class GameTypeViewModel with ChangeNotifier implements BaseBookingViewModel{
+class GameTypeViewModel with ChangeNotifier implements IBookingViewModel{
 
   GameTypeModel? _selectedType;
   PageState _pageState = PageState.unLoaded;
@@ -38,12 +38,12 @@ class GameTypeViewModel with ChangeNotifier implements BaseBookingViewModel{
   }
 
   @override
-  BaseBookingViewModel? getNext() {
+  IBookingViewModel? getNext() {
     return locator<GamesViewModel>();
   }
 
   @override
-  BaseBookingViewModel? getPrev() => null;
+  IBookingViewModel? getPrev() => null;
 
   @override
   bool isFinished() {

@@ -2,20 +2,20 @@ import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 
 //Возможно здесь будет USER вместо этого всего
-class BookingFormViewModel implements BaseBookingViewModel{
+class BookingFormViewModel implements IBookingViewModel{
 
   String? name;
   String? phoneNumber;
 
 
   @override
-  BaseBookingViewModel? getNext() {
+  IBookingViewModel? getNext() {
     // TODO: implement getNext
     throw UnimplementedError();
   }
 
   @override
-  BaseBookingViewModel? getPrev() {
+  IBookingViewModel? getPrev() {
     // TODO: implement getPrev
     throw UnimplementedError();
   }

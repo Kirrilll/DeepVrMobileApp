@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../locator.dart';
 
-class CounterViewModel with ChangeNotifier implements BaseBookingViewModel{
+class CounterViewModel with ChangeNotifier implements IBookingViewModel{
   final GamesViewModel _gamesViewModel = locator<GamesViewModel>();
 
   late int _guestMax;
@@ -52,12 +52,12 @@ class CounterViewModel with ChangeNotifier implements BaseBookingViewModel{
   bool isFinished() => true;
 
   @override
-  BaseBookingViewModel? getNext() {
+  IBookingViewModel? getNext() {
     return null;
   }
 
   @override
-  BaseBookingViewModel? getPrev() {
+  IBookingViewModel? getPrev() {
     return _gamesViewModel;
   }
 }

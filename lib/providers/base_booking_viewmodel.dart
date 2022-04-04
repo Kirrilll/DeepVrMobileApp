@@ -1,7 +1,7 @@
-abstract class BaseBookingViewModel{
+abstract class IBookingViewModel{
 
-  BaseBookingViewModel? getNext();
-  BaseBookingViewModel? getPrev();
+  IBookingViewModel? getNext();
+  IBookingViewModel? getPrev();
 
   bool isFinished();
 }

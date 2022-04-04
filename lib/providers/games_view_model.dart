@@ -10,7 +10,7 @@ import 'game_type_view_model.dart';
 // и создат стэйт связынный с законченностью страницы (аштшырувб гташтшыпув)
 
 //Для достоверной информации является listner gameViewModel, обновляет selectedGame
-class GamesViewModel with ChangeNotifier implements BaseBookingViewModel{
+class GamesViewModel with ChangeNotifier implements IBookingViewModel{
 
   GameModel? _selectedGame;
   GameModel? get selectedGame => _selectedGame;
@@ -41,12 +41,12 @@ class GamesViewModel with ChangeNotifier implements BaseBookingViewModel{
   }
 
   @override
-  BaseBookingViewModel? getNext() {
+  IBookingViewModel? getNext() {
     return locator<CounterViewModel>();
   }
 
   @override
-  BaseBookingViewModel? getPrev() {
+  IBookingViewModel? getPrev() {
     return _gameTypeModel;
   }
 

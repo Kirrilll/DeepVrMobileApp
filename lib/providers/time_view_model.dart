@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../locator.dart';
 
-class TimeViewModel with ChangeNotifier implements BaseBookingViewModel{
+class TimeViewModel with ChangeNotifier implements IBookingViewModel{
 
   TimeEntity? _selectedTime;
   late List<TimeEntity>? _availableTime;
@@ -40,13 +40,13 @@ class TimeViewModel with ChangeNotifier implements BaseBookingViewModel{
   }
 
   @override
-  BaseBookingViewModel? getNext() {
+  IBookingViewModel? getNext() {
     // TODO: implement getNext
     throw UnimplementedError();
   }
 
   @override
-  BaseBookingViewModel? getPrev() {
+  IBookingViewModel? getPrev() {
     // TODO: implement getPrev
     throw UnimplementedError();
   }

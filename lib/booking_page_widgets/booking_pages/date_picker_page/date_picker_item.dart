@@ -1,5 +1,4 @@
 import 'package:deepvr/entities/date_entity.dart';
-import 'package:deepvr/providers/booking_provider.dart';
 import 'package:deepvr/providers/date_view_model.dart';
 import 'package:deepvr/providers/games_view_model.dart';
 import 'package:flutter/cupertino.dart';

@@ -11,8 +11,8 @@ import 'package:deepvr/booking_page_widgets/booking_pages/time_picker_page/time_
 import 'package:deepvr/booking_page_widgets/booking_pages/time_picker_page/time_picker_page.dart';
 import 'package:deepvr/locator.dart';
 import 'package:deepvr/models/game_type_model.dart';
+import 'package:deepvr/pages/app.dart';
 import 'package:deepvr/pages/booking_page.dart';
-import 'package:deepvr/providers/booking_provider.dart';
 import 'package:deepvr/providers/games_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,7 @@ void main() {
                 secondaryContainer: const Color(0xFF1F2032)
             ),
           ),
-          home: const Booking()
+          home:  App()
       )),
     );
 
