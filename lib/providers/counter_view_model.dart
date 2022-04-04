@@ -1,4 +1,5 @@
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
+import 'package:deepvr/providers/date_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/providers/games_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -53,7 +54,7 @@ class CounterViewModel with ChangeNotifier implements IBookingViewModel{
 
   @override
   IBookingViewModel? getNext() {
-    return null;
+    return locator<DateViewModel>();
   }
 
   @override

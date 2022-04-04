@@ -18,14 +18,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   setup();
+  await locator.allReady();
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(
           create: (_) => GamesProvider()..getGames(),
           lazy: false,
-      )
+      ),
+
     ],
       child: MaterialApp(
           theme: ThemeData.from(

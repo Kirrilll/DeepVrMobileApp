@@ -3,6 +3,7 @@ import 'package:deepvr/entities/time_entity.dart';
 import 'package:deepvr/models/game_model/game_model.dart';
 import 'package:deepvr/models/game_type_model.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
+import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/counter_view_model.dart';
 import 'package:deepvr/providers/date_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
@@ -16,22 +17,26 @@ import '../locator.dart';
 class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
   PageState _pageState = PageState.loaded;
 
-  late GameTypeModel _selectedType ;
-  late GameModel _selectedGame;
-  late int _guestCount;
-  late DateEntity _selectedDate;
-  late TimeEntity _selectedTime;
+  GameTypeModel? _selectedType ;
+  GameModel? _selectedGame;
+  int? _guestCount;
+  DateEntity? _selectedDate;
+  TimeEntity? _selectedTime;
 
-  bool _isAvailable = true;
 
-  int get price => _guestCount * _selectedGame.price;
-  String get game => _selectedGame.title;
-  String get type => _selectedType.title;
-  String get date => _selectedDate.date.toString().replaceRange(10, _selectedDate.date.toString().length, '');
-  String get time => _selectedTime.time;
-  int get guestCount => _guestCount;
-  bool get isAvailable => _isAvailable;
+  int get price => _guestCount! * _selectedGame!.price;
+  String get game => _selectedGame!.title;
+  String get type => _selectedType!.title;
+  String get date => _selectedDate!.date.toString().replaceRange(10, _selectedDate!.date.toString().length, '');
+  String get time => _selectedTime!.time;
+  int get guestCount => _guestCount!;
 
+  bool isAvailable(){
+    return _selectedType != null &&
+            _selectedGame != null &&
+            _selectedDate != null &&
+            _selectedType != null;
+  }
 
   BookingResultsViewModel(){
     final gameTypeViewModel = locator<GameTypeViewModel>();
@@ -40,11 +45,11 @@ class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
     final dateViewModel = locator<DateViewModel>();
     final timeViewModel = locator<TimeViewModel>();
 
-    _selectedType = gameTypeViewModel.selectedType!;
-    _selectedGame = gamesViewModel.selectedGame!;
-    _guestCount = counterViewModel.guestCount;
-    _selectedDate = dateViewModel.selectedDate!;
-    _selectedTime = timeViewModel.selectedTime!;
+    // _selectedType = gameTypeViewModel.selectedType!;
+    // _selectedGame = gamesViewModel.selectedGame!;
+    // _guestCount = counterViewModel.guestCount;
+    // _selectedDate = dateViewModel.selectedDate!;
+    // _selectedTime = timeViewModel.selectedTime!;
     // if(gameTypeViewModel.isFinished()) {
     //   _selectedType = gameTypeViewModel.selectedType!;
     // }
@@ -86,14 +91,12 @@ class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
 
   @override
   IBookingViewModel? getNext() {
-    // TODO: implement getNext
-    throw UnimplementedError();
+    return null;
   }
 
   @override
   IBookingViewModel? getPrev() {
-    // TODO: implement getPrev
-    throw UnimplementedError();
+    return locator<BookingFormViewModel>();
   }
 
   @override

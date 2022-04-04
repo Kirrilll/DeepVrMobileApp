@@ -2,7 +2,6 @@ import 'package:deepvr/booking_page_widgets/booking_pages/date_picker_page/date_
 import 'package:deepvr/booking_page_widgets/booking_pages/form_page/form_page.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/result_page.dart';
 import 'package:deepvr/locator.dart';
-import 'package:deepvr/providers/booking_view_model.dart';
 import 'package:deepvr/providers/counter_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/providers/games_view_model.dart';
@@ -17,10 +16,7 @@ import '../booking_page_widgets/booking_pages/time_picker_page/time_picker_page.
 import '../models/game_type_model.dart';
 
 class Booking extends StatefulWidget {
-  const Booking({
-    Key? key,
-    required this.bookingController
-  }) : super(key: key);
+  const Booking({Key? key, required this.bookingController}) : super(key: key);
 
   final PageController bookingController;
 
@@ -30,35 +26,28 @@ class Booking extends StatefulWidget {
 
 //Как-то через  StreamProvider сделать переходы
 class _BookingState extends State<Booking> {
-  final bookingViewModel = locator<BookingViewModel>();
+
   //Стоит сделать переменную, которая хранит в себе BookingPage interface
   //Там getNExt, getPrev, там проверка
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        //Перенести это в отдельные доки
-        ChangeNotifierProvider.value(value: locator<GameTypeViewModel>()),
-        ChangeNotifierProvider.value(value: locator<GamesViewModel>()),
-        ChangeNotifierProvider.value(value: locator<CounterViewModel>()),
-      ],
-      child: SafeArea(
-        child: Scaffold(
-            body: ListView(
-              physics: const NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              controller: widget.bookingController,
-              children: const [
-                GameTypesPage(),
-                GameCardPage(),
-                PlayersCounterPage(),
-                DatePickerPage(),
-                TimePickerPage(),
-                FormPage(),
-                BookingResultPage()
-              ],
-            ),
+    return SafeArea(
+      child: Scaffold(
+        body: ListView(
+          addAutomaticKeepAlives: false,
+          physics: const NeverScrollableScrollPhysics(),
+          scrollDirection: Axis.horizontal,
+          controller: widget.bookingController,
+          children: const [
+            GameTypesPage(),
+            GameCardPage(),
+            PlayersCounterPage(),
+            DatePickerPage(),
+            TimePickerPage(),
+            FormPage(),
+            BookingResultPage()
+          ],
         ),
       ),
     );

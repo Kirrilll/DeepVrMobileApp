@@ -1,5 +1,6 @@
 import 'package:deepvr/entities/time_entity.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
+import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/date_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -41,14 +42,12 @@ class TimeViewModel with ChangeNotifier implements IBookingViewModel{
 
   @override
   IBookingViewModel? getNext() {
-    // TODO: implement getNext
-    throw UnimplementedError();
+    return locator<BookingFormViewModel>();
   }
 
   @override
   IBookingViewModel? getPrev() {
-    // TODO: implement getPrev
-    throw UnimplementedError();
+    return locator<DateViewModel>();
   }
 
   @override

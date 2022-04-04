@@ -3,6 +3,7 @@ import 'package:deepvr/models/booking_date_model/booking_date_model.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/counter_view_model.dart';
 import 'package:deepvr/providers/games_view_model.dart';
+import 'package:deepvr/providers/time_view_model.dart';
 import 'package:deepvr/services/remote_service.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -14,7 +15,8 @@ class DateViewModel with ChangeNotifier implements IBookingViewModel{
   DateEntity? _selectedDate;
   BookingDateModel? _calendar;
   PageState _pageState = PageState.unLoaded;
-  final _gamesViewModel = locator<GamesViewModel>();
+  final _gamesModel = locator<GamesViewModel>();
+  final _counterModel = locator<CounterViewModel>();
 
   //На момент запроса все элементы проинициалированные
   PageState get pageState => _pageState;
@@ -26,14 +28,14 @@ class DateViewModel with ChangeNotifier implements IBookingViewModel{
   //Поэтому повторная инициализация
   DateViewModel(){
     _update();
-    _gamesViewModel.addListener(()  {
+    _gamesModel.addListener(()  {
       _update();
     });
   }
 
   void _update() async{
-    if(_gamesViewModel.isFinished()){
-      _calendar = await RemoteService.getInstance().getDates(_gamesViewModel.selectedGame!.id);
+    if(_gamesModel.isFinished()){
+      _calendar = await RemoteService.getInstance().getDates(_gamesModel.selectedGame!.id);
       _pageState = PageState.loaded;
     }
     else{
@@ -52,8 +54,7 @@ class DateViewModel with ChangeNotifier implements IBookingViewModel{
 
   @override
   IBookingViewModel? getNext() {
-    // TODO: implement getNext
-    throw UnimplementedError();
+    return locator<TimeViewModel>();
   }
 
   @override

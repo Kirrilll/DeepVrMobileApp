@@ -1,7 +1,10 @@
 import 'package:deepvr/pages/booking_page.dart';
 import 'package:deepvr/pages/games.dart';
+import 'package:deepvr/providers/booking_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../locator.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
@@ -14,6 +17,8 @@ class _AppState extends State<App> {
 
   final bookingController = PageController();
   final pageController = PageController();
+
+  var booking = locator<BookingPageModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +43,7 @@ class _AppState extends State<App> {
                         iconSize: 24,
                         icon: const Icon(Icons.arrow_back),
                         onPressed:  () {
+                          booking.back();
                           bookingController.previousPage(
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.ease);
@@ -61,9 +67,11 @@ class _AppState extends State<App> {
                         iconSize: 24,
                         icon: const Icon(Icons.arrow_forward),
                         onPressed:   () {
-                          bookingController.nextPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.ease);
+                          if(booking.next()){
+                            bookingController.nextPage(
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.ease);
+                          }
                         }
                     ),
                     label: 'adad'),
