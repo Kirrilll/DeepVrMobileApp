@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:deepvr/booking_page_widgets/booking_page_maket.dart';
-import 'package:deepvr/booking_page_widgets/booking_pages/date_picker_page/date_picker_container.dart';
-import 'package:deepvr/entities/month_entity.dart';
+import 'package:deepvr/booking_page_widgets/booking_pages/date_picker_page/calendar_view.dart';
+import 'package:deepvr/entities/date_entity.dart';
+import 'package:deepvr/entities/month.dart';
+import 'package:deepvr/entities/time_entity.dart';
 import 'package:deepvr/models/booking_date_model/booking_date_model.dart';
 import 'package:deepvr/providers/date_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
@@ -28,9 +30,9 @@ class _DatePickerPageState extends State<DatePickerPage> {
       value: locator<DateViewModel>(),
       child: Consumer<DateViewModel>(
         builder: (context, viewModel, child) => BookingPageMaket(
-            stepNumber: 5,
+            stepNumber: 4,
             content: viewModel.pageState == PageState.loaded
-                ? DatePickerContainer(calendar: MonthEntity.monthsFromMap(viewModel.calendar.schedule))
+                ? Calendar(calendar: Month.monthFromMap(viewModel.calendar.schedule))
                 : const Center(child:  CircularProgressIndicator()),
             stepTitle: 'Выебрите дату'
         ),

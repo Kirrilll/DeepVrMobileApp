@@ -7,6 +7,12 @@ class BookingPageModel{
   //GameType  - стартовая страница
   IBookingViewModel _currViewModel = locator<GameTypeViewModel>();
 
+  IBookingViewModel get currPage => _currViewModel;
+
+  set currViewModel(IBookingViewModel value) {
+    _currViewModel = value;
+  }
+
   bool next(){
     if(_currViewModel.isFinished()){
       _currViewModel = _currViewModel.getNext() ?? _currViewModel;

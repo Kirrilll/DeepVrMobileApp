@@ -28,5 +28,10 @@ class BookingFormViewModel implements IBookingViewModel{
     return true;
   }
 
+  @override
+  int getPageNumber() {
+    return 5;
+  }
+
 
 }

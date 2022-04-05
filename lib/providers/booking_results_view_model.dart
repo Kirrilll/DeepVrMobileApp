@@ -105,4 +105,9 @@ class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
     throw UnimplementedError();
   }
 
+  @override
+  int getPageNumber() {
+    return 6;
+  }
+
 }

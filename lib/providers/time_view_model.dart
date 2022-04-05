@@ -57,4 +57,9 @@ class TimeViewModel with ChangeNotifier implements IBookingViewModel{
     return true;
   }
 
+  @override
+  int getPageNumber() {
+    return 4;
+  }
+
 }

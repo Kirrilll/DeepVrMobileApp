@@ -38,7 +38,7 @@ void main() async {
                 secondaryContainer: const Color(0xFF1F2032)
             ),
           ),
-          home:  App()
+          home: const App()
       )),
     );
 

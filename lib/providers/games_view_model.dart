@@ -50,4 +50,10 @@ class GamesViewModel with ChangeNotifier implements IBookingViewModel{
     return _gameTypeModel;
   }
 
+  @override
+  int getPageNumber() {
+    return 1;
+  }
+
+
 }

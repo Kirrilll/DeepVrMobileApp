@@ -6,6 +6,6 @@ class Games extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('games'));
+    return const Center(child: Text('games'));
   }
 }

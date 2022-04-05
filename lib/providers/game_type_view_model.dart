@@ -50,4 +50,9 @@ class GameTypeViewModel with ChangeNotifier implements IBookingViewModel{
     if(_selectedType == null) return false;
     return true;
   }
+
+  @override
+  int getPageNumber() {
+    return 0;
+  }
 }

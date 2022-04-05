@@ -68,4 +68,9 @@ class DateViewModel with ChangeNotifier implements IBookingViewModel{
     return true;
   }
 
+  @override
+  int getPageNumber() {
+    return 3;
+  }
+
 }

@@ -61,4 +61,9 @@ class CounterViewModel with ChangeNotifier implements IBookingViewModel{
   IBookingViewModel? getPrev() {
     return _gamesViewModel;
   }
+
+  @override
+  int getPageNumber() {
+    return 2;
+  }
 }

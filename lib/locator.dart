@@ -1,3 +1,4 @@
+import 'package:deepvr/providers/app_model.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/booking_page_model.dart';
 import 'package:deepvr/providers/booking_results_view_model.dart';
@@ -20,4 +21,5 @@ void setup(){
   //Сделать это StreamProvider и вписыыывать туда значения сразу
   locator.registerSingleton(BookingResultsViewModel());
   locator.registerSingleton(BookingPageModel());
+  locator.registerSingleton(AppModel());
 }
