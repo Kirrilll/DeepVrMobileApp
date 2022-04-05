@@ -5,6 +5,7 @@ import 'package:deepvr/providers/booking_results_view_model.dart';
 import 'package:deepvr/providers/counter_view_model.dart';
 import 'package:deepvr/providers/date_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
+import 'package:deepvr/providers/games_provider.dart';
 import 'package:deepvr/providers/games_view_model.dart';
 import 'package:deepvr/providers/time_view_model.dart';
 import 'package:get_it/get_it.dart';
@@ -12,6 +13,7 @@ import 'package:get_it/get_it.dart';
 GetIt locator = GetIt.instance;
 
 void setup(){
+  locator.registerSingleton(GamesProvider()..getGames());
   locator.registerSingleton<GameTypeViewModel>(GameTypeViewModel());
   locator.registerSingleton<GamesViewModel>(GamesViewModel());
   locator.registerSingleton(CounterViewModel());

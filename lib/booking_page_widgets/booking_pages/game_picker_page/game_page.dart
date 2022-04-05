@@ -14,32 +14,35 @@ import '../../../locator.dart';
 import '../../../providers/game_type_view_model.dart';
 
 class GameCardPage extends StatelessWidget {
-  const GameCardPage({Key? key,}) : super(key: key);
+  GameCardPage({Key? key}) : super(key: key);
+
+  final gamesProvider = locator<GamesProvider>();
 
   @override
   Widget build(BuildContext context) {
-    var gamesProvider = Provider.of<GamesProvider>(context, listen: true);
     return BookingPageMaket(
       stepNumber: 2,
-      content: gamesProvider.isLoaded
-          ? MultiProvider(
-            providers: [
-              ChangeNotifierProvider.value(value: locator<GamesViewModel>()),
-              ChangeNotifierProvider.value(value: locator<GameTypeViewModel>())
-            ],
-            child: Consumer<GameTypeViewModel>(
-              builder: (context, gameTypeViewModel, child) => GameCardContainer(
-                    games: gamesProvider.games!.where((game) {
-                      if(gameTypeViewModel.selectedType != null){
-                        return game.gameType.id == locator<GameTypeViewModel>().selectedType!.id;
+      content: MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(value: locator<GamesViewModel>()),
+          ChangeNotifierProvider.value(value: locator<GameTypeViewModel>())
+        ],
+        child: Consumer2<GameTypeViewModel, GamesProvider>(
+          builder: (context, gameTypeViewModel, gamesModel, child) =>
+              gamesModel.isLoaded
+                  ? GameCardContainer(
+                      games: gamesProvider.games!.where((game) {
+                      if (gameTypeViewModel.selectedType != null) {
+                        return game.gameType.id ==
+                            locator<GameTypeViewModel>().selectedType!.id;
                       }
                       return true;
-                    }).toList()),
-            ),
-          )
-          : const Center(
-              child: CircularProgressIndicator(),
-            ),
+                    }).toList())
+                  : const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+        ),
+      ),
       stepTitle: 'Выберите VR-игру',
     );
   }

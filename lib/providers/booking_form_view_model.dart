@@ -24,7 +24,7 @@ class BookingFormViewModel implements IBookingViewModel{
 
   @override
   bool isFinished() {
-    //if(name == null || phoneNumber == null) return false;
+    if(name == null || phoneNumber == null) return false;
     return true;
   }
 

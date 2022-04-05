@@ -1,5 +1,6 @@
 import 'package:deepvr/models/game_model/game_model.dart';
 import 'package:deepvr/models/game_type_model.dart';
+import 'package:deepvr/models/order.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/booking_date_model/booking_date_model.dart';
@@ -40,5 +41,16 @@ class RemoteService{
       var json = response.body;
       return BookingDateModel.fromJsonStr(json);
     }
+  }
+
+  Future<String?> postData(Order order, int gameId) async {
+    var uri = Uri.parse(_apiUrl + 'booking-request/$gameId');
+    var response  = await _client.patch(uri, body: order.toJson());
+    print(response.statusCode);
+    if(response.statusCode == 200){
+      print(response.body + 'nj');
+      return response.body;
+    }
+
   }
 }

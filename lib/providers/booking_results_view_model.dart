@@ -2,6 +2,7 @@ import 'package:deepvr/entities/date_entity.dart';
 import 'package:deepvr/entities/time_entity.dart';
 import 'package:deepvr/models/game_model/game_model.dart';
 import 'package:deepvr/models/game_type_model.dart';
+import 'package:deepvr/models/order.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/counter_view_model.dart';
@@ -9,19 +10,34 @@ import 'package:deepvr/providers/date_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/providers/games_view_model.dart';
 import 'package:deepvr/providers/time_view_model.dart';
+import 'package:deepvr/services/remote_service.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../locator.dart';
 
+enum RequestInfo {
+  notSend,
+  loading,
+  successful,
+  error
+}
+
 //Может это оберткой над всеМ
 class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
-  PageState _pageState = PageState.loaded;
+
+  final _gameTypeModel = locator<GameTypeViewModel>();
+  final _gamesModel = locator<GamesViewModel>();
+  final _counterModel = locator<CounterViewModel>();
+  final _dateModel = locator<DateViewModel>();
+  final _timeModel = locator<TimeViewModel>();
+  final _formModel = locator<BookingFormViewModel>();
 
   GameTypeModel? _selectedType ;
   GameModel? _selectedGame;
   int? _guestCount;
   DateEntity? _selectedDate;
   TimeEntity? _selectedTime;
+  RequestInfo _requestStatus = RequestInfo.notSend;
 
 
   int get price => _guestCount! * _selectedGame!.price;
@@ -39,55 +55,53 @@ class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
   }
 
   BookingResultsViewModel(){
-    final gameTypeViewModel = locator<GameTypeViewModel>();
-    final gamesViewModel = locator<GamesViewModel>();
-    final counterViewModel = locator<CounterViewModel>();
-    final dateViewModel = locator<DateViewModel>();
-    final timeViewModel = locator<TimeViewModel>();
 
-    // _selectedType = gameTypeViewModel.selectedType!;
-    // _selectedGame = gamesViewModel.selectedGame!;
-    // _guestCount = counterViewModel.guestCount;
-    // _selectedDate = dateViewModel.selectedDate!;
-    // _selectedTime = timeViewModel.selectedTime!;
-    // if(gameTypeViewModel.isFinished()) {
-    //   _selectedType = gameTypeViewModel.selectedType!;
-    // }
-
-    gameTypeViewModel.addListener(() {
-      if(gameTypeViewModel.isFinished()) {
-        _selectedType = gameTypeViewModel.selectedType!;
+    _gameTypeModel.addListener(() {
+      if(_gameTypeModel.isFinished()) {
+        _selectedType = _gameTypeModel.selectedType!;
       }
       notifyListeners();
     });
 
-    gamesViewModel.addListener(() {
-      if(gamesViewModel.isFinished()){
-        _selectedGame = gamesViewModel.selectedGame!;
+    _gamesModel.addListener(() {
+      if(_gamesModel.isFinished()){
+        _selectedGame = _gamesModel.selectedGame!;
       }
       notifyListeners();
     });
 
-    counterViewModel.addListener(() {
-      _guestCount = counterViewModel.guestCount;
+    _counterModel.addListener(() {
+      _guestCount = _counterModel.guestCount;
       notifyListeners();
     });
 
-    dateViewModel.addListener(() {
-      if(dateViewModel.isFinished()){
-        _selectedDate = dateViewModel.selectedDate!;
+    _dateModel.addListener(() {
+      if(_dateModel.isFinished()){
+        _selectedDate = _dateModel.selectedDate!;
         notifyListeners();
       }
     });
 
-    timeViewModel.addListener(() {
-      if(timeViewModel.isFinished()){
-        _selectedTime = timeViewModel.selectedTime!;
+    _timeModel.addListener(() {
+      if(_timeModel.isFinished()){
+        _selectedTime = _timeModel.selectedTime!;
         notifyListeners();
       }
     });
   }
 
+  void order() async{
+    _requestStatus = RequestInfo.loading;
+    RemoteService.getInstance().postData(Order(
+        userName: _formModel.name,
+        userPhone: _formModel.phoneNumber,
+        guestDate: date,
+        guestTime: _selectedTime!.time
+    ), _selectedGame!.id).then(
+        (res) => print(res)
+    );
+
+  }
 
   @override
   IBookingViewModel? getNext() {

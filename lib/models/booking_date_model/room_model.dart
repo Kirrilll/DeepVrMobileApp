@@ -22,7 +22,6 @@ class Room {
   }
 
   static List<Room> roomsFromJson(String str){
-    //print('sfsf');
     return List<Room>.from(json.decode(str).map((x) => Room.fromJson(x)));
   }
 }

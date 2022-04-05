@@ -62,7 +62,7 @@ class BookingResultPage extends StatelessWidget {
                           Spacer(),
                           Text('Итого: ${viewModel.price}'),
                           Spacer(),
-                          BookPageSwitchingBtn(action: () => print('publish'),
+                          BookPageSwitchingBtn(action: () => viewModel.order(),
                               text: 'Забронировать')
                         ])
                 ),

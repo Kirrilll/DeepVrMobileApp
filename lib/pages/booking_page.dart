@@ -41,14 +41,14 @@ class _BookingState extends State<Booking> {
           physics: const NeverScrollableScrollPhysics(),
           scrollDirection: Axis.horizontal,
           controller: widget.bookingController,
-          children: const [
-            GameTypesPage(),
+          children:  [
+            const GameTypesPage(),
             GameCardPage(),
-            PlayersCounterPage(),
-            DatePickerPage(),
-            TimePickerPage(),
-            FormPage(),
-            BookingResultPage()
+            const PlayersCounterPage(),
+            const DatePickerPage(),
+            const TimePickerPage(),
+            const FormPage(),
+            const BookingResultPage()
           ],
         ),
       ),
