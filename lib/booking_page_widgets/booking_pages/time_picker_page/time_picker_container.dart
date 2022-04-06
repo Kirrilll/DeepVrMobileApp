@@ -16,14 +16,15 @@ class TimePickerContainer extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return
-      GridView(
+      GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          mainAxisExtent: 80,
+          mainAxisExtent: 85,
           crossAxisSpacing: 16,
           mainAxisSpacing: 16
         ),
-        children: avaliblesTime.map((time) => TimePickerItem(time: time)).toList(),
+        itemCount: avaliblesTime.length,
+        itemBuilder: (context, index) => TimePickerItem(time: avaliblesTime[index])
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:deepvr/entities/date_entity.dart';
 import 'package:deepvr/providers/date_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../locator.dart';
 
@@ -36,29 +37,30 @@ class DateView extends StatelessWidget {
     return textStyle;
   }
 
-  var dateModel = locator<DateViewModel>();
 
   @override
   Widget build(BuildContext context) {
-    return !isEmpty ? ElevatedButton(
-      onPressed: date!.availableTime.isNotEmpty
-          ? () => dateModel.selectDate(date!)
-          : null,
-      style: ElevatedButton.styleFrom(
-        primary: _buildBackgroundColor(),
-        onSurface: const Color(0xFF0F0f1D),
-        alignment: Alignment.topLeft,
-        padding: const EdgeInsets.all(6),
-        fixedSize: const Size(43, 43),
-        shape: null,
-        side: dateModel.selectedDate != null && dateModel.selectedDate == date
-          ? const BorderSide(color: Color(0XFF8556FF), width: 2)
-            : BorderSide.none
+    return !isEmpty ? Consumer<DateViewModel>(
+      builder: (context, model, _) => ElevatedButton(
+        onPressed: date!.availableTime.isNotEmpty
+            ? () => model.selectDate(date!)
+            : null,
+        style: ElevatedButton.styleFrom(
+          primary: _buildBackgroundColor(),
+          onSurface: const Color(0xFF0F0f1D),
+          alignment: Alignment.topLeft,
+          padding: const EdgeInsets.all(6),
+          fixedSize: const Size(43, 43),
+          shape: null,
+          side: model.selectedDate != null && model.selectedDate == date
+            ? const BorderSide(color: Color(0XFF8556FF), width: 2)
+              : BorderSide.none
+        ),
+        child: Text(
+            date!.date.day.toString(),
+          style: _buildTextStyle(),
+        )
       ),
-      child: Text(
-          date!.date.day.toString(),
-        style: _buildTextStyle(),
-      )
     )
     : const SizedBox(height: 43, width: 43,);
   }

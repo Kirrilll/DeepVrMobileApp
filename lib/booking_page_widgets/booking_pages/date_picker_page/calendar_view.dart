@@ -124,13 +124,13 @@ class _CalendarState extends State<Calendar> {
         ]),
         const SizedBox(height: 36),
         Expanded(
-          child: ListView(
+          child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             controller: calendarController,
             scrollDirection: Axis.horizontal,
-            children: widget.calendar
-                .map((month) => MonthView(month: month))
-                .toList(),
+            itemCount: widget.calendar.length,
+            addAutomaticKeepAlives: false,
+            itemBuilder: (context, index)  => MonthView(month: widget.calendar[index])
           ),
         ),
       ],

@@ -51,7 +51,6 @@ class DateViewModel with ChangeNotifier implements IBookingViewModel{
     notifyListeners();
   }
 
-
   @override
   IBookingViewModel? getNext() {
     return locator<TimeViewModel>();

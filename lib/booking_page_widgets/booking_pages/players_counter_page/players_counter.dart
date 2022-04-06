@@ -45,7 +45,7 @@ class PlayerCounter extends StatelessWidget {
                           child: Text(
                             viewModel.guestCount.toString(),
                             style: const TextStyle(
-                                fontSize: 24
+                                fontSize: 16
                             ),
                           ),
                         ),
