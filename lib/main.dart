@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 void main() async {
   setup();
-  await locator.allReady();
+  //await locator.allReady();
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider.value(

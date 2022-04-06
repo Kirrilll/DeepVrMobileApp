@@ -56,6 +56,15 @@ class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
 
   BookingResultsViewModel(){
 
+      _selectedType = _gameTypeModel.selectedType!;
+      _selectedGame = _gamesModel.selectedGame!;
+      _guestCount = _counterModel.guestCount;
+      _selectedDate = _dateModel.selectedDate!;
+      if(_timeModel.isFinished()){
+        _selectedTime = _timeModel.selectedTime!;
+        notifyListeners();
+      }
+
     _gameTypeModel.addListener(() {
       if(_gameTypeModel.isFinished()) {
         _selectedType = _gameTypeModel.selectedType!;

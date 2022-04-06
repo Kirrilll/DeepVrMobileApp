@@ -14,14 +14,14 @@ GetIt locator = GetIt.instance;
 
 void setup(){
   locator.registerSingleton(GamesProvider()..getGames());
-  locator.registerSingleton<GameTypeViewModel>(GameTypeViewModel());
-  locator.registerSingleton<GamesViewModel>(GamesViewModel());
-  locator.registerSingleton(CounterViewModel());
-  locator.registerSingleton(DateViewModel());
-  locator.registerSingleton( TimeViewModel());
-  locator.registerSingleton(BookingFormViewModel());
+  locator.registerLazySingleton<GameTypeViewModel>(() => GameTypeViewModel());
+  locator.registerLazySingleton<GamesViewModel>(() => GamesViewModel());
+  locator.registerLazySingleton(() => CounterViewModel());
+  locator.registerLazySingleton(() => DateViewModel());
+  locator.registerLazySingleton( () => TimeViewModel());
+  locator.registerLazySingleton(() => BookingFormViewModel());
   //Сделать это StreamProvider и вписыыывать туда значения сразу
-  locator.registerSingleton(BookingResultsViewModel());
+  locator.registerLazySingleton(() => BookingResultsViewModel());
   locator.registerSingleton(BookingPageModel());
   locator.registerSingleton(AppModel());
 }

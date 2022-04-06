@@ -13,30 +13,23 @@ class MonthView extends StatelessWidget {
 
   final Month month;
 
-  Stream<List<DateEntity?>> _daysStream() async*{
-    List<DateEntity?> days = List.of(month.days, growable: true);
-    if(days.first!.date.weekday!= 1){
-      for(int i =0; i < days.first!.date.weekday; i++){
-        days.add(null);
+  Stream<List<Widget>> _daysStream() async*{
+    List<Widget> days = List.empty(growable: true);
+    var tempDays = List.of(month.days);
+
+    int currWeekday = 0;
+    while(tempDays.isNotEmpty){
+      if(tempDays.first.date.weekday == currWeekday + 1){
+        days.add(DateView(date: DateEntity.copyFrom(tempDays.first)));
+        tempDays.removeAt(0);
       }
+      else{
+        days.add(DateView.empty());
+      }
+      currWeekday = (currWeekday +1) % 7;
     }
+
     yield days;
-    // List<Widget> days = List.empty(growable: true);
-    // var tempDays = List.of(month.days);
-    //
-    // int currWeekday = 0;
-    // while(tempDays.isNotEmpty){
-    //   if(tempDays.first.date.weekday == currWeekday + 1){
-    //     days.add(DateView(date: DateEntity.copyFrom(tempDays.first)));
-    //     tempDays.removeAt(0);
-    //   }
-    //   else{
-    //     days.add(DateView.empty());
-    //   }
-    //   currWeekday = (currWeekday +1) % 7;
-    // }
-    //
-    // yield days;
   }
 
   //попробовать сделать это stream, а потом это загружать
@@ -62,7 +55,7 @@ class MonthView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width - 32, //padding c каждой стороне по 16
-      child: StreamBuilder<List<DateEntity?>>(
+      child: StreamBuilder<List<Widget>>(
         stream: _daysStream(),
         builder: (context, snapshot) {
           return snapshot.hasData
@@ -75,12 +68,7 @@ class MonthView extends StatelessWidget {
                 crossAxisSpacing: 7,
               ),
               itemCount: snapshot.data!.length,
-              itemBuilder: (context, index){
-                if(snapshot.data![index] == null) {
-                  return DateView.empty();
-                }
-                return DateView(date: snapshot.data![index]);
-              }
+              itemBuilder: (context, index) => snapshot.data![index]
           )
           : const Center(child: CircularProgressIndicator());
         }
