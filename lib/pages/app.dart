@@ -71,7 +71,7 @@ class _AppState extends State<App> {
                         icon: const Icon(Icons.widgets),
                         onPressed: (){
                           app.currPage = Pages.games;
-                          pageController.animateToPage(1, duration: Duration(milliseconds: 500), curve: Curves.ease);
+                          pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                           },
                     ), label: 'games'),
                 BottomNavigationBarItem(

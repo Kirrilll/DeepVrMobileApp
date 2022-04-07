@@ -2,15 +2,16 @@ import 'dart:developer';
 
 
 import 'package:deepvr/entities/month.dart';
+import 'package:deepvr/locator.dart';
+import 'package:deepvr/providers/date_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'month_view.dart';
 
 class Calendar extends StatefulWidget {
-  const Calendar({Key? key, required this.calendar}) : super(key: key);
+  const Calendar({Key? key}) : super(key: key);
 
-  final List<Month> calendar;
 
   @override
   _CalendarState createState() => _CalendarState();
@@ -19,9 +20,10 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   int currMonthIndex = 0;
   var calendarController = PageController();
+  final List<Month> calendar = Month.monthFromMap( locator<DateViewModel>().calendar.schedule);
 
   void  Function()? next(){
-    if(currMonthIndex < widget.calendar.length - 1){
+    if(currMonthIndex < calendar.length - 1){
       return (){
         setState(() {
           currMonthIndex++;
@@ -71,7 +73,7 @@ class _CalendarState extends State<Calendar> {
                   const SizedBox(width: 10),
                   Text(
                     currMonthIndex > 0
-                        ? widget.calendar[currMonthIndex - 1].monthName
+                        ? calendar[currMonthIndex - 1].monthName
                         : '',
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.secondary,
@@ -81,7 +83,7 @@ class _CalendarState extends State<Calendar> {
                 ],
               ),
               Text(
-                '${widget.calendar[currMonthIndex].monthName} ${widget.calendar[currMonthIndex].year} г.',
+                '${calendar[currMonthIndex].monthName} ${calendar[currMonthIndex].year} г.',
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -91,8 +93,8 @@ class _CalendarState extends State<Calendar> {
               Row(
                 children: [
                   Text(
-                    currMonthIndex < widget.calendar.length-1
-                        ? widget.calendar[currMonthIndex + 1].monthName
+                    currMonthIndex < calendar.length-1
+                        ? calendar[currMonthIndex + 1].monthName
                         : '',
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.secondary,
@@ -128,9 +130,8 @@ class _CalendarState extends State<Calendar> {
             physics: const NeverScrollableScrollPhysics(),
             controller: calendarController,
             scrollDirection: Axis.horizontal,
-            itemCount: widget.calendar.length,
-            addAutomaticKeepAlives: false,
-            itemBuilder: (context, index)  => MonthView(month: widget.calendar[index])
+            itemCount: calendar.length,
+            itemBuilder: (context, index)  => MonthView(month: calendar[index])
           ),
         ),
       ],

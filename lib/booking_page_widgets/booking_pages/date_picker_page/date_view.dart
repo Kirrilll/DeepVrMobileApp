@@ -27,7 +27,7 @@ class DateView extends StatelessWidget {
         fontWeight: FontWeight.w700,
         color: Colors.white);
 
-    if (date!.availableTime.isEmpty) {
+    if (date!.availableTime.isEmpty || !locator<DateViewModel>().isDateAvailable(date!)) {
       return textStyle.copyWith(color: const Color(0xFF828188));
     }
 
@@ -40,9 +40,10 @@ class DateView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('build');
     return !isEmpty ? Consumer<DateViewModel>(
       builder: (context, model, _) => ElevatedButton(
-        onPressed: date!.availableTime.isNotEmpty
+        onPressed: date!.availableTime.isNotEmpty && locator<DateViewModel>().isDateAvailable(date!)
             ? () => model.selectDate(date!)
             : null,
         style: ElevatedButton.styleFrom(

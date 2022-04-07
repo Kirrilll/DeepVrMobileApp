@@ -1,7 +1,9 @@
 import 'package:deepvr/entities/time_entity.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
+import 'package:deepvr/providers/counter_view_model.dart';
 import 'package:deepvr/providers/date_view_model.dart';
+import 'package:deepvr/providers/time_helper.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../locator.dart';
@@ -35,6 +37,10 @@ class TimeViewModel with ChangeNotifier implements IBookingViewModel{
     });
   }
 
+  bool isBooked(TimeEntity time){
+    return !TimeHelper.isTimeAvailable(_dateViewModel.calendar.rooms, locator<CounterViewModel>().guestCount, time.idRooms);
+  }
+
   void selectTime(TimeEntity time){
     _selectedTime = time;
     notifyListeners();
@@ -52,7 +58,6 @@ class TimeViewModel with ChangeNotifier implements IBookingViewModel{
 
   @override
   bool isFinished() {
-    // TODO: implement isFinished
     if(_selectedTime == null) return false;
     return true;
   }

@@ -14,7 +14,8 @@ GetIt locator = GetIt.instance;
 
 void setup(){
   locator.registerSingleton(GamesProvider()..getGames());
-  locator.registerLazySingleton<GameTypeViewModel>(() => GameTypeViewModel());
+  //locator.registerLazySingleton<GameTypeViewModel>(() => GameTypeViewModel());
+  locator.registerLazySingleton(() => GameTypeViewModel()); //сделать factory
   locator.registerLazySingleton<GamesViewModel>(() => GamesViewModel());
   locator.registerLazySingleton(() => CounterViewModel());
   locator.registerLazySingleton(() => DateViewModel());
@@ -22,6 +23,6 @@ void setup(){
   locator.registerLazySingleton(() => BookingFormViewModel());
   //Сделать это StreamProvider и вписыыывать туда значения сразу
   locator.registerLazySingleton(() => BookingResultsViewModel());
-  locator.registerSingleton(BookingPageModel());
-  locator.registerSingleton(AppModel());
+  locator.registerSingleton(BookingPageModel());//идеально сделать это factory, чтобы при каждом вызове обновлялось все
+  locator.registerSingleton( AppModel());
 }

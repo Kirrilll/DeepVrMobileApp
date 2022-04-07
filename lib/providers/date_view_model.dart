@@ -1,8 +1,10 @@
 import 'package:deepvr/entities/date_entity.dart';
+import 'package:deepvr/entities/time_entity.dart';
 import 'package:deepvr/models/booking_date_model/booking_date_model.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/counter_view_model.dart';
 import 'package:deepvr/providers/games_view_model.dart';
+import 'package:deepvr/providers/time_helper.dart';
 import 'package:deepvr/providers/time_view_model.dart';
 import 'package:deepvr/services/remote_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,6 +33,18 @@ class DateViewModel with ChangeNotifier implements IBookingViewModel{
     _gamesModel.addListener(()  {
       _update();
     });
+    _counterModel.addListener(() {
+      _update();
+    });
+  }
+
+  bool isDateAvailable(DateEntity dateEntity){
+    for(TimeEntity time in dateEntity.availableTime){
+      if(TimeHelper.isTimeAvailable(_calendar!.rooms, _counterModel.guestCount, time.idRooms)){
+        return true;
+      }
+    }
+    return false;
   }
 
   void _update() async{

@@ -37,8 +37,8 @@ class _BookingState extends State<Booking> {
     return SafeArea(
       child: Scaffold(
         body: ListView(
-          addAutomaticKeepAlives: false,
           physics: const NeverScrollableScrollPhysics(),
+          addAutomaticKeepAlives: false,
           scrollDirection: Axis.horizontal,
           controller: widget.bookingController,
           children:  [
