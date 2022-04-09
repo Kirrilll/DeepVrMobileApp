@@ -1,6 +1,6 @@
 import 'package:deepvr/booking_page_widgets/booking_pages/date_picker_page/date_picker_page.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/form_page/form_page.dart';
-import 'package:deepvr/booking_page_widgets/booking_pages/result_page.dart';
+import 'package:deepvr/booking_page_widgets/booking_pages/result_page/result_page.dart';
 import 'package:deepvr/locator.dart';
 import 'package:deepvr/providers/booking_page_model.dart';
 import 'package:deepvr/providers/counter_view_model.dart';
@@ -31,6 +31,12 @@ class _BookingState extends State<Booking> {
   //Стоит сделать переменную, которая хранит в себе BookingPage interface
   //Там getNExt, getPrev, там проверка
 
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

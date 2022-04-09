@@ -28,15 +28,13 @@ class _DatePickerPageState extends State<DatePickerPage> {
   //Возможно стоит пустить здесь Stream и из него данные получать
   @override
   Widget build(BuildContext context) {
-    print('rebuild');
     return  ChangeNotifierProvider.value(
       value: locator<DateViewModel>(),
-      child: Selector<DateViewModel, PageState>(
-        selector: (context, viewModel) => viewModel.pageState,
-        builder: (context, pageState, child) => BookingPageMaket(
+      child: Consumer<DateViewModel>(
+        builder: (context, model, child) => BookingPageMaket(
             stepNumber: 4,
-            content: pageState == PageState.loaded
-                ?const Calendar()
+            content: model.pageState == PageState.loaded
+                ? Calendar( calendar: Month.monthFromMap(model.calendar.schedule))
                 : const Center(child:  CircularProgressIndicator()),
             stepTitle: 'Выберите дату'
         ),

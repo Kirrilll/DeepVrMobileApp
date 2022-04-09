@@ -6,12 +6,17 @@ import 'package:deepvr/locator.dart';
 import 'package:deepvr/providers/date_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'month_view.dart';
 
 class Calendar extends StatefulWidget {
-  const Calendar({Key? key}) : super(key: key);
+  const Calendar({
+    Key? key,
+    required this.calendar
+  }) : super(key: key);
 
+  final List<Month> calendar;
 
   @override
   _CalendarState createState() => _CalendarState();
@@ -20,10 +25,10 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   int currMonthIndex = 0;
   var calendarController = PageController();
-  final List<Month> calendar = Month.monthFromMap( locator<DateViewModel>().calendar.schedule);
+ // final List<Month> calendar = Month.monthFromMap( locator<DateViewModel>().calendar.schedule);
 
   void  Function()? next(){
-    if(currMonthIndex < calendar.length - 1){
+    if(currMonthIndex < widget.calendar.length - 1){
       return (){
         setState(() {
           currMonthIndex++;
@@ -54,88 +59,88 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        //Кнопки
-        Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  IconButton(
-                      onPressed:previous(),
-                      icon: const Icon(
-                        Icons.arrow_back_ios_outlined,
-                        size: 20,
-                        color: Colors.white,
-                      )),
-                  const SizedBox(width: 10),
-                  Text(
-                    currMonthIndex > 0
-                        ? calendar[currMonthIndex - 1].monthName
-                        : '',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500),
-                  )
-                ],
-              ),
-              Text(
-                '${calendar[currMonthIndex].monthName} ${calendar[currMonthIndex].year} г.',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white
+    return  Column(
+        children: [
+          //Кнопки
+          Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed:previous(),
+                        icon: const Icon(
+                          Icons.arrow_back_ios_outlined,
+                          size: 20,
+                          color: Colors.white,
+                        )),
+                    const SizedBox(width: 10),
+                    Text(
+                      currMonthIndex > 0
+                          ? widget.calendar[currMonthIndex -1].monthName
+                          : '',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500),
+                    )
+                  ],
                 ),
-              ),
-              Row(
-                children: [
-                  Text(
-                    currMonthIndex < calendar.length-1
-                        ? calendar[currMonthIndex + 1].monthName
-                        : '',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500),
+                Text(
+                  '${widget.calendar[currMonthIndex].monthName} ${widget.calendar[currMonthIndex].year} г.',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white
                   ),
-                  const SizedBox(width: 10),
-                  IconButton(
-                      onPressed: next(),
-                      icon: const Icon(
-                        Icons.arrow_forward_ios_outlined,
-                        size: 20,
-                        color: Colors.white,
-                      )),
-                  const SizedBox(width: 10),
-                ],
-              ),
-            ]),
-        //Дни недели
-        const SizedBox(height: 37),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: const [
-          DayOfWeek(dayOfWeek: 'ПН'),
-          DayOfWeek(dayOfWeek: 'ВТ'),
-          DayOfWeek(dayOfWeek: 'СР'),
-          DayOfWeek(dayOfWeek: 'ЧТ'),
-          DayOfWeek(dayOfWeek: 'ПТ'),
-          DayOfWeek(dayOfWeek: 'СБ'),
-          DayOfWeek(dayOfWeek: 'ВС'),
-        ]),
-        const SizedBox(height: 36),
-        Expanded(
-          child: ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: calendarController,
-            scrollDirection: Axis.horizontal,
-            itemCount: calendar.length,
-            itemBuilder: (context, index)  => MonthView(month: calendar[index])
+                ),
+                Row(
+                  children: [
+                    Text(
+                      currMonthIndex < widget.calendar.length-1
+                          ? widget.calendar[currMonthIndex + 1].monthName
+                          : '',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(width: 10),
+                    IconButton(
+                        onPressed: next(),
+                        icon: const Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          size: 20,
+                          color: Colors.white,
+                        )),
+                    const SizedBox(width: 10),
+                  ],
+                ),
+              ]),
+          //Дни недели
+          const SizedBox(height: 37),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: const [
+            DayOfWeek(dayOfWeek: 'ПН'),
+            DayOfWeek(dayOfWeek: 'ВТ'),
+            DayOfWeek(dayOfWeek: 'СР'),
+            DayOfWeek(dayOfWeek: 'ЧТ'),
+            DayOfWeek(dayOfWeek: 'ПТ'),
+            DayOfWeek(dayOfWeek: 'СБ'),
+            DayOfWeek(dayOfWeek: 'ВС'),
+          ]),
+          const SizedBox(height: 36),
+          Expanded(
+            child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: calendarController,
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.calendar.length,
+              itemBuilder: (context, index)  => MonthView(month:widget.calendar[index])
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
   }
 }
 

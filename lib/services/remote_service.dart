@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:deepvr/models/game_model/game_model.dart';
 import 'package:deepvr/models/game_type_model.dart';
 import 'package:deepvr/models/order.dart';
+import 'package:deepvr/models/request.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/booking_date_model/booking_date_model.dart';
@@ -34,22 +37,22 @@ class RemoteService{
     }
   }
   
-  Future<BookingDateModel?> getDates(int gameId) async {
-    var uri = Uri.parse(_apiUrl + 'booking-dates/$gameId');
+  Future<BookingDateModel?> getDates(int gameId, int questCount) async {
+    var uri = Uri.parse(_apiUrl + 'booking-dates/$gameId?guest_quantity=$questCount');
     var response = await _client.get(uri);
     if(response.statusCode == 200){
       var json = response.body;
       return BookingDateModel.fromJsonStr(json);
+
     }
   }
 
-  Future<String?> postData(Order order, int gameId) async {
+  Future<Request?> postData(Order order, int gameId) async {
     var uri = Uri.parse(_apiUrl + 'booking-request/$gameId');
-    var response  = await _client.patch(uri, body: order.toJson());
-    print(response.statusCode);
+
+    var response  = await _client.post(uri, body: order.toJson());
     if(response.statusCode == 200){
-      print(response.body + 'nj');
-      return response.body;
+      return Request.requestFromJson(response.body);
     }
 
   }

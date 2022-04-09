@@ -47,6 +47,8 @@ class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
   String get time => _selectedTime!.time;
   int get guestCount => _guestCount!;
 
+  RequestInfo get requestInfo => _requestStatus;
+
   bool isAvailable(){
     return _selectedType != null &&
             _selectedGame != null &&
@@ -99,17 +101,24 @@ class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
     });
   }
 
+  void setStatus(RequestInfo status){
+    _requestStatus = status;
+    notifyListeners();
+  }
+
   void order() async{
-    _requestStatus = RequestInfo.loading;
-    RemoteService.getInstance().postData(Order(
+    setStatus(RequestInfo.loading);
+    var request =  await RemoteService.getInstance().postData(Order(
         userName: _formModel.name,
         userPhone: _formModel.phoneNumber,
         guestDate: date,
-        guestTime: _selectedTime!.time
-    ), _selectedGame!.id).then(
-        (res) => print(res)
-    );
+        guestTime: _selectedTime!.time,
+        guestCount: _guestCount
+    ), _selectedGame!.id);
 
+    if(request!.error == 0){
+      setStatus(RequestInfo.successful);
+    }
   }
 
   @override

@@ -14,7 +14,7 @@ GetIt locator = GetIt.instance;
 
 void setup(){
   locator.registerSingleton(GamesProvider()..getGames());
-  //locator.registerLazySingleton<GameTypeViewModel>(() => GameTypeViewModel());
+
   locator.registerLazySingleton(() => GameTypeViewModel()); //сделать factory
   locator.registerLazySingleton<GamesViewModel>(() => GamesViewModel());
   locator.registerLazySingleton(() => CounterViewModel());

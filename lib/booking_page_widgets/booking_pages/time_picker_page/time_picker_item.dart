@@ -14,11 +14,11 @@ class TimePickerItem extends StatelessWidget {
     return Consumer<TimeViewModel>(
         builder: (context, viewModel, _) =>
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-              Text(
-                !viewModel.isBooked(time) ? '' : 'Забронировано',
-                style:
-                    TextStyle(color: Theme.of(context).colorScheme.secondary),
-              ),
+              // Text(
+              //   !viewModel.isBooked(time) ? '' : 'Забронировано',
+              //   style:
+              //       TextStyle(color: Theme.of(context).colorScheme.secondary),
+              // ),
               const SizedBox(height: 12),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -33,26 +33,20 @@ class TimePickerItem extends StatelessWidget {
                             ? const BorderSide(
                                 color: Color(0XFF8556FF), width: 2)
                             : BorderSide.none)),
-                onPressed: viewModel.isBooked(time)
-                    ? null
-                    : () => viewModel.selectTime(time),
+                onPressed: () => viewModel.selectTime(time),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Icon(
                       Icons.access_time,
                       size: 20,
-                      color: viewModel.isBooked(time)
-                          ? const Color(0xFF58597B)
-                          : Theme.of(context).colorScheme.secondary,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                     const SizedBox(width: 10),
                     Text(
                       time.time.toString(),
                       style: TextStyle(
-                          color: viewModel.isBooked(time)
-                              ? const Color(0xFF58597B)
-                              : Theme.of(context).colorScheme.secondary,
+                          color: Theme.of(context).colorScheme.secondary,
                           fontSize: 16),
                     ),
                   ],

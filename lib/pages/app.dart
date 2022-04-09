@@ -38,7 +38,7 @@ class _AppState extends State<App> {
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(
-              currentIndex: 1,
+              type: BottomNavigationBarType.shifting,
               showSelectedLabels: false,
               showUnselectedLabels: false,
               items: [
@@ -55,7 +55,7 @@ class _AppState extends State<App> {
                           }
                         }
                     ),
-                    label: 'adad'),
+                    label: 'prev'),
                 BottomNavigationBarItem(
                     icon: IconButton(
                         icon: const Icon(Icons.album),
@@ -86,7 +86,7 @@ class _AppState extends State<App> {
                           }
                         }
                     ),
-                    label: 'adad'),
+                    label: 'next'),
               ],
             )
         )
