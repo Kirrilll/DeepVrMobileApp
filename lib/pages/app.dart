@@ -20,8 +20,8 @@ class _AppState extends State<App> {
   var booking = locator<BookingPageModel>();
   var app = locator<AppModel>();
 
-  final bookingController = PageController();
   final pageController = PageController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,62 +31,32 @@ class _AppState extends State<App> {
               controller: pageController,
               scrollDirection: Axis.vertical,
               physics: const NeverScrollableScrollPhysics(),
-              children: [
+              children:  [
                 //1 - Booking, если изменится поменять в app_model
-                Booking(bookingController: bookingController),
-                const Games()
+                const Booking(),
+                Games(pageController: pageController)
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.shifting,
-              showSelectedLabels: false,
               showUnselectedLabels: false,
               items: [
                 BottomNavigationBarItem(
                     icon: IconButton(
-                        iconSize: 24,
-                        icon: const Icon(Icons.arrow_back),
-                        onPressed:  () {
-                          if(app.currPage == Pages.booking){
-                            booking.back();
-                            bookingController.previousPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.ease);
-                          }
-                        }
-                    ),
-                    label: 'prev'),
-                BottomNavigationBarItem(
-                    icon: IconButton(
-                        icon: const Icon(Icons.album),
+                        icon: const Icon(Icons.book_online_outlined),
                         onPressed: (){
-                          //Костыли
-                          booking.currViewModel = locator<GameTypeViewModel>();
                           app.currPage = Pages.booking;
                           pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                           },
                     ), label: 'booking'),
                 BottomNavigationBarItem(
                     icon: IconButton(
-                        icon: const Icon(Icons.widgets),
+                        icon: const Icon(Icons.games),
                         onPressed: (){
                           app.currPage = Pages.games;
                           pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                           },
-                    ), label: 'games'),
-                BottomNavigationBarItem(
-                    icon: IconButton(
-                        iconSize: 24,
-                        icon: const Icon(Icons.arrow_forward),
-                        onPressed:   () {
-                          if(booking.next() && app.currPage == Pages.booking){
-                            bookingController.nextPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.ease);
-                          }
-                        }
-                    ),
-                    label: 'next'),
+                    ), label: 'games')
               ],
             )
         )

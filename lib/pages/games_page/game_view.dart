@@ -9,15 +9,17 @@ class GameView extends StatelessWidget {
   const GameView(
       {Key? key,
         required this.gameModel,
+        required this.action
       })
       : super(key: key);
 
+  final void Function() action;
   final GameModel gameModel;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap:() => print('content'),
+        onTap:() => action(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
