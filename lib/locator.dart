@@ -7,6 +7,7 @@ import 'package:deepvr/providers/date_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/providers/games_provider.dart';
 import 'package:deepvr/providers/games_view_model.dart';
+import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:deepvr/providers/time_view_model.dart';
 import 'package:get_it/get_it.dart';
 
@@ -15,7 +16,11 @@ GetIt locator = GetIt.instance;
 void setup(){
   locator.registerSingleton(GamesProvider()..getGames());
 
-  locator.registerLazySingleton(() => GameTypeViewModel()); //сделать factory
+  //начало рефакторинга
+  locator.registerLazySingleton(() => BookingModel());
+
+  //конец рефакторига
+  locator.registerLazySingleton(() => GameTypeViewModel()); //сделать factory, что-то сделать с getNext и т.д
   locator.registerLazySingleton<GamesViewModel>(() => GamesViewModel());
   locator.registerLazySingleton(() => CounterViewModel());
   locator.registerLazySingleton(() => DateViewModel());

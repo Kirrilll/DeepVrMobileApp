@@ -1,8 +1,12 @@
 import 'package:deepvr/models/game_model/game_model.dart';
+import 'package:deepvr/models/refactor/booking.dart';
 import 'package:deepvr/providers/games_view_model.dart';
+import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../locator.dart';
 
 class GameCard extends StatelessWidget {
   const GameCard(
@@ -31,9 +35,17 @@ class GameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<GamesViewModel>(
+    return Consumer<BookingModel>(
       builder: (context, viewModel, child) => GestureDetector(
-        onTap:() => viewModel.setSelectedGame(gameModel),
+        onTap:(){
+          //Записываем вместе с типом
+          viewModel.updateBooking(Booking.copyWith(
+              viewModel.booking,
+              selectedGame: gameModel,
+              selectedType: gameModel.gameType,
+              guestCount: gameModel.guestMin ?? gameModel.gameType.guestMin
+          ));
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,7 +64,7 @@ class GameCard extends StatelessWidget {
                         : const Center(child:  CircularProgressIndicator());
                   },
                 ),
-                decoration: _buildBoxDecoration(context, viewModel.selectedGame?.id == gameModel.id),
+                decoration: _buildBoxDecoration(context, viewModel.booking.selectedGame?.id == gameModel.id),
               ),
             ),
             const SizedBox(height: 16),

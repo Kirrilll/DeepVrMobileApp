@@ -1,3 +1,4 @@
+import 'package:deepvr/models/refactor/booking.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/time_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,8 +9,12 @@ import 'booking_results_view_model.dart';
 //Возможно здесь будет USER вместо этого всего
 class BookingFormViewModel implements IBookingViewModel{
 
-  String? name;
-  String? phoneNumber;
+  late GlobalKey<FormState> _formState;
+
+  void setFormState(GlobalKey<FormState> formState){
+    _formState = formState;
+  }
+  GlobalKey<FormState> get formState => _formState;
 
 
   @override
@@ -23,8 +28,8 @@ class BookingFormViewModel implements IBookingViewModel{
   }
 
   @override
-  bool isFinished() {
-    if(name == null || phoneNumber == null) return false;
+  bool isFinished(Booking booking) {
+    if(booking.name == null || booking.phone == null) return false;
     return true;
   }
 
@@ -32,6 +37,19 @@ class BookingFormViewModel implements IBookingViewModel{
   int getPageNumber() {
     return 5;
   }
+
+  @override
+  Future<void> additionalFunc() async {
+    if(_formState.currentState!.validate()) {
+          _formState.currentState?.save();
+        }
+  }
+
+  @override
+  bool isMayBack() {
+    return true;
+  }
+
 
 
 }

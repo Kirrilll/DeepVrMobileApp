@@ -12,11 +12,23 @@ import 'package:provider/provider.dart';
 
 import '../../../locator.dart';
 import '../../../providers/game_type_view_model.dart';
+import '../../../providers/refactor/booking_model.dart';
 
-class GameCardPage extends StatelessWidget {
+class GameCardPage extends StatefulWidget {
   GameCardPage({Key? key}) : super(key: key);
 
+  @override
+  State<GameCardPage> createState() => _GameCardPageState();
+}
+
+class _GameCardPageState extends State<GameCardPage> {
   final gamesProvider = locator<GamesProvider>();
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +37,15 @@ class GameCardPage extends StatelessWidget {
       content: MultiProvider(
         providers: [
           ChangeNotifierProvider.value(value: locator<GamesViewModel>()),
-          ChangeNotifierProvider.value(value: locator<GameTypeViewModel>())
+          ChangeNotifierProvider.value(value: locator<BookingModel>())
         ],
-        child: Consumer2<GameTypeViewModel, GamesProvider>(
-          builder: (context, gameTypeViewModel, gamesModel, child) =>
+        child: Consumer2<BookingModel, GamesProvider>(
+          builder: (context, bookingModel, gamesModel, child) =>
               gamesModel.isLoaded
                   ? GameCardContainer(
                       games: gamesProvider.games!.where((game) {
-                      if (gameTypeViewModel.selectedType != null) {
-                        return game.gameType.id ==
-                            locator<GameTypeViewModel>().selectedType!.id;
+                      if (bookingModel.booking.selectedType != null) {
+                        return game.gameType.id == bookingModel.booking.selectedType!.id;
                       }
                       return true;
                     }).toList())

@@ -1,6 +1,7 @@
 import 'package:deepvr/booking_page_widgets/booking_pages/form_page/login_field.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/form_page/password.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
+import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,15 @@ class OrderingForm extends StatefulWidget {
 class _OrderingFormState extends State<OrderingForm> {
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
 
-  var formModel = locator<BookingFormViewModel>();
+  var bookingModel = locator<BookingModel>();
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    locator<BookingFormViewModel>().setFormState(_formState);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +38,24 @@ class _OrderingFormState extends State<OrderingForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          LoginField(setName: (value) => formModel.name = value, initialName: formModel.name),
+          LoginField(
+              setName: (value) => bookingModel.booking.name = value,
+              initialName:bookingModel.booking.name,
+              formState: _formState,
+          ),
           const SizedBox(height: 10),
-          PasswordField(setPhone: (value) => formModel.phoneNumber = value, initialValue: formModel.phoneNumber),
-          // const SizedBox(height: 10),
-          const Spacer(),
-          BookPageSwitchingBtn(text: 'Отправить', action: () {
-            if(_formState.currentState!.validate()) {
-              _formState.currentState?.save();
-              FocusScope.of(context).unfocus();
-            }
-          },)
-          // const SizedBox(height: 20)
+          PasswordField(
+              setPhone: (value) => bookingModel.booking.phone = value,
+              initialValue: bookingModel.booking.phone,
+              formState: _formState,
+          ),
+          // BookPageSwitchingBtn(text: 'Отправить', action: () {
+          //   if(_formState.currentState!.validate()) {
+          //     _formState.currentState?.save();
+          //     FocusScope.of(context).unfocus();
+          //   }
+          // },)
+
         ],
       ),
     );

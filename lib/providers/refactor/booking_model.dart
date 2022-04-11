@@ -1,29 +1,42 @@
 import 'package:deepvr/entities/date_entity.dart';
 import 'package:deepvr/entities/time_entity.dart';
+import 'package:deepvr/models/refactor/booking.dart';
+import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/providers/games_view_model.dart';
+import 'package:flutter/cupertino.dart';
 
-class BookingModel {
+import '../../locator.dart';
+
+class BookingModel with ChangeNotifier{
   //Храним все выбранное
   //Должен знать какая сейчас страница
-  GameTypeViewModel? selectedType;
-  GamesViewModel? selectedGame;
-  //У Counter сделать функцию increment, которая получает знач, и лимиты
-  int? guestCount;
-  DateEntity? selectedDate;
-  TimeEntity? selectedTime;
-  String? name;
-  String? phone;
+  late Booking booking;
+  //Переделать currModel
+  late IBookingViewModel currModel;
 
-  BookingModel.initial(){
-    selectedType = null;
-    selectedGame = null;
-    guestCount = null;
-    selectedDate = null;
-    selectedTime = null;
-    name = null;
-    phone = null;
+
+  BookingModel(){
+    init();
+  }
+
+  void setViewModel(IBookingViewModel viewModel){
+    currModel = viewModel;
+    notifyListeners();
   }
 
 
-}
+  void updateBooking(Booking booking){
+    this.booking = booking;
+    notifyListeners();
+  }
+
+  //функция, которая делаем booking не
+  void init(){
+    updateBooking(Booking.initial());
+    currModel = locator<GameTypeViewModel>();
+  }
+
+  }
+
+

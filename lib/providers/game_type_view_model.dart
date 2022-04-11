@@ -1,6 +1,7 @@
 
 
 import 'package:deepvr/models/game_type_model.dart';
+import 'package:deepvr/models/refactor/booking.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/games_view_model.dart';
 import 'package:flutter/foundation.dart';
@@ -11,24 +12,18 @@ import '../services/remote_service.dart';
 enum PageState{
   unLoaded,
   loaded,
-  failed
+  failed,
 }
+
 
 class GameTypeViewModel with ChangeNotifier implements IBookingViewModel{
 
-  GameTypeModel? _selectedType;
   PageState _pageState = PageState.unLoaded;
   List<GameTypeModel>? _gameTypes;
 
-  GameTypeModel? get selectedType => _selectedType;
   PageState get pageState => _pageState;
   List<GameTypeModel>? get gameTypes => _gameTypes;
 
-
-  void selectType(GameTypeModel type){
-    _selectedType = type;
-    notifyListeners();
-  }
 
   //обрабатывать 404 error
   void getTypes() async{
@@ -46,13 +41,23 @@ class GameTypeViewModel with ChangeNotifier implements IBookingViewModel{
   IBookingViewModel? getPrev() => null;
 
   @override
-  bool isFinished() {
-    if(_selectedType == null) return false;
-    return true;
+  bool isFinished(Booking booking) {
+      if(booking.selectedType == null) return false;
+      return true;
   }
 
   @override
   int getPageNumber() {
     return 0;
+  }
+
+  @override
+  Future<void> additionalFunc() async {
+    // TODO: implement additionalFunc
+  }
+
+  @override
+  bool isMayBack() {
+    return false;
   }
 }

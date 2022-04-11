@@ -14,13 +14,10 @@ class PlayersCounterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: locator<CounterViewModel>(),
-      child: const BookingPageMaket(
-          content: PlayerCounter(),
-          stepNumber: 3,
-          stepTitle: 'Выберите количесвто игроков',
-      ),
+    return const BookingPageMaket(
+        content: PlayerCounter(),
+        stepNumber: 3,
+        stepTitle: 'Выберите количесвто игроков',
     );
   }
 }

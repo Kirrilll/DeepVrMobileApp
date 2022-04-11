@@ -8,6 +8,7 @@ import 'package:deepvr/entities/time_entity.dart';
 import 'package:deepvr/models/booking_date_model/booking_date_model.dart';
 import 'package:deepvr/providers/date_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
+import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:deepvr/services/remote_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,19 +26,30 @@ class DatePickerPage extends StatefulWidget {
 class _DatePickerPageState extends State<DatePickerPage> {
 
 
+  late DateViewModel dateModel;
+
+  @override
+  void initState() {
+    dateModel = locator<DateViewModel>();
+    var booking = locator<BookingModel>();
+    dateModel.getDates(booking.booking.selectedGame!.id, booking.booking.guestCount!);
+    super.initState();
+  }
+
   //Возможно стоит пустить здесь Stream и из него данные получать
   @override
   Widget build(BuildContext context) {
     return  ChangeNotifierProvider.value(
-      value: locator<DateViewModel>(),
-      child: Consumer<DateViewModel>(
-        builder: (context, model, child) => BookingPageMaket(
+      value: dateModel,
+      child: Consumer2<DateViewModel, BookingModel>(
+        builder: (context, dateModel, bookingModel, child) {
+          return BookingPageMaket(
             stepNumber: 4,
-            content: model.pageState == PageState.loaded
-                ? Calendar( calendar: Month.monthFromMap(model.calendar.schedule))
+            content: dateModel.pageState == PageState.loaded
+                ? Calendar( calendar: Month.monthFromMap(dateModel.calendar.schedule))
                 : const Center(child:  CircularProgressIndicator()),
             stepTitle: 'Выберите дату'
-        ),
+        );}
       ),
     );
   }

@@ -33,13 +33,12 @@ class BookPageSwitchingBtn extends StatelessWidget {
         ),
         TextButton(
           style: TextButton.styleFrom(
+            onSurface: Theme.of(context).colorScheme.onSurface,
             padding: const EdgeInsets.all(16.0),
             primary: Colors.white,
             textStyle: const TextStyle(fontSize: 16),
           ),
-          onPressed: () {
-            action();
-          },
+          onPressed: () => action(),
           child: Text(text),
         ),
       ],

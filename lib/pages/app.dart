@@ -33,7 +33,7 @@ class _AppState extends State<App> {
               physics: const NeverScrollableScrollPhysics(),
               children:  [
                 //1 - Booking, если изменится поменять в app_model
-                const Booking(),
+                const BookingPage(),
                 Games(pageController: pageController)
               ],
             ),

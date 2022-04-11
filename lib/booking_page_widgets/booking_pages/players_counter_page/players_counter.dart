@@ -1,7 +1,9 @@
 
+import 'package:deepvr/models/refactor/booking.dart';
 import 'package:deepvr/providers/counter_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/providers/games_view_model.dart';
+import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,20 +12,32 @@ import 'package:provider/provider.dart';
 class PlayerCounter extends StatelessWidget {
   const PlayerCounter({Key? key,}) : super(key: key);
 
+  void increment(Booking booking, BookingModel model){
+    if(booking.guestCount! < (booking.selectedGame?.guestMax ?? booking.selectedGame!.gameType.guestMax) ){
+      model.updateBooking(Booking.copyWith(booking, guestCount: booking.guestCount! + 1));
+    }
+  }
+
+  void decrement(Booking booking, BookingModel model){
+    if(booking.guestCount! > (booking.selectedGame?.guestMin ?? booking.selectedGame!.gameType.guestMin)){
+      model.updateBooking(Booking.copyWith(booking, guestCount: booking.guestCount! - 1));
+    }
+  }
+
 //Если это ListView обернуть в 2 Consumer(вепхний GamesViewModel) проверять на isFinished
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12),
-      child: Consumer<CounterViewModel>(
+      child: Consumer<BookingModel>(
               builder: (context, viewModel, child)  {
-                return viewModel.isAvailable ? Row(
+                return viewModel.booking.selectedGame != null ? Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       IconButton(
-                          onPressed: () => viewModel.decrement(),
+                          onPressed: () => decrement(viewModel.booking, viewModel),
                           icon: const Icon(
                             Icons.remove,
                             size: 20,
@@ -43,7 +57,7 @@ class PlayerCounter extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            viewModel.guestCount.toString(),
+                            viewModel.booking.guestCount.toString(),
                             style: const TextStyle(
                                 fontSize: 16
                             ),
@@ -52,7 +66,7 @@ class PlayerCounter extends StatelessWidget {
                       ),
 
                       IconButton(
-                          onPressed: () => viewModel.increment(),
+                          onPressed: () => increment(viewModel.booking, viewModel),
                           icon: const Icon(
                             Icons.add,
                             size: 20,

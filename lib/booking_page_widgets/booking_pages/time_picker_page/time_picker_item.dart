@@ -1,4 +1,6 @@
 import 'package:deepvr/entities/time_entity.dart';
+import 'package:deepvr/models/refactor/booking.dart';
+import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:deepvr/providers/time_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,7 @@ class TimePickerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TimeViewModel>(
+    return Consumer<BookingModel>(
         builder: (context, viewModel, _) =>
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
               // Text(
@@ -28,12 +30,12 @@ class TimePickerItem extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
-                        side: viewModel.selectedTime != null &&
-                                viewModel.selectedTime == time
+                        side: viewModel.booking.selectedTime != null &&
+                                viewModel.booking.selectedTime == time
                             ? const BorderSide(
                                 color: Color(0XFF8556FF), width: 2)
                             : BorderSide.none)),
-                onPressed: () => viewModel.selectTime(time),
+                onPressed: () => viewModel.updateBooking(Booking.copyWith(viewModel.booking, selectedTime: time)),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

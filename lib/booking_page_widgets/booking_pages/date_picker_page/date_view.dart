@@ -1,5 +1,7 @@
 import 'package:deepvr/entities/date_entity.dart';
+import 'package:deepvr/models/refactor/booking.dart';
 import 'package:deepvr/providers/date_view_model.dart';
+import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,10 +42,20 @@ class DateView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return !isEmpty ? Consumer<DateViewModel>(
-      builder: (context, model, _) => ElevatedButton(
-        onPressed: date!.availableTime.isNotEmpty //&& locator<DateViewModel>().isDateAvailable(date!)
-            ? () => model.selectDate(date!)
+
+    return !isEmpty ? Consumer<BookingModel>(
+      builder: (context, model, _)  => ElevatedButton(
+        onPressed: date!.availableTime.isNotEmpty
+        //Сбрасываем время, без copy, потому что проверка на null
+            ? () => model.updateBooking(Booking(
+          model.booking.selectedType,
+          model.booking.selectedGame,
+          model.booking.guestCount,
+          date,
+          null,
+          model.booking.name,
+          model.booking.phone,
+        ))
             : null,
         style: ElevatedButton.styleFrom(
           primary: _buildBackgroundColor(),
@@ -52,7 +64,7 @@ class DateView extends StatelessWidget {
           padding: const EdgeInsets.all(6),
           fixedSize: const Size(43, 43),
           shape: null,
-          side: model.selectedDate != null && model.selectedDate == date
+          side: model.booking.selectedDate != null && model.booking.selectedDate == date
             ? const BorderSide(color: Color(0XFF8556FF), width: 2)
               : BorderSide.none
         ),

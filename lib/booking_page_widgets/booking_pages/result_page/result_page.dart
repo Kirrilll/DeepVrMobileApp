@@ -1,6 +1,7 @@
 import 'package:deepvr/booking_page_widgets/booking_pages/result_page/order_page.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/result_page/suc%D1%81essful_page.dart';
 import 'package:deepvr/providers/booking_results_view_model.dart';
+import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +14,9 @@ class BookingResultPage extends StatelessWidget {
 
   Widget _buildResultPage() {
     var model = locator<BookingResultsViewModel>();
-    switch (model.requestInfo) {
+    switch (model.status) {
       case RequestInfo.notSend:
-        return OrderPage(viewModel: model);
+        return OrderPage(booking : locator<BookingModel>().booking );
       case RequestInfo.loading:
         return const Center(child: CircularProgressIndicator());
       case RequestInfo.successful:
@@ -33,8 +34,7 @@ class BookingResultPage extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Consumer<BookingResultsViewModel>(
-              builder: (context, viewModel, _) => viewModel.isAvailable()
-                  ? Padding(
+              builder: (context, viewModel, _) =>  Padding(
                       padding: const EdgeInsets.all(15),
                       child: Container(
                         padding: const EdgeInsets.all(2),
@@ -51,8 +51,7 @@ class BookingResultPage extends StatelessWidget {
                           padding: const EdgeInsets.all(15),
                           child: _buildResultPage(),
                         ),
-                      ))
-                  : const Center(child: CircularProgressIndicator()),
+                      )),
             )));
   }
 }

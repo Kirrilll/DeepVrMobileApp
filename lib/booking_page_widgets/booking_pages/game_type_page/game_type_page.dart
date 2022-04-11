@@ -18,20 +18,21 @@ class GameTypesPage extends StatefulWidget {
 
 class _GameTypesPageState extends State<GameTypesPage> {
 
+  late GameTypeViewModel model;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // final booking = Provider.of<BookingProvider>(context, listen: false);
-    // booking.getTypes();
-    locator<GameTypeViewModel>().getTypes();
+    model = locator<GameTypeViewModel>();
+    model.getTypes();
   }
 
   @override
   Widget build(BuildContext context) {
     //var booking = Provider.of<BookingProvider>(context);
     return ChangeNotifierProvider.value(
-      value: locator<GameTypeViewModel>(),
+      value: model,
       child: Consumer<GameTypeViewModel>(
         builder :(context, viewModel, child)  => BookingPageMaket(
           content: viewModel.pageState == PageState.loaded

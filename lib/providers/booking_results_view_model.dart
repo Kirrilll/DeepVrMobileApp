@@ -3,12 +3,14 @@ import 'package:deepvr/entities/time_entity.dart';
 import 'package:deepvr/models/game_model/game_model.dart';
 import 'package:deepvr/models/game_type_model.dart';
 import 'package:deepvr/models/order.dart';
+import 'package:deepvr/models/refactor/booking.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/counter_view_model.dart';
 import 'package:deepvr/providers/date_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/providers/games_view_model.dart';
+import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:deepvr/providers/time_view_model.dart';
 import 'package:deepvr/services/remote_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,100 +27,13 @@ enum RequestInfo {
 //Может это оберткой над всеМ
 class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
 
-  final _gameTypeModel = locator<GameTypeViewModel>();
-  final _gamesModel = locator<GamesViewModel>();
-  final _counterModel = locator<CounterViewModel>();
-  final _dateModel = locator<DateViewModel>();
-  final _timeModel = locator<TimeViewModel>();
-  final _formModel = locator<BookingFormViewModel>();
+  RequestInfo _status = RequestInfo.notSend;
 
-  GameTypeModel? _selectedType ;
-  GameModel? _selectedGame;
-  int? _guestCount;
-  DateEntity? _selectedDate;
-  TimeEntity? _selectedTime;
-  RequestInfo _requestStatus = RequestInfo.notSend;
-
-
-  int get price => _guestCount! * _selectedGame!.price;
-  String get game => _selectedGame!.title;
-  String get type => _selectedType!.title;
-  String get date => _selectedDate!.date.toString().replaceRange(10, _selectedDate!.date.toString().length, '');
-  String get time => _selectedTime!.time;
-  int get guestCount => _guestCount!;
-
-  RequestInfo get requestInfo => _requestStatus;
-
-  bool isAvailable(){
-    return _selectedType != null &&
-            _selectedGame != null &&
-            _selectedDate != null &&
-            _selectedType != null;
-  }
-
-  BookingResultsViewModel(){
-
-      _selectedType = _gameTypeModel.selectedType!;
-      _selectedGame = _gamesModel.selectedGame!;
-      _guestCount = _counterModel.guestCount;
-      _selectedDate = _dateModel.selectedDate!;
-      if(_timeModel.isFinished()){
-        _selectedTime = _timeModel.selectedTime!;
-        notifyListeners();
-      }
-
-    _gameTypeModel.addListener(() {
-      if(_gameTypeModel.isFinished()) {
-        _selectedType = _gameTypeModel.selectedType!;
-      }
-      notifyListeners();
-    });
-
-    _gamesModel.addListener(() {
-      if(_gamesModel.isFinished()){
-        _selectedGame = _gamesModel.selectedGame!;
-      }
-      notifyListeners();
-    });
-
-    _counterModel.addListener(() {
-      _guestCount = _counterModel.guestCount;
-      notifyListeners();
-    });
-
-    _dateModel.addListener(() {
-      if(_dateModel.isFinished()){
-        _selectedDate = _dateModel.selectedDate!;
-        notifyListeners();
-      }
-    });
-
-    _timeModel.addListener(() {
-      if(_timeModel.isFinished()){
-        _selectedTime = _timeModel.selectedTime!;
-        notifyListeners();
-      }
-    });
-  }
+  RequestInfo get status => _status;
 
   void setStatus(RequestInfo status){
-    _requestStatus = status;
+    _status = status;
     notifyListeners();
-  }
-
-  void order() async{
-    setStatus(RequestInfo.loading);
-    var request =  await RemoteService.getInstance().postData(Order(
-        userName: _formModel.name,
-        userPhone: _formModel.phoneNumber,
-        guestDate: date,
-        guestTime: _selectedTime!.time,
-        guestCount: _guestCount
-    ), _selectedGame!.id);
-
-    if(request!.error == 0){
-      setStatus(RequestInfo.successful);
-    }
   }
 
   @override
@@ -132,14 +47,56 @@ class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
   }
 
   @override
-  bool isFinished() {
-    // TODO: implement isFinished
-    throw UnimplementedError();
+  bool isFinished(Booking booking) {
+    if(status == RequestInfo.notSend) return true;
+    return false;
   }
 
   @override
   int getPageNumber() {
     return 6;
+  }
+
+
+  void order() async{
+    var bookingModel = locator<BookingModel>();
+    var booking = bookingModel.booking;
+    setStatus(RequestInfo.loading);
+    var request =  await RemoteService.getInstance().postData(Order(
+        userName: booking.name,
+        userPhone: booking.phone,
+        guestDate: booking.selectedDate!.date.toString().replaceRange(10, booking.selectedDate!.date.toString().length, ''),
+        guestTime: booking.selectedTime!.time,
+        guestCount: booking.guestCount
+    ), booking.selectedGame!.id);
+    if(request!.error == 0){
+      setStatus(RequestInfo.successful);
+    }
+  }
+
+  @override
+  Future<void> additionalFunc() async {
+    //post на сервер
+    var bookingModel = locator<BookingModel>();
+    var booking = bookingModel.booking;
+    setStatus(RequestInfo.loading);
+    var request =  await RemoteService.getInstance().postData(Order(
+        userName: booking.name,
+        userPhone: booking.phone,
+        guestDate: booking.selectedDate!.date.toString().replaceRange(10, booking.selectedDate!.date.toString().length, ''),
+        guestTime: booking.selectedTime!.time,
+        guestCount: booking.guestCount
+    ), booking.selectedGame!.id);
+    if(request!.error == 0){
+      setStatus(RequestInfo.successful);
+    }
+    bookingModel.init();
+  }
+
+  @override
+  bool isMayBack() {
+    if(_status == RequestInfo.notSend) return true;
+    return false;
   }
 
 }

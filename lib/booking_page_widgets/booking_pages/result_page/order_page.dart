@@ -2,16 +2,19 @@ import 'package:deepvr/providers/booking_results_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../models/refactor/booking.dart';
 import '../../booking_page_switch_btn.dart';
 
 
 class OrderPage extends StatelessWidget {
   const OrderPage({
     Key? key,
-    required this.viewModel
+    required this.booking
   }) : super(key: key);
 
-  final BookingResultsViewModel viewModel;
+  final Booking booking;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +23,15 @@ class OrderPage extends StatelessWidget {
         children: [
           const Text('Бронирование'),
           const Spacer(),
-          Text(viewModel.type),
-          Text(viewModel.game),
-          Text('Игроков: ${viewModel.guestCount}'),
+          Text(booking.selectedType!.title),
+          Text(booking.selectedGame!.title),
+          Text('Игроков: ${booking.guestCount}'),
           const Spacer(),
           Row(
             children: [
               const Icon(Icons.calendar_today),
               const SizedBox(width: 10),
-              Text(viewModel.date)
+              Text(booking.selectedDate!.date.toString().replaceRange(10, booking.selectedDate!.date.toString().length, ''))
             ],
           ),
           const Spacer(),
@@ -36,14 +39,12 @@ class OrderPage extends StatelessWidget {
             children: [
               const Icon(Icons.access_time),
               const SizedBox(width: 10),
-              Text(viewModel.time)
+              Text(booking.selectedTime!.time)
             ],
           ),
           const Spacer(),
-          Text('Итого: ${viewModel.price}'),
-          const Spacer(),
-          BookPageSwitchingBtn(action: () => viewModel.order(),
-              text: 'Забронировать')
+          Text('Итого: ${booking.guestCount! * booking.selectedGame!.price }'),
+          const Spacer()
         ]);
   }
 }
