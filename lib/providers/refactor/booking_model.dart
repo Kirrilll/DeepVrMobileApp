@@ -2,6 +2,7 @@ import 'package:deepvr/entities/date_entity.dart';
 import 'package:deepvr/entities/time_entity.dart';
 import 'package:deepvr/models/refactor/booking.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
+import 'package:deepvr/providers/booking_results_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/providers/games_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,6 +36,7 @@ class BookingModel with ChangeNotifier{
   void init(){
     updateBooking(Booking.initial());
     currModel = locator<GameTypeViewModel>();
+    // locator<BookingResultsViewModel>().setStatus(RequestInfo.notSend);
   }
 
   }

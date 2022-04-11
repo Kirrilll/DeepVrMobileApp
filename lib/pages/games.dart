@@ -1,6 +1,7 @@
-import 'package:deepvr/booking_page_widgets/booking_page_switch_btn.dart';
+import 'package:deepvr/booking_page_widgets/default_button.dart';
 import 'package:deepvr/models/refactor/booking.dart';
 import 'package:deepvr/pages/games_page/game_view.dart';
+import 'package:deepvr/providers/app_model.dart';
 import 'package:deepvr/providers/booking_page_model.dart';
 import 'package:deepvr/providers/counter_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
@@ -45,11 +46,12 @@ class Games extends StatelessWidget {
                      builder: (context) => SimpleDialog(
                        title: Text(game.title),
                        children: [
-                         BookPageSwitchingBtn(action: (){
+                         DefaultButton(action: () => (){
                            var bookingModel = locator<BookingModel>();
+                           bookingModel.init();
                            bookingModel.updateBooking(
                                Booking.copyWith(
-                                   Booking.initial(),
+                                   bookingModel.booking,
                                    selectedType: game.gameType,
                                    selectedGame: game,
                                     guestCount: game.guestMin ?? game.gameType.guestMin
@@ -57,6 +59,7 @@ class Games extends StatelessWidget {
                            );
                            bookingModel.setViewModel(locator<CounterViewModel>());
                            Navigator.of(context).pop();
+                           locator<AppModel>().currPage = Pages.booking;
                            pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
                          },
                              text: 'Забронировать')

@@ -18,8 +18,15 @@ class BookingDateModel {
     Map<String, Map<String, List<int>>> schedule = {};
     Map<int, Room> rooms = {};
 
+    //Sprint('-------------------------------------------');
+    //log(json['schedule'].toString());
+
     json['schedule'].forEach((key, value) {
+
       schedule.putIfAbsent(key, () {
+        if(value.runtimeType == List){
+          return <String, List<int>>{};
+        }
         Map<String, List<int>> timeLines = {};
         value.forEach((innerKey, innerValue) {
           timeLines.putIfAbsent(innerKey, () {

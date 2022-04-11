@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class BookPageSwitchingBtn extends StatelessWidget {
-  const BookPageSwitchingBtn({
+class DefaultButton extends StatelessWidget {
+  const DefaultButton({
     Key? key,
     required this.action,
     required this.text
@@ -10,7 +10,7 @@ class BookPageSwitchingBtn extends StatelessWidget {
 
   //Прокидывать сюда controller, создать enum buttonType(next, back, confirm)
 
-  final void Function() action;
+  final Function()? Function() action;
   final String text;
 
   @override
@@ -38,7 +38,7 @@ class BookPageSwitchingBtn extends StatelessWidget {
             primary: Colors.white,
             textStyle: const TextStyle(fontSize: 16),
           ),
-          onPressed: () => action(),
+          onPressed: action(),
           child: Text(text),
         ),
       ],

@@ -14,13 +14,33 @@ class PlayerCounter extends StatelessWidget {
 
   void increment(Booking booking, BookingModel model){
     if(booking.guestCount! < (booking.selectedGame?.guestMax ?? booking.selectedGame!.gameType.guestMax) ){
-      model.updateBooking(Booking.copyWith(booking, guestCount: booking.guestCount! + 1));
+      model.updateBooking(
+          Booking(
+            booking.selectedType,
+            booking.selectedGame,
+            booking.guestCount! + 1,
+            null,
+            null,
+            booking.name,
+            booking.name
+          )
+      );
     }
   }
 
   void decrement(Booking booking, BookingModel model){
     if(booking.guestCount! > (booking.selectedGame?.guestMin ?? booking.selectedGame!.gameType.guestMin)){
-      model.updateBooking(Booking.copyWith(booking, guestCount: booking.guestCount! - 1));
+      model.updateBooking(
+          Booking(
+              booking.selectedType,
+              booking.selectedGame,
+              booking.guestCount! - 1,
+              null,
+              null,
+              booking.name,
+              booking.name
+          )
+      );
     }
   }
 

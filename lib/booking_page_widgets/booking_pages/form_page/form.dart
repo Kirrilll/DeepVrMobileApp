@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../locator.dart';
-import '../../booking_page_switch_btn.dart';
+import '../../default_button.dart';
 
 //Возможно аккуратное подключение к stream и подкидывание данных сюда
 class OrderingForm extends StatefulWidget {

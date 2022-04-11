@@ -7,10 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../locator.dart';
-import '../../booking_page_switch_btn.dart';
+import '../../default_button.dart';
 
-class BookingResultPage extends StatelessWidget {
+class BookingResultPage extends StatefulWidget {
   const BookingResultPage({Key? key}) : super(key: key);
+
+  @override
+  State<BookingResultPage> createState() => _BookingResultPageState();
+}
+
+
+class _BookingResultPageState extends State<BookingResultPage> {
+
 
   Widget _buildResultPage() {
     var model = locator<BookingResultsViewModel>();
@@ -24,6 +32,12 @@ class BookingResultPage extends StatelessWidget {
       case RequestInfo.error:
         return const Text('Нет соединения');
     }
+  }
+
+  @override
+  void initState() {
+    locator<BookingResultsViewModel>().setStatus(RequestInfo.notSend);
+    super.initState();
   }
 
   @override

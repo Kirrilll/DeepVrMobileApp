@@ -1,4 +1,4 @@
-import 'package:deepvr/booking_page_widgets/booking_page_switch_btn.dart';
+import 'package:deepvr/booking_page_widgets/default_button.dart';
 import 'package:deepvr/booking_page_widgets/booking_page_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
