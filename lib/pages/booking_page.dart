@@ -16,6 +16,7 @@ import '../booking_page_widgets/booking_pages/game_picker_page/game_page.dart';
 import '../booking_page_widgets/booking_pages/game_type_page/game_type_page.dart';
 import '../booking_page_widgets/booking_pages/players_counter_page/players_counter_page.dart';
 import '../booking_page_widgets/booking_pages/time_picker_page/time_picker_page.dart';
+import '../booking_page_widgets/default_button.dart';
 import '../models/game_type_model.dart';
 
 class BookingPage extends StatefulWidget {
@@ -83,58 +84,67 @@ class _BookingPageState extends State<BookingPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ElevatedButton(
-                    onPressed: model.currModel.isMayBack()
-                        ? () {
-                            FocusScope.of(context).unfocus();
-                            model.currModel.additionalFunc();
-                            model.setViewModel(
-                                model.currModel.getPrev() ?? model.currModel);
-                            bookingController.previousPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.ease);
-                          }
-                        : null,
-                    child: const Text(
-                      'Назад',
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.all(10),
-                        primary: Theme.of(context).colorScheme.secondary,
-                        onSurface: Theme.of(context).colorScheme.onSurface,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16))),
+                  DefaultButton(
+                      action: () => model.currModel.isMayBack()
+                          ? () {
+                        FocusScope.of(context).unfocus();
+                        model.currModel.additionalFunc();
+                        model.setViewModel(model.currModel.getPrev() ?? model.currModel);
+                        bookingController.previousPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.ease);
+                      }
+                          : null,
+                      text: 'Назад'
                   ),
-                  ElevatedButton(
-                    onPressed: model.currModel.isFinished(model.booking)
-                        ? () async {
-                            FocusScope.of(context).unfocus();
-                            if(model.currModel.runtimeType != BookingResultsViewModel){
-                              model.setViewModel(
-                                  model.currModel.getNext() ?? model.currModel);
-                              await bookingController.nextPage(
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.ease);
-                            }
-                            else{
-                              locator<BookingResultsViewModel>().order();
-                              model.init();
-                            }
-                          }
-                        : null,
-                    child:  Text(
-                      _buildNextText(model.currModel),
-                      style: const TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(10),
-                      primary: Theme.of(context).colorScheme.secondary,
-                      onSurface: Theme.of(context).colorScheme.onSurface,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
-                    ),
+                  DefaultButton(
+                      action: () => model.currModel.isFinished(model.booking)
+                          ? () async {
+                        FocusScope.of(context).unfocus();
+                        if(model.currModel.runtimeType != BookingResultsViewModel){
+                          model.setViewModel(
+                              model.currModel.getNext() ?? model.currModel);
+                          await bookingController.nextPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.ease);
+                        }
+                        else{
+                          locator<BookingResultsViewModel>().order();
+                          model.init();
+                        }
+                      }
+                      : null,
+                      text: _buildNextText(model.currModel)
                   )
+                  // ElevatedButton(
+                  //   onPressed: model.currModel.isFinished(model.booking)
+                  //       ? () async {
+                  //           FocusScope.of(context).unfocus();
+                  //           if(model.currModel.runtimeType != BookingResultsViewModel){
+                  //             model.setViewModel(
+                  //                 model.currModel.getNext() ?? model.currModel);
+                  //             await bookingController.nextPage(
+                  //                 duration: const Duration(milliseconds: 300),
+                  //                 curve: Curves.ease);
+                  //           }
+                  //           else{
+                  //             locator<BookingResultsViewModel>().order();
+                  //             model.init();
+                  //           }
+                  //         }
+                  //       : null,
+                  //   child:  Text(
+                  //     _buildNextText(model.currModel),
+                  //     style: const TextStyle(fontSize: 16, color: Colors.black),
+                  //   ),
+                  //   style: ElevatedButton.styleFrom(
+                  //     padding: const EdgeInsets.all(10),
+                  //     primary: Theme.of(context).colorScheme.secondary,
+                  //     onSurface: Theme.of(context).colorScheme.onSurface,
+                  //     shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(16)),
+                  //   ),
+                  // )
                 ],
               ),
             ),

@@ -2,11 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DefaultButton extends StatelessWidget {
-  const DefaultButton({
-    Key? key,
-    required this.action,
-    required this.text
-  }) : super(key: key);
+  const DefaultButton({Key? key, required this.action, required this.text})
+      : super(key: key);
 
   //Прокидывать сюда controller, создать enum buttonType(next, back, confirm)
 
@@ -20,8 +17,16 @@ class DefaultButton extends StatelessWidget {
       children: <Widget>[
         Positioned.fill(
           child: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: const [
+                BoxShadow(
+                  blurRadius: 12,
+                  color: Colors.black,
+                  offset: Offset(-7, -7),
+                ),
+              ],
+              gradient: const LinearGradient(
                 colors: <Color>[
                   Color(0xFF0D47A1),
                   Color(0xFF1976D2),
@@ -39,7 +44,7 @@ class DefaultButton extends StatelessWidget {
             textStyle: const TextStyle(fontSize: 16),
           ),
           onPressed: action(),
-          child: Text(text),
+          child: Text(text, softWrap: false),
         ),
       ],
     );
