@@ -9,6 +9,7 @@ import 'package:deepvr/providers/games_provider.dart';
 import 'package:deepvr/providers/games_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:deepvr/providers/time_view_model.dart';
+import 'package:deepvr/services/remote_service.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt locator = GetIt.instance;
@@ -18,6 +19,8 @@ void setup(){
 
   //начало рефакторинга
   locator.registerLazySingleton(() => BookingModel());
+  //locator.registerSingletonWithDependencies(() => RemoteService)
+
 
   //конец рефакторига
   locator.registerLazySingleton(() => GameTypeViewModel()); //сделать factory, что-то сделать с getNext и т.д

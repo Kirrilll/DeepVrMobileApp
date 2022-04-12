@@ -26,7 +26,6 @@ class BookingPage extends StatefulWidget {
   _BookingPageState createState() => _BookingPageState();
 }
 
-//TODO сделать преключатель, кнопку или что-то типа этого
 
 //Как-то через  StreamProvider сделать переходы
 class _BookingPageState extends State<BookingPage> {
@@ -36,12 +35,11 @@ class _BookingPageState extends State<BookingPage> {
 
   @override
   void initState() {
-    print('init booking');
-    print(locator<BookingModel>().currModel.getPageNumber());
     bookingController = PageController(
         initialPage: locator<BookingModel>().currModel.getPageNumber());
     super.initState();
   }
+
 
   String _buildNextText(IBookingViewModel currModel){
     switch(currModel.runtimeType){

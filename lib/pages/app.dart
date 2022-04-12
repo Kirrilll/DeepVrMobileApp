@@ -2,6 +2,7 @@ import 'package:deepvr/pages/booking_page.dart';
 import 'package:deepvr/pages/games.dart';
 import 'package:deepvr/providers/booking_page_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
+import 'package:deepvr/widgets/town_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,18 @@ class _AppState extends State<App> {
 
   final pageController = PageController();
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+       showDialog(
+          barrierDismissible: false,
+          context: context,
+          useRootNavigator: false,
+          builder: (_) => const TownDialog());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
