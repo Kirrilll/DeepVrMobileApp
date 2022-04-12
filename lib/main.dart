@@ -9,25 +9,19 @@ import 'package:provider/provider.dart';
 
 void main() async {
   setup();
-  //await locator.allReady();
-  runApp(
-    MultiProvider(providers: [
-      ChangeNotifierProvider.value(
-          value: locator<GamesProvider>(),
-      ),
 
-    ],
-      child: MaterialApp(
-          theme: ThemeData.from(
-            colorScheme: ThemeData.dark().colorScheme.copyWith(
-                primary: Colors.white,
-                secondary: const Color(0xFFABAFE5),
-                background: Colors.black,
-                secondaryContainer: const Color(0xFF1F2032)
-            ),
+  runApp(
+    MaterialApp(
+        theme: ThemeData.from(
+          colorScheme: ThemeData.dark().colorScheme.copyWith(
+              primary: Colors.white,
+              secondary: const Color(0xFFABAFE5),
+              background: Colors.black,
+              secondaryContainer: const Color(0xFF1F2032)
           ),
-          home: const App()
-      )),
+        ),
+        home: const App()
+    ),
     );
 
 }

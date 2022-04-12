@@ -1,15 +1,14 @@
+import 'package:deepvr/location_config.dart';
+import 'package:deepvr/models/location.dart';
+import 'package:deepvr/services/remote_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../locator.dart';
 
 class TownDialog extends StatelessWidget {
   const TownDialog({Key? key}) : super(key: key);
 
-  final List<String> points = const [
-    'Саратов',
-    'Казань',
-    'Тюмень',
-    'Челябинск',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +20,10 @@ class TownDialog extends StatelessWidget {
         ),
         padding: const EdgeInsets.fromLTRB(30, 19, 30, 30),
         child: ListView.separated(
-          itemCount: points.length,
-          itemBuilder: (context, index) => TownDialogItem(town: points[index], country: points[index]),
+          itemCount: locationConfig.length,
+          itemBuilder: (context, index) => TownDialogItem(
+              location: locationConfig[index],
+          ),
           separatorBuilder: (context, index) => const SizedBox(height: 16),
         ),
       ),
@@ -34,21 +35,22 @@ class TownDialog extends StatelessWidget {
 class TownDialogItem extends StatelessWidget {
   const TownDialogItem({
     Key? key,
-    required this.country,
-    required this.town
+    required this.location
   }) : super(key: key);
 
-  final String town;
-  final String country;
+  final Location location;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () => Navigator.pop(context),
+        onPressed: () {
+          locator<RemoteService>().init(location.api);
+          Navigator.pop(context);
+        },
         child: Row(
           children: [
             Text(
-              town,
+              location.town,
               style:  TextStyle(
                 letterSpacing: 0.3,
                 color: Theme.of(context).colorScheme.secondary,
@@ -58,7 +60,7 @@ class TownDialogItem extends StatelessWidget {
             ),
             const SizedBox(width: 5),
             Text(
-                '($country)',
+                '(${location.country})',
               style: TextStyle(
                 letterSpacing: 0.3,
                 color: Theme.of(context).colorScheme.secondary,

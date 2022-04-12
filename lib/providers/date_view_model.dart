@@ -34,7 +34,7 @@ class DateViewModel with ChangeNotifier implements IBookingViewModel{
   }
 
   void getDates(int gameId, int questCount) async{
-    _calendar = await RemoteService.getInstance().getDates(gameId, questCount);
+    _calendar = await locator<RemoteService>().getDates(gameId, questCount);
     _pageState = PageState.loaded;
   }
 

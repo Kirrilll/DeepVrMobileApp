@@ -62,7 +62,7 @@ class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
     var bookingModel = locator<BookingModel>();
     var booking = bookingModel.booking;
     setStatus(RequestInfo.loading);
-    var request =  await RemoteService.getInstance().postData(Order(
+    var request =  await locator<RemoteService>().postData(Order(
         userName: booking.name,
         userPhone: booking.phone,
         guestDate: booking.selectedDate!.date.toString().replaceRange(10, booking.selectedDate!.date.toString().length, ''),
@@ -70,7 +70,7 @@ class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
         guestCount: booking.guestCount
     ), booking.selectedGame!.id);
     if(request!.error == 0){
-      setStatus(RequestInfo.successful);
+    setStatus(RequestInfo.successful);
     }
   }
 
@@ -80,7 +80,7 @@ class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
     var bookingModel = locator<BookingModel>();
     var booking = bookingModel.booking;
     setStatus(RequestInfo.loading);
-    var request =  await RemoteService.getInstance().postData(Order(
+    var request =  await locator<RemoteService>().postData(Order(
         userName: booking.name,
         userPhone: booking.phone,
         guestDate: booking.selectedDate!.date.toString().replaceRange(10, booking.selectedDate!.date.toString().length, ''),

@@ -27,7 +27,7 @@ class GameTypeViewModel with ChangeNotifier implements IBookingViewModel{
 
   //обрабатывать 404 error
   void getTypes() async{
-    _gameTypes = await RemoteService.getInstance().getGameTypes();
+    _gameTypes = await locator<RemoteService>().getGameTypes();
     _pageState = PageState.loaded;
     notifyListeners();
   }

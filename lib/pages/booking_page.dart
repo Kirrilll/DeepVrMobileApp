@@ -86,7 +86,6 @@ class _BookingPageState extends State<BookingPage> {
                       action: () => model.currModel.isMayBack()
                           ? () {
                         FocusScope.of(context).unfocus();
-                        model.currModel.additionalFunc();
                         model.setViewModel(model.currModel.getPrev() ?? model.currModel);
                         bookingController.previousPage(
                             duration: const Duration(milliseconds: 300),

@@ -14,23 +14,27 @@ import 'package:get_it/get_it.dart';
 
 GetIt locator = GetIt.instance;
 
-void setup(){
-  locator.registerSingleton(GamesProvider()..getGames());
+void setup() {
+  locator.registerSingleton<RemoteService>(
+      RemoteService(),
+    signalsReady: true
+  );
 
+  locator.registerLazySingleton(() => GamesProvider());
   //начало рефакторинга
   locator.registerLazySingleton(() => BookingModel());
-  //locator.registerSingletonWithDependencies(() => RemoteService)
-
 
   //конец рефакторига
-  locator.registerLazySingleton(() => GameTypeViewModel()); //сделать factory, что-то сделать с getNext и т.д
+  locator.registerLazySingleton(() =>
+      GameTypeViewModel()); //сделать factory, что-то сделать с getNext и т.д
   locator.registerLazySingleton<GamesViewModel>(() => GamesViewModel());
   locator.registerLazySingleton(() => CounterViewModel());
   locator.registerLazySingleton(() => DateViewModel());
-  locator.registerLazySingleton( () => TimeViewModel());
+  locator.registerLazySingleton(() => TimeViewModel());
   locator.registerLazySingleton(() => BookingFormViewModel());
   //Сделать это StreamProvider и вписыыывать туда значения сразу
   locator.registerLazySingleton(() => BookingResultsViewModel());
-  locator.registerSingleton(BookingPageModel());//идеально сделать это factory, чтобы при каждом вызове обновлялось все
-  locator.registerSingleton( AppModel());
+  locator.registerSingleton(
+      BookingPageModel()); //идеально сделать это factory, чтобы при каждом вызове обновлялось все
+  locator.registerSingleton(AppModel());
 }

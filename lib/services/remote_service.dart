@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:deepvr/locator.dart';
 import 'package:deepvr/models/game_model/game_model.dart';
 import 'package:deepvr/models/game_type_model.dart';
+import 'package:deepvr/models/location.dart';
 import 'package:deepvr/models/order.dart';
 import 'package:deepvr/models/request.dart';
 import 'package:http/http.dart' as http;
@@ -10,14 +12,17 @@ import '../models/booking_date_model/booking_date_model.dart';
 
 class RemoteService{
 
-  static final RemoteService _instance = RemoteService._();
 
+
+  bool isInit = false;
   final _client = http.Client();
-  final _apiUrl = 'https://srt.vrbook.creatrix-digital.ru/api/';
+  late String _apiUrl;
 
-  RemoteService._(){}
-
-  factory RemoteService.getInstance  () => _instance;
+  void init(String api) async {
+    _apiUrl = api;
+    locator.signalReady(this);
+    isInit = true;
+  }
 
   Future<List<GameTypeModel>?> getGameTypes() async {
     var uri = Uri.parse(_apiUrl + 'gameTypes');
