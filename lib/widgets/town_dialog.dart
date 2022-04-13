@@ -3,6 +3,7 @@ import 'package:deepvr/models/location.dart';
 import 'package:deepvr/services/remote_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../locator.dart';
 
@@ -43,7 +44,9 @@ class TownDialogItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () {
+        onPressed: () async {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('userLocation', location.encodeJson());
           locator<RemoteService>().init(location.api);
           Navigator.pop(context);
         },

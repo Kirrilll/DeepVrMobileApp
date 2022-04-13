@@ -23,7 +23,7 @@ class DefaultButton extends StatelessWidget {
                 BoxShadow(
                   blurRadius: 12,
                   color: Colors.black,
-                  offset: Offset(-7, -7),
+                  offset: Offset(-4, -4),
                 ),
               ],
               gradient: const LinearGradient(
