@@ -1,7 +1,7 @@
 import 'package:deepvr/booking_page_widgets/default_button.dart';
+import 'package:deepvr/enums/routes.dart';
 import 'package:deepvr/models/refactor/booking.dart';
-import 'package:deepvr/pages/games_page/game_view.dart';
-import 'package:deepvr/providers/app_model.dart';
+import 'package:deepvr/providers/routes_model.dart';
 import 'package:deepvr/providers/booking_page_model.dart';
 import 'package:deepvr/providers/counter_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
@@ -12,14 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../locator.dart';
+import '../widgets/games_page/game_view.dart';
 
 class Games extends StatelessWidget {
-  const Games({
-    Key? key,
-    required this.pageController
-  }) : super(key: key);
+  const Games({Key? key}) : super(key: key);
 
-  final PageController pageController;
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +56,7 @@ class Games extends StatelessWidget {
                            );
                            bookingModel.setViewModel(locator<CounterViewModel>());
                            Navigator.of(context).pop();
-                           locator<AppModel>().currPage = Pages.booking;
-                           pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                           locator<RoutesModel>().navigateToNamed(Routes.booking);
                          },
                              text: 'Забронировать')
                        ],

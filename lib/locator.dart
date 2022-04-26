@@ -1,4 +1,4 @@
-import 'package:deepvr/providers/app_model.dart';
+import 'package:deepvr/providers/routes_model.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/booking_page_model.dart';
 import 'package:deepvr/providers/booking_results_view_model.dart';
@@ -36,5 +36,5 @@ void setup() {
   locator.registerLazySingleton(() => BookingResultsViewModel());
   locator.registerSingleton(
       BookingPageModel()); //идеально сделать это factory, чтобы при каждом вызове обновлялось все
-  locator.registerSingleton(AppModel());
+  locator.registerSingleton(RoutesModel());
 }
