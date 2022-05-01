@@ -8,8 +8,8 @@ import '../pages/profile.dart';
 
 class RoutesModel with ChangeNotifier{
   final routes =<Routes, Widget> {
-    Routes.booking: const BookingPage(),
     Routes.games : const Games(),
+    Routes.booking: const BookingPage(),
     Routes.achievements : const Achievements(),
     Routes.profile : const Profile()
   };

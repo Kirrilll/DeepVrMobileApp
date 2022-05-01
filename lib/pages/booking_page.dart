@@ -8,6 +8,7 @@ import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/booking_page_model.dart';
 import 'package:deepvr/providers/booking_results_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
+import 'package:deepvr/widgets/custom_stepper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,6 @@ class BookingPage extends StatefulWidget {
   _BookingPageState createState() => _BookingPageState();
 }
 
-
 //Как-то через  StreamProvider сделать переходы
 class _BookingPageState extends State<BookingPage> {
   //Стоит сделать переменную, которая хранит в себе BookingPage interface
@@ -40,16 +40,18 @@ class _BookingPageState extends State<BookingPage> {
     super.initState();
   }
 
-
-  String _buildNextText(IBookingViewModel currModel){
-    switch(currModel.runtimeType){
-      case BookingFormViewModel:{
-        return 'Отправить';
-      }
-      case BookingResultsViewModel:{
-        return 'Забронировать';
-      }
-      default: return 'Далее';
+  String _buildNextText(IBookingViewModel currModel) {
+    switch (currModel.runtimeType) {
+      case BookingFormViewModel:
+        {
+          return 'Отправить';
+        }
+      case BookingResultsViewModel:
+        {
+          return 'Забронировать';
+        }
+      default:
+        return 'Далее';
     }
   }
 
@@ -60,91 +62,150 @@ class _BookingPageState extends State<BookingPage> {
         value: locator<BookingModel>(),
         child: Consumer<BookingModel>(builder: (context, model, _) {
           return Scaffold(
-            body: ListView(
-              physics: const NeverScrollableScrollPhysics(),
-              addAutomaticKeepAlives: false,
-              scrollDirection: Axis.horizontal,
-              controller: bookingController,
-              children: [
-                const GameTypesPage(),
-                GameCardPage(),
-                const PlayersCounterPage(),
-                const DatePickerPage(),
-                const TimePickerPage(),
-                const FormPage(),
-                const BookingResultPage()
+            body: CustomStepper(
+              type: StepperType.horizontal,
+              currentStep: model.currModel.getPageNumber(),
+              steps: [
+                const Step(title: Text(""), content: GameTypesPage()),
+                Step(title: const Text(""), content: GameCardPage()),
+                const Step(
+                  title: Text(""),
+                  content: PlayersCounterPage(),
+                ),
+                const Step(title: Text(""), content: TimePickerPage()),
+                const Step(title: Text(""), content: DatePickerPage()),
               ],
-            ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  DefaultButton(
-                      action: () => model.currModel.isMayBack()
-                          ? () {
-                        FocusScope.of(context).unfocus();
-                        model.setViewModel(model.currModel.getPrev() ?? model.currModel);
-                        bookingController.previousPage(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.ease);
+              onStepContinue: model.currModel.isFinished(model.booking)
+                  ? () {
+                      FocusScope.of(context).unfocus();
+                      if (model.currModel.runtimeType !=
+                          BookingResultsViewModel) {
+                        model.setViewModel(
+                            model.currModel.getNext() ?? model.currModel);
+                      } else {
+                        locator<BookingResultsViewModel>().order();
+                        model.init();
                       }
-                          : null,
-                      text: 'Назад'
+                    }
+                  : null,
+              onStepCancel: model.currModel.isMayBack()
+                  ? () {
+                      FocusScope.of(context).unfocus();
+                      model.setViewModel(
+                          model.currModel.getPrev() ?? model.currModel);
+                    }
+                  : null,
+              controlsBuilder: (context, details) {
+                return Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  decoration:  BoxDecoration(
+                      boxShadow: const [BoxShadow(color: Color(0xFF1F2032), offset: Offset(0, 1))],
+                    color: Theme.of(context).colorScheme.background
                   ),
-                  DefaultButton(
-                      action: () => model.currModel.isFinished(model.booking)
-                          ? () async {
-                        FocusScope.of(context).unfocus();
-                        if(model.currModel.runtimeType != BookingResultsViewModel){
-                          model.setViewModel(
-                              model.currModel.getNext() ?? model.currModel);
-                          await bookingController.nextPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.ease);
-                        }
-                        else{
-                          locator<BookingResultsViewModel>().order();
-                          model.init();
-                        }
-                      }
-                      : null,
-                      text: _buildNextText(model.currModel)
-                  )
-                  // ElevatedButton(
-                  //   onPressed: model.currModel.isFinished(model.booking)
-                  //       ? () async {
-                  //           FocusScope.of(context).unfocus();
-                  //           if(model.currModel.runtimeType != BookingResultsViewModel){
-                  //             model.setViewModel(
-                  //                 model.currModel.getNext() ?? model.currModel);
-                  //             await bookingController.nextPage(
-                  //                 duration: const Duration(milliseconds: 300),
-                  //                 curve: Curves.ease);
-                  //           }
-                  //           else{
-                  //             locator<BookingResultsViewModel>().order();
-                  //             model.init();
-                  //           }
-                  //         }
-                  //       : null,
-                  //   child:  Text(
-                  //     _buildNextText(model.currModel),
-                  //     style: const TextStyle(fontSize: 16, color: Colors.black),
-                  //   ),
-                  //   style: ElevatedButton.styleFrom(
-                  //     padding: const EdgeInsets.all(10),
-                  //     primary: Theme.of(context).colorScheme.secondary,
-                  //     onSurface: Theme.of(context).colorScheme.onSurface,
-                  //     shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(16)),
-                  //   ),
-                  // )
-                ],
-              ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                          onPressed: details.onStepCancel,
+                          child: Text('Назад'),
+                        ),
+                      ),
+                      const SizedBox(width: 9),
+                      Expanded(
+                        child: Stack(
+                          fit: StackFit.passthrough,
+                          children: <Widget>[
+                            Positioned.fill(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+
+                                  gradient: const LinearGradient(
+                                    colors: <Color>[
+                                      Color(0xFF0D47A1),
+                                      Color(0xFF1976D2),
+                                      Color(0xFF42A5F5),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                onSurface: Theme.of(context).colorScheme.onSurface,
+                                padding: const EdgeInsets.all(16.0),
+                                primary: Colors.white,
+                                textStyle: const TextStyle(fontSize: 16),
+                              ),
+                              onPressed: details.onStepContinue,
+                              child: const Text("Далее", softWrap: false),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
             ),
+            // body: ListView(
+            //   physics: const NeverScrollableScrollPhysics(),
+            //   addAutomaticKeepAlives: false,
+            //   scrollDirection: Axis.horizontal,
+            //   controller: bookingController,
+            //   children: [
+            //     const GameTypesPage(),
+            //     GameCardPage(),
+            //     const PlayersCounterPage(),
+            //     const DatePickerPage(),
+            //     const TimePickerPage(),
+            //     const FormPage(),
+            //     const BookingResultPage()
+            //   ],
+            // ),
+            // floatingActionButtonLocation:
+            //     FloatingActionButtonLocation.centerFloat,
+            // floatingActionButton: Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       DefaultButton(
+            //           action: () => model.currModel.isMayBack()
+            //               ? () {
+            //             FocusScope.of(context).unfocus();
+            //             model.setViewModel(model.currModel.getPrev() ?? model.currModel);
+            //             bookingController.previousPage(
+            //                 duration: const Duration(milliseconds: 300),
+            //                 curve: Curves.ease);
+            //           }
+            //               : null,
+            //           text: 'Назад'
+            //       ),
+            //       DefaultButton(
+            //           action: () => model.currModel.isFinished(model.booking)
+            //               ? () async {
+            //             FocusScope.of(context).unfocus();
+            //             if(model.currModel.runtimeType != BookingResultsViewModel){
+            //               model.setViewModel(
+            //                   model.currModel.getNext() ?? model.currModel);
+            //               await bookingController.nextPage(
+            //                   duration: const Duration(milliseconds: 300),
+            //                   curve: Curves.ease);
+            //             }
+            //             else{
+            //               locator<BookingResultsViewModel>().order();
+            //               model.init();
+            //             }
+            //           }
+            //           : null,
+            //           text: _buildNextText(model.currModel)
+            //       )
+            //     ],
+            //   ),
+            // ),
           );
         }),
       ),

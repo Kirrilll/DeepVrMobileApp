@@ -7,6 +7,7 @@ import 'package:deepvr/pages/profile.dart';
 import 'package:deepvr/providers/booking_page_model.dart';
 import 'package:deepvr/providers/games_provider.dart';
 import 'package:deepvr/services/remote_service.dart';
+import 'package:deepvr/widgets/tab_nav_button.dart';
 import 'package:deepvr/widgets/town_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +58,7 @@ class _AppState extends State<App> {
         colorScheme: ThemeData.dark().colorScheme.copyWith(
             primary: Colors.white,
             secondary: const Color(0xFFABAFE5),
-            background: Colors.black,
+            background: const Color(0xFF050411),
             secondaryContainer: const Color(0xFF1F2032)),
       ),
       home: SafeArea(
@@ -73,45 +74,57 @@ class _AppState extends State<App> {
                     child: Consumer<RoutesModel>(
                       builder: (context, model, _) => Scaffold(
                         body: model.selectedPage,
-                        bottomNavigationBar: BottomNavigationBar(
-                          currentIndex: model.selectedIndex,
+                        //TODO засунуть в отдельный виджет верстку IconButton
+                        bottomNavigationBar:
+                        BottomNavigationBar(
                           type: BottomNavigationBarType.fixed,
-                          selectedItemColor:
-                              Theme.of(context).colorScheme.secondary,
+                          iconSize: 22,
+                          // selectedLabelStyle: const TextStyle(
+                          //   fontWeight: FontWeight.w400,
+                          //   fontSize: 12,
+                          //   letterSpacing: -0.41,
+                          //   fontFamily: 'Gilroy'
+                          // ),
+                          fixedColor: Colors.white,
+                          currentIndex: model.selectedIndex,
                           showUnselectedLabels: false,
+                          showSelectedLabels: false,
+                          unselectedItemColor: Colors.white,
                           items: [
                             BottomNavigationBarItem(
-                                icon: IconButton(
-                                  icon: const Icon(Icons.book_online_outlined),
-                                  onPressed: () {
-                                    model.navigateToNamed(Routes.booking);
-                                  },
-                                ),
-                                label: 'бронирование'),
+                              icon: TabNavButton(
+                                navToNamed: () => model.navigateToNamed(Routes.games),
+                                iconPath: 'assets/icons/nav_games_icon.png',
+                                label: 'Игры',
+                                isActive: model.selectedIndex == 0,
+                              ),
+                              label: 'Игры'),
                             BottomNavigationBarItem(
-                                icon: IconButton(
-                                  icon: const Icon(Icons.games),
-                                  onPressed: () {
-                                    model.navigateToNamed(Routes.games);
-                                  },
+                                icon: TabNavButton(
+                                  navToNamed:() =>  model.navigateToNamed(Routes.booking),
+                                  label: 'Бронирование',
+                                  iconPath: 'assets/icons/nav_booking_icon.png',
+                                  isActive: model.selectedIndex == 1,
                                 ),
-                                label: 'игры'),
+                                label: 'Бронирование'),
+
                             BottomNavigationBarItem(
-                                icon: IconButton(
-                                  icon: const Icon(Icons.book_online_outlined),
-                                  onPressed: () {
-                                    model.navigateToNamed(Routes.achievements);
-                                  },
+
+                                icon: TabNavButton(
+                                  navToNamed: () => model.navigateToNamed(Routes.achievements),
+                                  label: 'Достижения',
+                                  iconPath: 'assets/icons/nav_achievement_icon.png',
+                                  isActive: model.selectedIndex == 2,
                                 ),
-                                label: 'достижения'),
+                                label: 'Достижения'),
                             BottomNavigationBarItem(
-                                icon: IconButton(
-                                  icon: const Icon(Icons.book_online_outlined),
-                                  onPressed: () {
-                                    model.navigateToNamed(Routes.profile);
-                                  },
+                                icon: TabNavButton(
+                                  navToNamed: () => model.navigateToNamed(Routes.profile),
+                                  label: 'Аккаунт',
+                                  iconPath: 'assets/icons/nav_profile_icon.png',
+                                  isActive: model.selectedIndex == 3
                                 ),
-                                label: 'профиль'),
+                                label: 'Аккаунт'),
                           ],
                         ),
                       ),
