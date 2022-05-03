@@ -49,7 +49,7 @@ class _BookingPageState extends State<BookingPage> {
         return  CustomStepper(
             type: StepperType.horizontal,
             currentStep: model.currModel.getPageNumber(),
-            steps: [
+            steps:   [
               const Step(title: Text(""), content: GameTypesPage()),
               Step(title: const Text(""), content: GameCardPage()),
               const Step(title: Text(""), content: PlayersCounterPage()),

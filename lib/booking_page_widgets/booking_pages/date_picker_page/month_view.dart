@@ -53,25 +53,27 @@ class MonthView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width - 32, //padding c каждой стороне по 16
-      child: StreamBuilder<List<Widget>>(
-        stream: _daysStream(),
-        builder: (context, snapshot) {
-          return snapshot.hasData
-              ? GridView.builder(
-            shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 7,
-                mainAxisSpacing: 7,
-                crossAxisSpacing: 7,
-              ),
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) => snapshot.data![index]
-          )
-          : const Center(child: CircularProgressIndicator());
-        }
+    return SingleChildScrollView(
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width - 32, //padding c каждой стороне по 16
+        child: StreamBuilder<List<Widget>>(
+          stream: _daysStream(),
+          builder: (context, snapshot) {
+            return snapshot.hasData
+                ? GridView.builder(
+              shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 7,
+                  mainAxisSpacing: 7,
+                  crossAxisSpacing: 7,
+                ),
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) => snapshot.data![index]
+            )
+            : const Center(child: CircularProgressIndicator());
+          }
+        ),
       ),
     );
   }

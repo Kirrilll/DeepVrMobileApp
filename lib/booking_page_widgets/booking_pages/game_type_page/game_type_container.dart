@@ -2,7 +2,6 @@ import 'package:deepvr/models/game_type_model.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/game_type_page/game_type_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class GameTypeContainer extends StatelessWidget {
   const GameTypeContainer({

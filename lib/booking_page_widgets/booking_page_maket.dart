@@ -19,10 +19,6 @@ class BookingPageMaket extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height-323.143,
-          maxWidth: MediaQuery.of(context).size.width
-      ),
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,12 +27,12 @@ class BookingPageMaket extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
               stepTitle,
-            maxLines: 2,
+            textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.white,
               letterSpacing: 1,
               fontWeight: FontWeight.w700,
-              fontSize: 46
+              fontSize: 46,
             ),
           ),
           const SizedBox(height: 16),

@@ -1,12 +1,6 @@
-import 'dart:developer';
-
-
 import 'package:deepvr/entities/month.dart';
-import 'package:deepvr/locator.dart';
-import 'package:deepvr/providers/date_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'month_view.dart';
 
@@ -25,7 +19,6 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   int currMonthIndex = 0;
   var calendarController = PageController();
- // final List<Month> calendar = Month.monthFromMap( locator<DateViewModel>().calendar.schedule);
 
   void  Function()? next(){
     if(currMonthIndex < widget.calendar.length - 1){

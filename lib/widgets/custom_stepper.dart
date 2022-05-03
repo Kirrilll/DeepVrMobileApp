@@ -190,6 +190,7 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
 
     return Column(
       mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
@@ -201,7 +202,7 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
           child: AnimatedSize(
             curve: Curves.fastOutSlowIn,
             duration: kThemeAnimationDuration,
-            child: Column(children: stepPanels),
+            child: Stack(children: stepPanels),
           ),
         ),
         _buildVerticalControls(widget.currentStep),
