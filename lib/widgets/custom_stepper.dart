@@ -74,10 +74,6 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
     return widget.currentStep == index;
   }
 
-  bool _isDark() {
-    return Theme.of(context).brightness == Brightness.dark;
-  }
-
   Widget _buildLine(bool visible) {
     return const DottedLine(
       lineThickness: 2,
@@ -130,7 +126,7 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
     if (widget.steps[index].state != _oldStates[index]) {
       return AnimatedCrossFade(
         firstChild: _buildCircle(index, true),
-        secondChild: _buildCircle(index, true),
+        secondChild: _buildCircle(0, true),
         firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
         secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
         sizeCurve: Curves.fastOutSlowIn,
@@ -193,29 +189,22 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
     }
 
     return Column(
+      mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Material(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-            child: Row(
-              children: children,
-            ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+          child: Row(
+            children: children,
           ),
         ),
         Expanded(
-          child: ListView(
-            physics: widget.physics,
-            children: <Widget>[
-              _buildVerticalControls(widget.currentStep),
-              AnimatedSize(
-                curve: Curves.fastOutSlowIn,
-                duration: kThemeAnimationDuration,
-                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: stepPanels),
-              ),
-              //_buildVerticalControls(widget.currentStep),
-            ],
+          child: AnimatedSize(
+            curve: Curves.fastOutSlowIn,
+            duration: kThemeAnimationDuration,
+            child: Column(children: stepPanels),
           ),
         ),
+        _buildVerticalControls(widget.currentStep),
       ],
     );
   }

@@ -18,23 +18,20 @@ class TabNavButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      // crossAxisAlignment: CrossAxisAlignment.center,
-      // mainAxisAlignment: MainAxisAlignment.center,
       children: [
 
-        IconButton(
-          iconSize: 22,
-          padding: const EdgeInsets.all(0),
-          alignment: Alignment.bottomCenter,
-          icon:  ImageIcon(
-            AssetImage(iconPath),
-            size: 22,
+        GestureDetector(
+          onTap: () => navToNamed(),
+          child: Image.asset(
+              iconPath,
+            width: 22,
+            height: 22,
           ),
-          onPressed: () => navToNamed(),
         ),
+
         Container(
-            margin: const EdgeInsets.only(top: 5),
-            padding: const EdgeInsets.only(bottom: 5),
+            margin: const EdgeInsets.only(top: 2),
+            padding: const EdgeInsets.only(bottom: 2),
             decoration: BoxDecoration(
               border: Border(
                   bottom: BorderSide(
@@ -54,14 +51,6 @@ class TabNavButton extends StatelessWidget {
               ),
             )
         ),
-        // Container(
-        //   margin: const EdgeInsets.only(top: 5),
-        //   height: 2,
-        //   decoration: BoxDecoration(
-        //     color: isActive ? const Color(0xFF30A5D1): Colors.transparent,
-        //     borderRadius: BorderRadius.circular(50)
-        //   ),
-        // )
       ],
     );
   }

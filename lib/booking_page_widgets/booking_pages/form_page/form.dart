@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../locator.dart';
-import '../../default_button.dart';
 
 //Возможно аккуратное подключение к stream и подкидывание данных сюда
 class OrderingForm extends StatefulWidget {
@@ -49,13 +48,6 @@ class _OrderingFormState extends State<OrderingForm> {
               initialValue: bookingModel.booking.phone,
               formState: _formState,
           ),
-          // BookPageSwitchingBtn(text: 'Отправить', action: () {
-          //   if(_formState.currentState!.validate()) {
-          //     _formState.currentState?.save();
-          //     FocusScope.of(context).unfocus();
-          //   }
-          // },)
-
         ],
       ),
     );

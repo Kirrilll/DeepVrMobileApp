@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../locator.dart';
-import '../../default_button.dart';
 
 class BookingResultPage extends StatefulWidget {
   const BookingResultPage({Key? key}) : super(key: key);

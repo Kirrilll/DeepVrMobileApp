@@ -1,4 +1,3 @@
-import 'package:deepvr/booking_page_widgets/default_button.dart';
 import 'package:deepvr/enums/routes.dart';
 import 'package:deepvr/models/refactor/booking.dart';
 import 'package:deepvr/providers/routes_model.dart';
@@ -12,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../locator.dart';
+import '../widgets/default_button.dart';
 import '../widgets/games_page/game_view.dart';
 
 class Games extends StatelessWidget {
@@ -43,7 +43,7 @@ class Games extends StatelessWidget {
                      builder: (context) => SimpleDialog(
                        title: Text(game.title),
                        children: [
-                         DefaultButton(action: () => (){
+                         DefaultButton(actionCallback: () => (){
                            var bookingModel = locator<BookingModel>();
                            bookingModel.init();
                            bookingModel.updateBooking(
@@ -58,7 +58,7 @@ class Games extends StatelessWidget {
                            Navigator.of(context).pop();
                            locator<RoutesModel>().navigateToNamed(Routes.booking);
                          },
-                             text: 'Забронировать')
+                             actTitle: 'Забронировать')
                        ],
                      )
                  )

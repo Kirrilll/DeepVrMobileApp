@@ -76,57 +76,95 @@ class _AppState extends State<App> {
                         body: model.selectedPage,
                         //TODO засунуть в отдельный виджет верстку IconButton
                         bottomNavigationBar:
-                        BottomNavigationBar(
-                          type: BottomNavigationBarType.fixed,
-                          iconSize: 22,
-                          // selectedLabelStyle: const TextStyle(
-                          //   fontWeight: FontWeight.w400,
-                          //   fontSize: 12,
-                          //   letterSpacing: -0.41,
-                          //   fontFamily: 'Gilroy'
-                          // ),
-                          fixedColor: Colors.white,
-                          currentIndex: model.selectedIndex,
-                          showUnselectedLabels: false,
-                          showSelectedLabels: false,
-                          unselectedItemColor: Colors.white,
-                          items: [
-                            BottomNavigationBarItem(
-                              icon: TabNavButton(
-                                navToNamed: () => model.navigateToNamed(Routes.games),
-                                iconPath: 'assets/icons/nav_games_icon.png',
-                                label: 'Игры',
-                                isActive: model.selectedIndex == 0,
-                              ),
-                              label: 'Игры'),
-                            BottomNavigationBarItem(
-                                icon: TabNavButton(
-                                  navToNamed:() =>  model.navigateToNamed(Routes.booking),
-                                  label: 'Бронирование',
-                                  iconPath: 'assets/icons/nav_booking_icon.png',
-                                  isActive: model.selectedIndex == 1,
-                                ),
-                                label: 'Бронирование'),
+                          Container(
+                            color: Theme.of(context).colorScheme.background,
+                            padding: const EdgeInsets.fromLTRB(35, 11, 35, 15),
+                            height: 72,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                       TabNavButton(
+                                        navToNamed: () => model.navigateToNamed(Routes.games),
+                                        iconPath: 'assets/icons/nav_games_icon.png',
+                                        label: 'Игры',
+                                        isActive: model.selectedIndex == 0,
+                                      ),
 
-                            BottomNavigationBarItem(
+                                    TabNavButton(
+                                          navToNamed:() =>  model.navigateToNamed(Routes.booking),
+                                          label: 'Бронирование',
+                                          iconPath: 'assets/icons/nav_booking_icon.png',
+                                          isActive: model.selectedIndex == 1,
+                                        ),
+                                     TabNavButton(
+                                          navToNamed: () => model.navigateToNamed(Routes.achievements),
+                                          label: 'Достижения',
+                                          iconPath: 'assets/icons/nav_achievement_icon.png',
+                                          isActive: model.selectedIndex == 2,
+                                        ),
 
-                                icon: TabNavButton(
-                                  navToNamed: () => model.navigateToNamed(Routes.achievements),
-                                  label: 'Достижения',
-                                  iconPath: 'assets/icons/nav_achievement_icon.png',
-                                  isActive: model.selectedIndex == 2,
-                                ),
-                                label: 'Достижения'),
-                            BottomNavigationBarItem(
-                                icon: TabNavButton(
-                                  navToNamed: () => model.navigateToNamed(Routes.profile),
-                                  label: 'Аккаунт',
-                                  iconPath: 'assets/icons/nav_profile_icon.png',
-                                  isActive: model.selectedIndex == 3
-                                ),
-                                label: 'Аккаунт'),
-                          ],
-                        ),
+                                     TabNavButton(
+                                          navToNamed: () => model.navigateToNamed(Routes.profile),
+                                          label: 'Аккаунт',
+                                          iconPath: 'assets/icons/nav_profile_icon.png',
+                                          isActive: model.selectedIndex == 3
+                                        ),
+
+                              ],
+                            ),
+                          )
+                        // BottomNavigationBar(
+                        //   type: BottomNavigationBarType.fixed,
+                        //   iconSize: 22,
+                        //   // selectedLabelStyle: const TextStyle(
+                        //   //   fontWeight: FontWeight.w400,
+                        //   //   fontSize: 12,
+                        //   //   letterSpacing: -0.41,
+                        //   //   fontFamily: 'Gilroy'
+                        //   // ),
+                        //   fixedColor: Colors.white,
+                        //   currentIndex: model.selectedIndex,
+                        //   showUnselectedLabels: false,
+                        //   showSelectedLabels: false,
+                        //   unselectedItemColor: Colors.white,
+                        //   items: [
+                        //     BottomNavigationBarItem(
+                        //       icon: TabNavButton(
+                        //         navToNamed: () => model.navigateToNamed(Routes.games),
+                        //         iconPath: 'assets/icons/nav_games_icon.png',
+                        //         label: 'Игры',
+                        //         isActive: model.selectedIndex == 0,
+                        //       ),
+                        //       label: 'Игры'),
+                        //     BottomNavigationBarItem(
+                        //         icon: TabNavButton(
+                        //           navToNamed:() =>  model.navigateToNamed(Routes.booking),
+                        //           label: 'Бронирование',
+                        //           iconPath: 'assets/icons/nav_booking_icon.png',
+                        //           isActive: model.selectedIndex == 1,
+                        //         ),
+                        //         label: 'Бронирование'),
+                        //
+                        //     BottomNavigationBarItem(
+                        //
+                        //         icon: TabNavButton(
+                        //           navToNamed: () => model.navigateToNamed(Routes.achievements),
+                        //           label: 'Достижения',
+                        //           iconPath: 'assets/icons/nav_achievement_icon.png',
+                        //           isActive: model.selectedIndex == 2,
+                        //         ),
+                        //         label: 'Достижения'),
+                        //     BottomNavigationBarItem(
+                        //         icon: TabNavButton(
+                        //           navToNamed: () => model.navigateToNamed(Routes.profile),
+                        //           label: 'Аккаунт',
+                        //           iconPath: 'assets/icons/nav_profile_icon.png',
+                        //           isActive: model.selectedIndex == 3
+                        //         ),
+                        //         label: 'Аккаунт'),
+                        //   ],
+                        // ),
                       ),
                     ),
                   )

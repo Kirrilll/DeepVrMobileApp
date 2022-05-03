@@ -1,4 +1,3 @@
-import 'package:deepvr/booking_page_widgets/default_button.dart';
 import 'package:deepvr/booking_page_widgets/booking_page_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,20 +20,26 @@ class BookingPageMaket extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height,
+          maxHeight: MediaQuery.of(context).size.height-323.143,
           maxWidth: MediaQuery.of(context).size.width
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.max,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(height: 33),
-          BookingPageTitle(
-            step: stepNumber,
-            title: stepTitle,
+          const SizedBox(height: 16),
+          Text(
+              stepTitle,
+            maxLines: 2,
+            style: const TextStyle(
+              color: Colors.white,
+              letterSpacing: 1,
+              fontWeight: FontWeight.w700,
+              fontSize: 46
+            ),
           ),
-          const SizedBox(height: 36),
+          const SizedBox(height: 16),
           Expanded(child: content),
         ],
       ),
