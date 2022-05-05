@@ -20,16 +20,31 @@ class _GameCardContainerState extends State<GameCardContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 15,
-        crossAxisSpacing: 15,
-        mainAxisExtent: 315
-      ),
-      children: widget.games
-          .map((game) => GameCard(gameModel: game))
-          .toList()
+    // return GridView(
+    //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    //     crossAxisCount: 2,
+    //     mainAxisSpacing: 15,
+    //     crossAxisSpacing: 15,
+    //     //mainAxisExtent: 315
+    //   ),
+    //   children: widget.games
+    //       .map((game) => GameCard(gameModel: game))
+    //       .toList()
+    // );
+    return ListView.separated(
+        itemBuilder: (context, index){
+          int currIndex = index * 2;
+          var isExist = currIndex +1 != widget.games.length;
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GameCard(gameModel: widget.games[currIndex]),
+              isExist? GameCard(gameModel: widget.games[currIndex+1]): const SizedBox()
+            ],
+          );
+        },
+        separatorBuilder: (_, index) => const SizedBox(height: 20),
+        itemCount: (widget.games.length / 2).round()
     );
   }
 }

@@ -17,7 +17,7 @@ class GameTypeContainer extends StatelessWidget {
     return ListView.separated(
         itemCount: gameTypes.length,
         itemBuilder: (context, index) {
-          return GameTypeCard(gameType: gameTypes[index],);
+          return  GameTypeCard(gameType: gameTypes[index]);
         },
         separatorBuilder: (_, index) => const SizedBox(height: 30),
     );

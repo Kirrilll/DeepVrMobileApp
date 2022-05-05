@@ -29,6 +29,7 @@ class RemoteService{
     var response = await _client.get(uri);
     if(response.statusCode == 200){
       var json = response.body;
+      print(json);
       return GameTypeModel.gameTypesFromJson(json);
     }
   }

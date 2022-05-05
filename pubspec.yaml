@@ -64,6 +64,9 @@ flutter:
     - assets/icons/nav_games_icon.png
     - assets/icons/nav_booking_icon.png
     - assets/icons/nav_achievement_icon.png
+    - assets/icons/clock.png
+    - assets/icons/console.png
+    - assets/icons/vrglasses.png
     - assets/fonts/
 #   fonts:
 #     - family: Gilroy

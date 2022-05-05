@@ -2,6 +2,7 @@ import 'package:deepvr/models/game_type_model.dart';
 import 'package:deepvr/models/refactor/booking.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
+import 'package:deepvr/widgets/selectable_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,22 +17,6 @@ class GameTypeCard extends StatelessWidget {
 
   final GameTypeModel gameType;
 
-  get _buildBoxDecoration => (context, isActive) {
-        BoxDecoration boxDecoration = BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: Theme.of(context).colorScheme.secondaryContainer);
-
-        if (isActive) {
-          return boxDecoration.copyWith(
-              border: Border.all(color: const Color(0XFF8556FF), width: 2),
-              boxShadow: const [
-                BoxShadow(
-                    color: Color(0xFF250F5d), blurRadius: 20, spreadRadius: 10),
-              ]);
-        }
-        return boxDecoration;
-      };
-
   @override
   Widget build(BuildContext context) {
     return Consumer<BookingModel>(
@@ -40,56 +25,84 @@ class GameTypeCard extends StatelessWidget {
           //Изменился тип, изменилось все, поэтому идет сброс
           model.updateBooking(Booking.copyWith(Booking.initial(), selectedType: gameType));
           },
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(36, 40, 21, 38),
-          decoration: _buildBoxDecoration(context, model.booking.selectedType?.id == gameType.id),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                gameType.title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
+        child: SelectableItem(
+          isSelected: model.booking.selectedType != null && model.booking.selectedType!.id == gameType.id,
+          item: Container(
+            padding: const EdgeInsets.all(30),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Theme.of(context).colorScheme.secondaryContainer
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  gameType.title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    letterSpacing: -0.41,
+                    fontWeight: FontWeight.w600
+                  ),
                 ),
-              ),
-              const SizedBox(height: 60),
-              Row(
-                children: [
-                  Icon(
-                    Icons.videogame_asset,
-                    size: 25,
-                    color: Colors.cyan.shade700,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    gameType.guestMin.toString() +
-                        '-' +
-                        gameType.guestMax.toString(),
-                    style: const TextStyle(fontSize: 17, color: Colors.white),
-                  )
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Icon(
-                    Icons.access_time,
-                    color: Colors.cyan.shade700,
-                    size: 25,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    gameType.timeDuration.toString(),
-                    style: const TextStyle(fontSize: 17, color: Colors.white),
-                  )
-                ],
-              ),
-            ],
+                const SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TypeLimitation(
+                      name: gameType.guestMin.toString() + '-' + gameType.guestMax.toString(),
+                      iconPath: 'assets/icons/console.png'
+                    ),
+                    const TypeLimitation(name: '12+', iconPath: 'assets/icons/vrglasses.png'),
+                    TypeLimitation(
+                      name: gameType.timeDuration.toString() + ' мин.',
+                      iconPath: 'assets/icons/clock.png',
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+
+class TypeLimitation extends StatelessWidget {
+  const TypeLimitation({
+    Key? key,
+    required this.name,
+    required this.iconPath
+  }) : super(key: key);
+
+  final String name;
+  final String iconPath;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        ImageIcon(
+          AssetImage(iconPath),
+          size: 32,
+          color: const Color(0xFF30A5D1),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          name,
+          style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.2,
+              color: Colors.white
+          ),
+        )
+      ],
+    );
+  }
+}
+
