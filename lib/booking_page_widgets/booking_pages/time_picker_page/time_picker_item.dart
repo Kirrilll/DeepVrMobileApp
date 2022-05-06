@@ -11,45 +11,45 @@ class TimePickerItem extends StatelessWidget {
 
   final TimeEntity time;
 
+  bool _isSelected(TimeEntity? time) => this.time == time;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<BookingModel>(
         builder: (context, viewModel, _) =>
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-              // Text(
-              //   !viewModel.isBooked(time) ? '' : 'Забронировано',
-              //   style:
-              //       TextStyle(color: Theme.of(context).colorScheme.secondary),
-              // ),
               const SizedBox(height: 12),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).colorScheme.secondaryContainer,
-                    onSurface: const Color(0xFF0F0F1D),
+                    primary: _isSelected(viewModel.booking.selectedTime)
+                        ? Theme.of(context).colorScheme.secondary
+                        : Theme.of(context).colorScheme.secondaryContainer,
                     elevation: 20,
                     padding: const EdgeInsets.all(16),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        side: viewModel.booking.selectedTime != null &&
-                                viewModel.booking.selectedTime == time
-                            ? const BorderSide(
-                                color: Color(0XFF8556FF), width: 2)
-                            : BorderSide.none)),
-                onPressed: () => viewModel.updateBooking(Booking.copyWith(viewModel.booking, selectedTime: time)),
+                        borderRadius: BorderRadius.circular(10))),
+                onPressed: () => viewModel.updateBooking(
+                    Booking.copyWith(viewModel.booking, selectedTime: time)),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.access_time,
+                    ImageIcon(
+                      const  AssetImage('assets/icons/access_time .png'),
                       size: 20,
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: _isSelected(viewModel.booking.selectedTime)
+                          ? const Color(0xFF050411)
+                          : Theme.of(context).colorScheme.secondary,
                     ),
                     const SizedBox(width: 10),
                     Text(
                       time.time.toString(),
                       style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                          fontSize: 16),
+                          color: _isSelected(viewModel.booking.selectedTime)
+                              ? const Color(0xFF050411)
+                              : Theme.of(context).colorScheme.secondary,
+                          fontSize: 16,
+                        fontWeight: FontWeight.w400
+                      ),
                     ),
                   ],
                 ),

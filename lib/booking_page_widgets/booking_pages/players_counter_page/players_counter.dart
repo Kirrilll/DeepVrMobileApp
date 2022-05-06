@@ -47,55 +47,74 @@ class PlayerCounter extends StatelessWidget {
 //Если это ListView обернуть в 2 Consumer(вепхний GamesViewModel) проверять на isFinished
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12),
-      child: Consumer<BookingModel>(
-              builder: (context, viewModel, child)  {
-                return viewModel.booking.selectedGame != null ? Row(
+    return Consumer<BookingModel>(
+            builder: (context, viewModel, child)  {
+              if (viewModel.booking.selectedGame != null) {
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 48),
+                  // padding: const EdgeInsets.symmetric(vertical: 72),
+                  decoration:  BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    color: Theme.of(context).colorScheme.secondaryContainer
+                  ),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      IconButton(
-                          onPressed: () => decrement(viewModel.booking, viewModel),
-                          icon: const Icon(
-                            Icons.remove,
-                            size: 20,
-                          )
-                      ),
-                      Container(
-                        width: 80,
-                        height: 50,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 26, vertical: 5),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Theme
-                                .of(context)
-                                .colorScheme
-                                .secondaryContainer
-                        ),
-                        child: Center(
-                          child: Text(
-                            viewModel.booking.guestCount.toString(),
-                            style: const TextStyle(
-                                fontSize: 16
+                      Image.asset('assets/images/realistic_vrglasses.png'),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                              onPressed: () => decrement(viewModel.booking, viewModel),
+                              padding: const EdgeInsets.all(0),
+                              iconSize: 20,
+                              icon: const Icon(
+                                Icons.remove,
+                              )
+                          ),
+                          Container(
+                            width: 95,
+                            height: 52,
+                            margin: const EdgeInsets.symmetric(horizontal: 24),
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                gradient: const LinearGradient(colors: [Color(0xFF36C0E7), Color(0xFF4B51EA)]),
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.secondaryContainer,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  viewModel.booking.guestCount.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 16
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
 
-                      IconButton(
-                          onPressed: () => increment(viewModel.booking, viewModel),
-                          icon: const Icon(
-                            Icons.add,
-                            size: 20,
+                          IconButton(
+                              onPressed: () => increment(viewModel.booking, viewModel),
+                              icon: const Icon(
+                                Icons.add,
+                                size: 20,
+                              )
                           )
-                      )
+                        ],
+                      ),
                     ],
-                  ) : const Center(child: CircularProgressIndicator(),);
+                  ),
+                );
+              } else {
+                return const Center(child: CircularProgressIndicator(),);
               }
-      ),
+            }
     );
   }
 }
