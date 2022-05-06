@@ -51,6 +51,7 @@ class GameCard extends StatelessWidget {
             height: 216,
             width: 162,
             child: Stack(
+              fit: StackFit.expand,
               children: [
                 Image.network(
                   gameModel.logo == null
@@ -70,7 +71,7 @@ class GameCard extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(13),
                     child:  Text(
-                        gameModel.title,
+                        gameModel.title.toUpperCase(),
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.white,

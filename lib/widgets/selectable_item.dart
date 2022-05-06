@@ -17,12 +17,10 @@ class SelectableItem extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(15))
       ),
       child: Stack(
+        alignment: Alignment.topRight,
         children: [
           item,
-          const Align(
-            child: SelectedTriangle(),
-            alignment: Alignment.centerRight,
-          )
+          const SelectedTriangle()
         ],
       ),
     ):
@@ -47,9 +45,9 @@ class SelectedTriangle extends StatelessWidget {
           borderRadius: BorderRadius.only(topRight: Radius.circular(15)),
           color:  Color(0xFF4B51EA),
         ),
-        child: Padding(
+        child: const Padding(
           padding: EdgeInsets.fromLTRB(0, 4, 5, 0),
-          child: const Icon(
+          child: Icon(
               Icons.done,
             size: 20,
           ),
