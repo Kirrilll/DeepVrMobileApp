@@ -5,8 +5,8 @@ import '../../../locator.dart';
 import '../../../models/refactor/booking.dart';
 import '../../../providers/refactor/booking_model.dart';
 
-class PasswordField extends StatelessWidget {
-  const PasswordField({
+class PhoneField extends StatelessWidget {
+  const PhoneField({
     Key? key,
     this.initialValue,
     required this.setPhone,
@@ -54,7 +54,11 @@ class PasswordField extends StatelessWidget {
       decoration: InputDecoration(
           filled: true,
           contentPadding: const EdgeInsets.all(16),
-          prefixIcon:  const Icon(Icons.phone),
+          prefixIcon:  ImageIcon(
+            const AssetImage('assets/icons/phone.png'),
+            size: 24,
+            color: Theme.of(context).colorScheme.secondary,
+          ),
           fillColor: Theme.of(context).colorScheme.secondaryContainer,
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),

@@ -44,18 +44,14 @@ class LoginField extends StatelessWidget {
         bookingModel.updateBooking(Booking.copyWith(bookingModel.booking, name: value));
       },
       initialValue: initialName,
-      // validator: (value){
-      //   const pattern = r'/^[а-яё]{30}|[a-z]{30}$/iu';
-      //   var regExp = RegExp(pattern);
-      //   if(!regExp.hasMatch(value!)){
-      //     return 'Неверное имя';
-      //   }
-      //   return null;
-      // },
       decoration: InputDecoration(
           filled: true,
           contentPadding: const EdgeInsets.all(16),
-          prefixIcon:  const Icon(Icons.account_circle),
+          prefixIcon: ImageIcon(
+            const AssetImage('assets/icons/person.png'),
+            size: 24,
+            color: Theme.of(context).colorScheme.secondary,
+          ),
           fillColor: Theme.of(context).colorScheme.secondaryContainer,
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),

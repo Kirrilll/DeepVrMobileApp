@@ -69,6 +69,8 @@ flutter:
     - assets/icons/vrglasses.png
     - assets/images/realistic_vrglasses.png
     - assets/icons/access_time .png
+    - assets/icons/phone.png
+    - assets/icons/person.png
     - assets/fonts/
 #   fonts:
 #     - family: Gilroy
