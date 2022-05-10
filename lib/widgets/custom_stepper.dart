@@ -74,6 +74,7 @@ class _CustomStepperState extends State<CustomStepper> with TickerProviderStateM
     return widget.currentStep == index;
   }
 
+
   Widget _buildLine(bool visible) {
     return const DottedLine(
       lineThickness: 2,

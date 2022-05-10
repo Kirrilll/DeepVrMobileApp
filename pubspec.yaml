@@ -71,6 +71,7 @@ flutter:
     - assets/icons/access_time .png
     - assets/icons/phone.png
     - assets/icons/person.png
+    - assets/icons/calendar.png
     - assets/fonts/
 #   fonts:
 #     - family: Gilroy

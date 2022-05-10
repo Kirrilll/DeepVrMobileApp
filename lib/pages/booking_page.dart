@@ -1,5 +1,7 @@
 import 'package:deepvr/booking_page_widgets/booking_pages/date_picker_page/date_picker_page.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/form_page/form_page.dart';
+import 'package:deepvr/booking_page_widgets/booking_pages/result_page/order_page.dart';
+import 'package:deepvr/booking_page_widgets/booking_pages/result_page/result_page.dart';
 import 'package:deepvr/locator.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:deepvr/widgets/custom_stepper.dart';
@@ -56,6 +58,11 @@ class _BookingPageState extends State<BookingPage> {
               const Step(title: Text(""), content: DatePickerPage()),
               const Step(title: Text(""), content: TimePickerPage()),
               const Step(title: Text(""), content: FormPage()),
+              Step(
+                  title: const Text(''),
+                  content: OrderPage(booking: model.booking),
+                state: StepState.disabled
+              )
             ],
             onStepContinue: _onStepContinue(model),
             onStepCancel: _onStepCancel(model),

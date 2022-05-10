@@ -19,19 +19,7 @@ class BookingResultPage extends StatefulWidget {
 class _BookingResultPageState extends State<BookingResultPage> {
 
 
-  Widget _buildResultPage() {
-    var model = locator<BookingResultsViewModel>();
-    switch (model.status) {
-      case RequestInfo.notSend:
-        return OrderPage(booking : locator<BookingModel>().booking );
-      case RequestInfo.loading:
-        return const Center(child: CircularProgressIndicator());
-      case RequestInfo.successful:
-        return const Successful();
-      case RequestInfo.error:
-        return const Text('Нет соединения');
-    }
-  }
+
 
   @override
   void initState() {
@@ -43,28 +31,10 @@ class _BookingResultPageState extends State<BookingResultPage> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
         value: locator<BookingResultsViewModel>(),
-        child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Consumer<BookingResultsViewModel>(
-              builder: (context, viewModel, _) =>  Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Container(
-                        padding: const EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                                colors: [Color(0xFF36C0E7), Color(0xFF4B51EA)]),
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .secondaryContainer),
-                          padding: const EdgeInsets.all(15),
-                          child: _buildResultPage(),
-                        ),
-                      )),
-            )));
+        child: Consumer<BookingResultsViewModel>(
+          builder: (context, viewModel, _) => Stack(
+            children: [],
+          ),
+        ));
   }
 }
