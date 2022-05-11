@@ -2,8 +2,8 @@ import 'package:deepvr/booking_page_widgets/booking_pages/form_page/login_field.
 import 'package:deepvr/booking_page_widgets/booking_pages/form_page/phone_field.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
-import 'package:deepvr/widgets/custom_checkbox.dart';
-import 'package:deepvr/widgets/default_button.dart';
+import 'package:deepvr/ui/widgets/custom_checkbox.dart';
+import 'package:deepvr/ui/widgets/default_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

@@ -1,9 +1,8 @@
-import 'package:deepvr/booking_page_widgets/booking_page_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class BookingPageMaket extends StatelessWidget {
-  const BookingPageMaket({
+class BookingStepLayout extends StatelessWidget {
+  const BookingStepLayout({
     Key? key,
     required this.stepNumber,
     required this.content,

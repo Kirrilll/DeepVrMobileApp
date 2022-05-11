@@ -7,16 +7,15 @@ import 'package:deepvr/locator.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/booking_results_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
-import 'package:deepvr/widgets/custom_stepper.dart';
-import 'package:deepvr/widgets/default_button.dart';
+import 'package:deepvr/ui/widgets/default_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../booking_page_widgets/booking_pages/game_picker_page/game_page.dart';
-import '../booking_page_widgets/booking_pages/game_type_page/game_type_page.dart';
-import '../booking_page_widgets/booking_pages/players_counter_page/players_counter_page.dart';
-import '../booking_page_widgets/booking_pages/time_picker_page/time_picker_page.dart';
+import '../../booking_page_widgets/booking_pages/game_picker_page/game_page.dart';
+import '../../booking_page_widgets/booking_pages/game_type_page/game_type_page.dart';
+import '../../booking_page_widgets/booking_pages/players_counter_page/players_counter_page.dart';
+import '../../booking_page_widgets/booking_pages/time_picker_page/time_picker_page.dart';
+import '../widgets/custom_stepper.dart';
 
 class BookingPage extends StatefulWidget {
   const BookingPage({Key? key}) : super(key: key);

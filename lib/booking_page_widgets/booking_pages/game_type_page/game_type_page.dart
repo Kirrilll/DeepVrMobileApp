@@ -1,4 +1,4 @@
-import 'package:deepvr/booking_page_widgets/booking_page_maket.dart';
+import 'package:deepvr/booking_page_widgets/booking_step_layout.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/game_type_page/game_type_container.dart';
 import 'package:deepvr/models/game_type_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
@@ -34,7 +34,7 @@ class _GameTypesPageState extends State<GameTypesPage> {
     return ChangeNotifierProvider.value(
       value: model,
       child: Consumer<GameTypeViewModel>(
-        builder :(context, viewModel, child)  => BookingPageMaket(
+        builder :(context, viewModel, child)  => BookingStepLayout(
           content: viewModel.pageState == PageState.loaded
               ? GameTypeContainer(gameTypes: viewModel.gameTypes!,)
               : const Center(child: CircularProgressIndicator()),

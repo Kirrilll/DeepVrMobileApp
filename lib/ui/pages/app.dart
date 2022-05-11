@@ -1,20 +1,12 @@
 import 'package:deepvr/enums/routes.dart';
-import 'package:deepvr/models/location.dart';
-import 'package:deepvr/pages/achievements.dart';
-import 'package:deepvr/pages/booking_page.dart';
-import 'package:deepvr/pages/games.dart';
-import 'package:deepvr/pages/profile.dart';
-import 'package:deepvr/providers/booking_page_model.dart';
 import 'package:deepvr/providers/games_provider.dart';
 import 'package:deepvr/services/remote_service.dart';
-import 'package:deepvr/widgets/tab_nav_button.dart';
-import 'package:deepvr/widgets/town_dialog.dart';
+import 'package:deepvr/ui/widgets/tab_nav_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../locator.dart';
-import '../providers/routes_model.dart';
+import '../../locator.dart';
+import '../../providers/routes_model.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);

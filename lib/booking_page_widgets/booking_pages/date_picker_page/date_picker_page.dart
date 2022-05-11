@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:deepvr/booking_page_widgets/booking_page_maket.dart';
+import 'package:deepvr/booking_page_widgets/booking_step_layout.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/date_picker_page/calendar_view.dart';
 import 'package:deepvr/entities/date_entity.dart';
 import 'package:deepvr/entities/month.dart';
@@ -43,7 +43,7 @@ class _DatePickerPageState extends State<DatePickerPage> {
       value: dateModel,
       child: Consumer2<DateViewModel, BookingModel>(
         builder: (context, dateModel, bookingModel, child) {
-          return BookingPageMaket(
+          return BookingStepLayout(
             stepNumber: 4,
             content: dateModel.pageState == PageState.loaded
                 ? Calendar( calendar: Month.monthFromMap(dateModel.calendar.schedule))

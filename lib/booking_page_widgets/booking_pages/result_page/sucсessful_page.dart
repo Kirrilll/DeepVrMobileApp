@@ -1,6 +1,6 @@
 import 'package:deepvr/enums/routes.dart';
 import 'package:deepvr/providers/routes_model.dart';
-import 'package:deepvr/widgets/default_button.dart';
+import 'package:deepvr/ui/widgets/default_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,10 +1,10 @@
 import 'package:deepvr/enums/routes.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../pages/achievements.dart';
-import '../pages/booking_page.dart';
-import '../pages/games.dart';
-import '../pages/profile.dart';
+import '../ui/pages/achievements.dart';
+import '../ui/pages/booking_page.dart';
+import '../ui/pages/games.dart';
+import '../ui/pages/profile.dart';
 
 class RoutesModel with ChangeNotifier{
   final routes =<Routes, Widget> {
