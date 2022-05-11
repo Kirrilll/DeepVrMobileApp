@@ -54,34 +54,19 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/icons/nav_profile_icon.png
-    - assets/icons/nav_games_icon.png
-    - assets/icons/nav_booking_icon.png
-    - assets/icons/nav_achievement_icon.png
-    - assets/icons/clock.png
-    - assets/icons/console.png
-    - assets/icons/vrglasses.png
-    - assets/images/realistic_vrglasses.png
-    - assets/icons/access_time .png
-    - assets/icons/phone.png
-    - assets/icons/person.png
-    - assets/icons/calendar.png
+    - assets/icons/
+    - assets/images/
     - assets/fonts/
-#   fonts:
-#     - family: Gilroy
-#       fonts:
-#         - asset: assets/fonts/Gilroy-Regular.ttf
-#           weight: 400
-#         - asset: assets/fonts/Gilroy-Medium.ttf
-#            weight: 500
-#          - asset: assets/fonts/Gilroy-Bold.ttf
-#            weight: 700
+  fonts:
+   - family: Gilroy
+     fonts:
+       - asset: assets/fonts/Gilroy-Regular.ttf
+         weight: 400
+       - asset: assets/fonts/Gilroy-Bold.ttf
+         weight: 700
+
 
 
   # For details regarding fonts from package dependencies,

@@ -54,12 +54,15 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.from(
-        colorScheme: ThemeData.dark().colorScheme.copyWith(
+      theme: ThemeData(
+        backgroundColor: const Color(0xFF050411),
+        fontFamily: 'Gilroy',
+        colorScheme: const ColorScheme.dark().copyWith(
             primary: Colors.white,
             secondary: const Color(0xFFABAFE5),
             background: const Color(0xFF050411),
-            secondaryContainer: const Color(0xFF1F2032)),
+            secondaryContainer: const Color(0xFF1F2032)
+        ),
       ),
       home: SafeArea(
           child: MultiProvider(
@@ -73,11 +76,14 @@ class _AppState extends State<App> {
                     value: locator<GamesProvider>()..getGames(),
                     child: Consumer<RoutesModel>(
                       builder: (context, model, _) => Scaffold(
-                        body: model.selectedPage,
+                        body: Container(
+                          color: Theme.of(context).backgroundColor,
+                            child: model.selectedPage
+                        ),
                         //TODO засунуть в отдельный виджет верстку IconButton
                         bottomNavigationBar:
                           Container(
-                            color: Theme.of(context).colorScheme.background,
+                            color: Theme.of(context).backgroundColor,
                             padding: const EdgeInsets.fromLTRB(35, 11, 35, 15),
                             height: 72,
                             child: Row(

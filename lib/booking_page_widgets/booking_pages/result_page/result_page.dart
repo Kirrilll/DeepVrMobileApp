@@ -15,12 +15,7 @@ class BookingResultPage extends StatefulWidget {
   State<BookingResultPage> createState() => _BookingResultPageState();
 }
 
-
 class _BookingResultPageState extends State<BookingResultPage> {
-
-
-
-
   @override
   void initState() {
     locator<BookingResultsViewModel>().setStatus(RequestInfo.notSend);
@@ -31,9 +26,19 @@ class _BookingResultPageState extends State<BookingResultPage> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
         value: locator<BookingResultsViewModel>(),
-        child: Consumer<BookingResultsViewModel>(
-          builder: (context, viewModel, _) => Stack(
-            children: [],
+        child: Consumer2<BookingResultsViewModel, BookingModel>(
+          builder: (context, resultModel, bookingModel, _) => Stack(
+            children: [
+              Visibility(
+                  visible: resultModel.status == RequestInfo.notSend,
+                  child: OrderPage(booking: bookingModel.booking)),
+              Visibility(
+                  visible: resultModel.status == RequestInfo.successful,
+                  child: const Successful()),
+              Visibility(
+                  visible: resultModel.status == RequestInfo.loading,
+                  child: const Center(child: CircularProgressIndicator()))
+            ],
           ),
         ));
   }

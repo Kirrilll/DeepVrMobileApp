@@ -43,7 +43,7 @@ class Games extends StatelessWidget {
                      builder: (context) => SimpleDialog(
                        title: Text(game.title),
                        children: [
-                         DefaultButton(actionCallback: () => (){
+                         DefaultButton(actionCallback: () {
                            var bookingModel = locator<BookingModel>();
                            bookingModel.init();
                            bookingModel.updateBooking(
