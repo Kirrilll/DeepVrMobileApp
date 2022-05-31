@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
+import '../../../domain/view_models/identification_model.dart';
+import '../../../enums/identification_routes.dart';
+import '../../../locator.dart';
 import '../../widgets/useful_widgets/default_button.dart';
 import '../../widgets/useful_widgets/default_formfield.dart';
 
@@ -98,32 +102,27 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               const SizedBox(height: 26),
-              RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                      style: const TextStyle(
-                          fontSize: 16,
-                          letterSpacing: 0.34,
-                          color: Color(0xFFABAFE5),
-                          fontFamily: 'Gilroy'),
-                      children: [
-                        TextSpan(
-                          text: "У меня уже есть аккаунт. ",
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              print('aad');
-                            },
-                        ),
-                        TextSpan(
-                            text: "Войти",
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                print('aad');
-                              },
-                            style: const TextStyle(
-                              decoration: TextDecoration.underline,
-                            ))
-                      ])
+              GestureDetector(
+                onTap: () => context.read<IdentificationModel>().pop(),
+                child: RichText(
+                    textAlign: TextAlign.center,
+                    text: const TextSpan(
+                        style:  TextStyle(
+                            fontSize: 16,
+                            letterSpacing: 0.34,
+                            color: Color(0xFFABAFE5),
+                            fontFamily: 'Gilroy'),
+                        children: [
+                          TextSpan(
+                            text: "У меня уже есть аккаунт. ",
+                          ),
+                          TextSpan(
+                              text: "Войти",
+                              style:  TextStyle(
+                                decoration: TextDecoration.underline,
+                              ))
+                        ])
+                ),
               ),
             ],
           ),

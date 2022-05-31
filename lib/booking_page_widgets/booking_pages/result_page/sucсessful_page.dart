@@ -43,7 +43,7 @@ class Successful extends StatelessWidget {
               children: [
                 DefaultButton(
                     actTitle: 'Жду встречи!',
-                    actionCallback: () => locator<RoutesModel>().navigateToNamed(Routes.profile)
+                    actionCallback: () => locator<RoutesModel>().navigateToNamed(Routes.identification)
                 ),
               ],
             ),

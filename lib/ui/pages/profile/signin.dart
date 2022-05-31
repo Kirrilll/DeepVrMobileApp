@@ -3,6 +3,11 @@ import 'package:deepvr/ui/widgets/useful_widgets/default_formfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../domain/view_models/identification_model.dart';
+import '../../../enums/identification_routes.dart';
+import '../../../locator.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -75,32 +80,30 @@ class _SignInState extends State<SignIn> {
                 ),
               ),
               const SizedBox(height: 34),
-              RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                      style: const TextStyle(
-                          fontSize: 16,
-                          letterSpacing: 0.34,
-                          color: Color(0xFFABAFE5),
-                          fontFamily: 'Gilroy'),
-                      children: [
-                        TextSpan(
-                          text: "У меня еще не аккаунта, хочу ",
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              print('aad');
-                            },
-                        ),
-                        TextSpan(
-                            text: "зарегистрироваться",
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                print('aad');
-                              },
-                            style: const TextStyle(
-                              decoration: TextDecoration.underline,
-                            ))
-                      ])),
+              GestureDetector(
+                onTap: () {
+                  print('taped');
+                  context.read<IdentificationModel>().navigateNamed(IdentificationRoutes.signUp);
+                },
+                child: RichText(
+                    textAlign: TextAlign.center,
+                    text: const TextSpan(
+                        style:  TextStyle(
+                            fontSize: 16,
+                            letterSpacing: 0.34,
+                            color: Color(0xFFABAFE5),
+                            fontFamily: 'Gilroy'),
+                        children: [
+                          TextSpan(
+                            text: "У меня еще не аккаунта, хочу ",
+                          ),
+                          TextSpan(
+                              text: "зарегистрироваться",
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                              ))
+                        ])),
+              ),
             ],
           ),
         ),

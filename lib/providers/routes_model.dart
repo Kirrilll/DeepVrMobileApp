@@ -1,4 +1,5 @@
 import 'package:deepvr/enums/routes.dart';
+import 'package:deepvr/ui/pages/profile/identification.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../ui/pages/achievements.dart';
@@ -11,11 +12,11 @@ class RoutesModel with ChangeNotifier{
     Routes.games : const Games(),
     Routes.booking: const BookingPage(),
     Routes.achievements : const Achievements(),
-    Routes.profile : const Profile()
+    Routes.identification : const Identification()
   };
 
 
-  Routes _selectedRoute = Routes.profile;
+  Routes _selectedRoute = Routes.identification;
   int get selectedIndex => routes.keys.toList().indexOf(_selectedRoute);
   Widget get selectedPage => routes[_selectedRoute]!;
 

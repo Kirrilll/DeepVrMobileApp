@@ -1,3 +1,4 @@
+import 'package:deepvr/domain/view_models/identification_model.dart';
 import 'package:deepvr/providers/routes_model.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/booking_page_model.dart';
@@ -19,6 +20,8 @@ void setup() {
       RemoteService(),
     signalsReady: true
   );
+
+  locator.registerFactory(() => IdentificationModel());
 
   locator.registerLazySingleton(() => GamesProvider());
   //начало рефакторинга
