@@ -1,13 +1,57 @@
-import 'package:deepvr/entities/time_entity.dart';
-import 'package:deepvr/models/refactor/booking.dart';
-import 'package:deepvr/providers/refactor/booking_model.dart';
-import 'package:deepvr/providers/time_view_model.dart';
+import 'package:deepvr/booking_page_widgets/booking_step_layout.dart';
+import 'package:deepvr/entities/date_entity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TimePickerItem extends StatelessWidget {
-  const TimePickerItem({Key? key, required this.time}) : super(key: key);
+import '../../entities/time_entity.dart';
+import '../../locator.dart';
+import '../../models/refactor/booking.dart';
+import '../../providers/refactor/booking_model.dart';
+
+class TimePickerStep extends StatelessWidget {
+  const TimePickerStep({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider.value(
+      value: locator<BookingModel>(),
+      child: BookingStepLayout(
+          stepNumber: 5,
+          content: Selector<BookingModel, DateEntity?>(
+              selector: (context, model) => model.booking.selectedDate,
+              builder: (context, selectedDate, _) => selectedDate != null
+                  ? TimeContainer(availableTime: selectedDate.availableTime)
+                  : const Center(child: CircularProgressIndicator())),
+          stepTitle: 'Выберите подходящее время'),
+    );
+  }
+}
+
+class TimeContainer extends StatelessWidget {
+  const TimeContainer({Key? key, required this.availableTime})
+      : super(key: key);
+
+  final List<TimeEntity> availableTime;
+
+  //В теории данные приходят сюда
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisExtent: 85,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16),
+        itemCount: availableTime.length,
+        itemBuilder: (context, index) => TimeItem(time: availableTime[index]));
+  }
+}
+
+class TimeItem extends StatelessWidget {
+  const TimeItem({Key? key, required this.time}) : super(key: key);
 
   final TimeEntity time;
 
@@ -34,7 +78,7 @@ class TimePickerItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ImageIcon(
-                      const  AssetImage('assets/icons/access_time .png'),
+                      const AssetImage('assets/icons/access_time .png'),
                       size: 20,
                       color: _isSelected(viewModel.booking.selectedTime)
                           ? const Color(0xFF050411)
@@ -48,8 +92,7 @@ class TimePickerItem extends StatelessWidget {
                               ? const Color(0xFF050411)
                               : Theme.of(context).colorScheme.secondary,
                           fontSize: 16,
-                        fontWeight: FontWeight.w400
-                      ),
+                          fontWeight: FontWeight.w400),
                     ),
                   ],
                 ),
