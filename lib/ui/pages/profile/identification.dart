@@ -1,4 +1,6 @@
-import 'package:deepvr/domain/view_models/identification_model.dart';
+import 'package:deepvr/data/services/storge_service.dart';
+import 'package:deepvr/domain/view_models/authentication_model.dart';
+import 'package:deepvr/domain/view_models/identification_routing_model.dart';
 import 'package:deepvr/locator.dart';
 import 'package:deepvr/ui/pages/profile/profile.dart';
 import 'package:deepvr/ui/pages/profile/signin.dart';
@@ -16,12 +18,11 @@ class Identification extends StatefulWidget {
 }
 
 class _IdentificationState extends State<Identification> {
-  late IdentificationModel model;
+
 
   @override
   void initState() {
-    print('damn');
-    model = locator<IdentificationModel>();
+    locator<IdentificationRoutingModel>().init();
     super.initState();
   }
 
@@ -35,8 +36,8 @@ class _IdentificationState extends State<Identification> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-        value: model,
-        child: Consumer<IdentificationModel>(
+        value: locator<IdentificationRoutingModel>(),
+        child: Consumer<IdentificationRoutingModel>(
             builder: (context, model, _) => Stack(
                   children: [
                     Visibility(
@@ -45,22 +46,11 @@ class _IdentificationState extends State<Identification> {
                     Visibility(
                         visible: model.route == IdentificationRoutes.signUp,
                         child: const SignUp()),
+                    Visibility(
+                        visible: model.route == IdentificationRoutes.profile,
+                        child: const Profile()),
                   ],
                 )
-            // Builder(builder: (context) {
-            //   switch (model.route) {
-            //     case IdentificationRoutes.signIn:
-            //       return const SignIn();
-            //     case IdentificationRoutes.signUp:
-            //       return const SignUp();
-            //     case IdentificationRoutes.profile:
-            //       return const Profile();
-            //     case IdentificationRoutes.orders:
-            //       return const Center(child: Text('Заказы в разработке'));
-            //     case IdentificationRoutes.options:
-            //       return const Center(child: Text('Настройки в разработке'));
-            //   }
-            // })
             ));
   }
 }

@@ -6,19 +6,17 @@ class DefaultFormField extends StatefulWidget {
       required this.initialValue,
       this.textInputType = TextInputType.text,
       required this.formState,
-      required this.onChange,
       required this.iconPath,
       required this.hintText,
       this.validator,
-      required this.onSaved,
+      required this.controller,
       this.isPassword = false})
       : super(key: key);
 
+  final TextEditingController controller;
   final String? initialValue;
   final TextInputType textInputType;
   final GlobalKey<FormState> formState;
-  final Function(String?) onChange;
-  final Function(String?) onSaved;
   final String iconPath;
   final String hintText;
   final String? Function(String? value)? validator;
@@ -29,7 +27,6 @@ class DefaultFormField extends StatefulWidget {
 }
 
 class _DefaultFormFieldState extends State<DefaultFormField> {
-
   bool isVisible = true;
 
   bool _isVisible() => isVisible && widget.isPassword;
@@ -37,9 +34,8 @@ class _DefaultFormFieldState extends State<DefaultFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      onChanged: widget.onChange,
+      controller: widget.controller,
       keyboardType: widget.textInputType,
-      onSaved: widget.onSaved,
       obscureText: _isVisible(),
       obscuringCharacter: '•',
       initialValue: widget.initialValue,
@@ -58,7 +54,9 @@ class _DefaultFormFieldState extends State<DefaultFormField> {
                     isVisible = !isVisible;
                   }),
                   child: ImageIcon(
-                    AssetImage(isVisible ? 'assets/icons/visible.png' : 'assets/icons/invisible.png'),
+                    AssetImage(isVisible
+                        ? 'assets/icons/visible.png'
+                        : 'assets/icons/invisible.png'),
                     size: 24,
                     color: Theme.of(context).colorScheme.secondary,
                   ),

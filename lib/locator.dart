@@ -1,4 +1,8 @@
-import 'package:deepvr/domain/view_models/identification_model.dart';
+import 'package:deepvr/data/services/authentication_service.dart';
+import 'package:deepvr/domain/view_models/authentication_model.dart';
+import 'package:deepvr/domain/view_models/identification_routing_model.dart';
+import 'package:deepvr/domain/view_models/login_model.dart';
+import 'package:deepvr/domain/view_models/registration_model.dart';
 import 'package:deepvr/providers/routes_model.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/booking_page_model.dart';
@@ -11,18 +15,28 @@ import 'package:deepvr/providers/games_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:deepvr/providers/time_view_model.dart';
 import 'package:deepvr/services/remote_service.dart';
+import 'package:deepvr/data/services/storge_service.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt locator = GetIt.instance;
 
 void setup() {
-  locator.registerSingleton<RemoteService>(
-      RemoteService(),
-    signalsReady: true
-  );
+  locator.registerSingletonAsync(() => StorageService().init());
+  locator.registerSingleton<RemoteService>(RemoteService(), signalsReady: true);
 
-  locator.registerFactory(() => IdentificationModel());
+  //Аунтефикация
 
+  locator.registerSingleton(AuthenticationModel());
+  locator.registerSingletonWithDependencies(
+          () => IdentificationRoutingModel(),
+          dependsOn: [StorageService]);
+
+
+  locator.registerLazySingleton(() => AuthenticationService());
+  locator.registerFactory(() => RegistrationModel());
+  locator.registerFactory(() => LoginModel());
+
+  //Бронирование
   locator.registerLazySingleton(() => GamesProvider());
   //начало рефакторинга
   locator.registerLazySingleton(() => BookingModel());

@@ -26,17 +26,6 @@ class _GamesContainerState extends State<GamesContainer> {
 
   @override
   Widget build(BuildContext context) {
-    // return GridView(
-    //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-    //     crossAxisCount: 2,
-    //     mainAxisSpacing: 15,
-    //     crossAxisSpacing: 15,
-    //     //mainAxisExtent: 315
-    //   ),
-    //   children: widget.games
-    //       .map((game) => GameCard(gameModel: game))
-    //       .toList()
-    // );
     return ListView.separated(
         itemBuilder: (context, index){
           int currIndex = index * 2;

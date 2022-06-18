@@ -1,3 +1,6 @@
+import 'package:deepvr/data/services/storge_service.dart';
+import 'package:deepvr/domain/view_models/authentication_model.dart';
+import 'package:deepvr/domain/view_models/login_model.dart';
 import 'package:deepvr/enums/routes.dart';
 import 'package:deepvr/providers/games_provider.dart';
 import 'package:deepvr/services/remote_service.dart';
@@ -5,6 +8,7 @@ import 'package:deepvr/ui/widgets/useful_widgets/tab_nav_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../domain/models/user.dart';
 import '../../locator.dart';
 import '../../providers/routes_model.dart';
 
@@ -20,26 +24,14 @@ class _AppState extends State<App> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    // SharedPreferences.getInstance().then(
-    //         (prefs){
-    //           if(prefs.getString('userLocation') != null){
-    //             locator<RemoteService>().init(Location.decodeJson(prefs.getString('userLocation')!).api);
-    //           }
-    //           else{
-    //             WidgetsBinding.instance?.addPostFrameCallback((_) {
-    //               showDialog(
-    //                   barrierDismissible: false,
-    //                   context: context,
-    //                   useRootNavigator: false,
-    //                   builder: (_) => const TownDialog());
-    //             });
-    //           }
-    //         }
-    // );
-
     locator<RemoteService>()
         .init('https://srt.vrbook.creatrix-digital.ru/api/');
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -57,7 +49,11 @@ class _AppState extends State<App> {
       home: SafeArea(
           child: MultiProvider(
         providers: [
-          ChangeNotifierProvider.value(value: locator<RoutesModel>())
+          ChangeNotifierProvider.value(value: locator<RoutesModel>()),
+          StreamProvider<User>(
+              create: (context) =>  locator<AuthenticationModel>().userController.stream.asBroadcastStream(),
+              initialData: User.initial()
+          )
         ],
         child: FutureBuilder(
             future: locator.allReady(),

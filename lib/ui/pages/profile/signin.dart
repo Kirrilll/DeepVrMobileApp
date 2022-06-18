@@ -1,11 +1,17 @@
+import 'package:deepvr/data/entities/login.dart';
+import 'package:deepvr/data/entities/registration.dart';
+import 'package:deepvr/data/services/authentication_service.dart';
+import 'package:deepvr/domain/view_models/login_model.dart';
 import 'package:deepvr/ui/widgets/useful_widgets/default_button.dart';
 import 'package:deepvr/ui/widgets/useful_widgets/default_formfield.dart';
+import 'package:deepvr/usecases/helpers/validation_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../domain/view_models/identification_model.dart';
+import '../../../domain/enums/fetching_state.dart';
+import '../../../domain/view_models/identification_routing_model.dart';
 import '../../../enums/identification_routes.dart';
 import '../../../locator.dart';
 
@@ -19,92 +25,114 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
 
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text(
-                'ВХОД',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontWeight: FontWeight.w700, fontSize: 46, color: Colors.white),
-              ),
-              const SizedBox(height: 24),
-              Form(
-                  autovalidateMode: AutovalidateMode.always,
-                  child: Column(
-                    children: [
-                      DefaultFormField(
-                          initialValue: null,
-                          textInputType: TextInputType.phone,
-                          formState: _formState,
-                          onChange: (value) => print(value),
-                          iconPath: 'assets/icons/phone.png',
-                          hintText: '+7 (___) ___-__-__',
-                          validator: (value) {
-                            const pattern =
-                                r'^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$';
-                            var regExp = RegExp(pattern);
-                            if (!regExp.hasMatch(value!)) {
-                              return 'Неверно введет номер';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) => print(value)),
-                      const SizedBox(height: 10),
-                      DefaultFormField(
-                        initialValue: null,
-                        formState: _formState,
-                        onChange: (value) => print(value),
-                        iconPath: 'assets/icons/password.png',
-                        hintText: 'Введите пароль',
-                        onSaved: (value) => print(value),
-                        isPassword: true,
-                      ),
-                    ],
-                  )),
-              const SizedBox(height: 48),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    DefaultButton(
-                        actTitle: "Войти", actionCallback: () => print('gsf')),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 34),
-              GestureDetector(
-                onTap: () {
-                  print('taped');
-                  context.read<IdentificationModel>().navigateNamed(IdentificationRoutes.signUp);
-                },
-                child: RichText(
+    return ChangeNotifierProvider.value(
+      value: locator<LoginModel>(),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Consumer<LoginModel>(
+              builder: (context, model, _) => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text(
+                    'ВХОД',
                     textAlign: TextAlign.center,
-                    text: const TextSpan(
-                        style:  TextStyle(
-                            fontSize: 16,
-                            letterSpacing: 0.34,
-                            color: Color(0xFFABAFE5),
-                            fontFamily: 'Gilroy'),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 46,
+                        color: Colors.white),
+                  ),
+                  const SizedBox(height: 24),
+                  Builder(
+                      builder: (context) => model.state == FetchingState.error
+                          ? Container(
+                              margin: const EdgeInsets.only(bottom: 20),
+                              child: Text(model.message!),
+                            )
+                          : const SizedBox()),
+                  Form(
+                      key: _formState,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      child: Column(
                         children: [
-                          TextSpan(
-                            text: "У меня еще не аккаунта, хочу ",
+                          DefaultFormField(
+                              controller: _phoneController,
+                              initialValue: null,
+                              textInputType: TextInputType.phone,
+                              formState: _formState,
+                              iconPath: 'assets/icons/phone.png',
+                              hintText: '+7 (___) ___-__-__',
+                              validator: (value) =>
+                                  ValidationHelper.validatePhone(value!)),
+                          const SizedBox(height: 10),
+                          DefaultFormField(
+                            controller: _passwordController,
+                            initialValue: null,
+                            formState: _formState,
+                            iconPath: 'assets/icons/password.png',
+                            hintText: 'Введите пароль',
+                            validator: (value) =>
+                                ValidationHelper.validatePassword(value!),
+                            isPassword: true,
                           ),
-                          TextSpan(
-                              text: "зарегистрироваться",
-                              style: TextStyle(
-                                decoration: TextDecoration.underline,
-                              ))
-                        ])),
+                        ],
+                      )),
+                  const SizedBox(height: 48),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        model.state == FetchingState.loading
+                            ? const CircularProgressIndicator()
+                            : DefaultButton(
+                                actTitle: "Войти",
+                                actionCallback: () {
+                                  if (_formState.currentState!.validate()) {
+                                    model.login(Login(
+                                        phone: _phoneController.value.text,
+                                        password:
+                                            _passwordController.value.text));
+                                  }
+                                }),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 34),
+                  GestureDetector(
+                    onTap: () {
+                      context
+                          .read<IdentificationRoutingModel>()
+                          .navigateNamed(IdentificationRoutes.signUp);
+                    },
+                    child: RichText(
+                        textAlign: TextAlign.center,
+                        text: const TextSpan(
+                            style: TextStyle(
+                                fontSize: 16,
+                                letterSpacing: 0.34,
+                                color: Color(0xFFABAFE5),
+                                fontFamily: 'Gilroy'),
+                            children: [
+                              TextSpan(
+                                text: "У меня еще не аккаунта, хочу ",
+                              ),
+                              TextSpan(
+                                  text: "зарегистрироваться",
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                  ))
+                            ])),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
