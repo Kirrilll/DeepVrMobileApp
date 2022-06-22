@@ -7,6 +7,8 @@ import 'package:deepvr/locator.dart';
 class AuthenticationModel {
   StreamController<User> userController = StreamController.broadcast();
 
+
+
   void dispose() {
     userController.close();
   }

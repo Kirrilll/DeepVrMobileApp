@@ -135,7 +135,7 @@ class _SignUpState extends State<SignUp> {
                                     password: _passwordController.value.text,
                                     passwordRepeat: _repeatPasswordController.value.text,
                                     email: _mailController.value.text
-                                  ));
+                                  ), _loginController.value.text);
                                 },
                               ),
                       ],

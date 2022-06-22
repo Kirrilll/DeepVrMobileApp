@@ -1,4 +1,6 @@
 import 'package:deepvr/data/services/authentication_service.dart';
+import 'package:deepvr/data/services/games_service.dart';
+import 'package:deepvr/data/services/profile_service.dart';
 import 'package:deepvr/domain/view_models/authentication_model.dart';
 import 'package:deepvr/domain/view_models/identification_routing_model.dart';
 import 'package:deepvr/domain/view_models/login_model.dart';
@@ -25,19 +27,23 @@ void setup() {
   locator.registerSingleton<RemoteService>(RemoteService(), signalsReady: true);
 
   //Аунтефикация
-
   locator.registerSingleton(AuthenticationModel());
   locator.registerSingletonWithDependencies(
           () => IdentificationRoutingModel(),
           dependsOn: [StorageService]);
 
-
   locator.registerLazySingleton(() => AuthenticationService());
   locator.registerFactory(() => RegistrationModel());
   locator.registerFactory(() => LoginModel());
 
+  //Профиль
+  locator.registerLazySingleton(() => ProfileService());
+
+
+  //Игры
+  locator.registerLazySingleton(() => GamesService());
   //Бронирование
-  locator.registerLazySingleton(() => GamesProvider());
+  locator.registerLazySingleton(() => GamesProvider()..getGames());
   //начало рефакторинга
   locator.registerLazySingleton(() => BookingModel());
 

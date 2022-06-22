@@ -11,6 +11,7 @@ class AuthenticationService {
   Future<AuthenticationResponse?> login(Login login) async {
     var uri = Uri.parse(_apiUrl + 'login');
     var response = await _client.post(uri, body: login.toJson());
+    print(response.body);
     if(response.statusCode == 200) return AuthenticationResponse.fromJsonString(response.body);
     return null;
   }

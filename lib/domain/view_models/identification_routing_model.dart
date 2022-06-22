@@ -18,6 +18,7 @@ class IdentificationRoutingModel with ChangeNotifier {
   IdentificationRoutingModel() {
     init();
     Stream<User> userStream = locator<AuthenticationModel>().userController.stream;
+
     _userSub = userStream.listen((user) {
       if(user.token == null) {
         navigateNamed(IdentificationRoutes.signIn);

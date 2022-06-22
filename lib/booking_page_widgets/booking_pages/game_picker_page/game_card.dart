@@ -11,19 +11,20 @@ class GameCard extends StatelessWidget {
   const GameCard({
     Key? key,
     required this.gameModel,
-    required this.action
+    required this.action,
+    this.isSelected = false
   }) : super(key: key);
 
   final GameModel gameModel;
   final void Function() action;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BookingModel>(
-      builder: (context, viewModel, child) => GestureDetector(
+    return GestureDetector(
         onTap: action,
         child: SelectableItem(
-          isSelected: viewModel.booking.selectedGame?.id == gameModel.id,
+          isSelected: isSelected,
           item: Container(
             clipBehavior: Clip.hardEdge,
             height: 216,
@@ -65,7 +66,6 @@ class GameCard extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(15))),
           ),
         ),
-      ),
     );
   }
 }

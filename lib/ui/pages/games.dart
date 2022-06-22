@@ -82,7 +82,7 @@ class Games extends StatelessWidget {
                     ],
                   )
                 : const Center(child: CircularProgressIndicator()),
-          ) //GamesContainer(games: viewModel.games!, action: _showGameProfile(context))
+          ) 
 
           ),
     );

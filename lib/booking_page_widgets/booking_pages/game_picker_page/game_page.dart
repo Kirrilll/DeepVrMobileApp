@@ -58,6 +58,7 @@ class _GameCardPageState extends State<GameCardPage> {
                       return true;
                     }).toList(),
                 action: _selectGame(bookingModel),
+                selectedId: bookingModel.booking.selectedGame?.id,
               )
                   : const Center(
                       child: CircularProgressIndicator(),
