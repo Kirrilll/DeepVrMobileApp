@@ -4,7 +4,6 @@ import 'package:deepvr/data/services/storge_service.dart';
 import 'package:deepvr/domain/view_models/authentication_model.dart';
 import 'package:deepvr/enums/identification_routes.dart';
 import 'package:deepvr/locator.dart';
-import 'package:deepvr/ui/pages/profile/signin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 

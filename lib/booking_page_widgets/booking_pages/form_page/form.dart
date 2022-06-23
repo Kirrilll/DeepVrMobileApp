@@ -2,6 +2,7 @@ import 'package:deepvr/booking_page_widgets/booking_pages/form_page/login_field.
 import 'package:deepvr/booking_page_widgets/booking_pages/form_page/phone_field.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
+import 'package:deepvr/ui/shared/bottom_modal.dart';
 import 'package:deepvr/ui/widgets/custom_widgets/custom_checkbox.dart';
 import 'package:deepvr/ui/widgets/useful_widgets/default_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,79 +33,53 @@ class _OrderingFormState extends State<OrderingForm> {
   }
 
   Widget buildSheet(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(
-          16, 5, 16, 16 + MediaQuery.of(context).viewInsets.bottom),
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-          color: Color(0xFF050411)),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 80,
-                  height: 4,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: const Color(0xFF444656)),
-                ),
-              ],
+    return BottomModal(
+      children: [
+        const SizedBox(height: 10),
+        Align(
+          alignment: Alignment.centerRight,
+          child: InkResponse(
+            onTap: () => print('close'),
+            child: const Icon(
+              Icons.clear,
+              size: 30,
+              color: Color(0xFF444656),
             ),
-            const SizedBox(height: 10),
-            Align(
-              alignment: Alignment.centerRight,
-              child: InkResponse(
-                onTap: () => print('close'),
-                child: const Icon(
-                  Icons.clear,
-                  size: 30,
-                  color: Color(0xFF444656),
-                ),
-              ),
-            ),
-            const SizedBox(height: 42),
-            Text(
-              'Введите промокод',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Theme.of(context).colorScheme.secondary,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              decoration: InputDecoration(
-                  filled: true,
-                  contentPadding: const EdgeInsets.all(16),
-                  fillColor: Theme.of(context).colorScheme.secondaryContainer,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide.none
-                  ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-                'Много информации',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.secondary,
-                fontSize: 11
-              ),
-            ),
-            const SizedBox(height: 63),
-            SizedBox(
-                height: 64,
-                child: DefaultButton(
-                    actTitle: 'Применить',
-                    actionCallback: () => print('применить')))
-          ],
+          ),
         ),
-      ),
+        const SizedBox(height: 42),
+        Text(
+          'Введите промокод',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Theme.of(context).colorScheme.secondary,
+              fontSize: 16,
+              fontWeight: FontWeight.w700),
+        ),
+        const SizedBox(height: 16),
+        TextField(
+          decoration: InputDecoration(
+            filled: true,
+            contentPadding: const EdgeInsets.all(16),
+            fillColor: Theme.of(context).colorScheme.secondaryContainer,
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide.none),
+          ),
+        ),
+        const SizedBox(height: 24),
+        Text(
+          'Много информации',
+          style: TextStyle(
+              color: Theme.of(context).colorScheme.secondary, fontSize: 11),
+        ),
+        const SizedBox(height: 63),
+        SizedBox(
+            height: 64,
+            child: DefaultButton(
+                actTitle: 'Применить',
+                actionCallback: () => print('применить')))
+      ],
     );
   }
 
@@ -160,10 +135,8 @@ class _OrderingFormState extends State<OrderingForm> {
                     fillColor: Theme.of(context).colorScheme.secondaryContainer,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide.none
-                    ),
-                    hintText: 'Комментарии'
-                ),
+                        borderSide: BorderSide.none),
+                    hintText: 'Комментарии'),
               ),
             ),
             const SizedBox(height: 24),

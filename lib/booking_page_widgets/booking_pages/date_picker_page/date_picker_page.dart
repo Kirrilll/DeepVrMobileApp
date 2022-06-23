@@ -9,7 +9,7 @@ import 'package:deepvr/models/booking_date_model/booking_date_model.dart';
 import 'package:deepvr/providers/date_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
-import 'package:deepvr/services/remote_service.dart';
+import 'package:deepvr/data/services/booking_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

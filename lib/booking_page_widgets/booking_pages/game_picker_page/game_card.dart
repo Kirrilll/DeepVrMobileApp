@@ -1,4 +1,4 @@
-import 'package:deepvr/models/game_model/game_model.dart';
+import 'package:deepvr/data/entities/game.dart';
 import 'package:deepvr/models/refactor/booking.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +15,7 @@ class GameCard extends StatelessWidget {
     this.isSelected = false
   }) : super(key: key);
 
-  final GameModel gameModel;
+  final Game gameModel;
   final void Function() action;
   final bool isSelected;
 

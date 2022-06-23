@@ -1,12 +1,14 @@
+import 'dart:convert';
+
 import 'package:deepvr/data/entities/game_type.dart';
 
 class Game {
-  int? id;
-  String? title;
+  int id;
+  String title;
   String? slug;
   int? timeDuration;
-  int? price;
-  int? gameTypeId;
+  int price;
+  int gameTypeId;
   int? isActive;
   DateTime? deletedAt;
   String? createdAt;
@@ -19,60 +21,54 @@ class Game {
   List<String>? images;
   String? video;
   String? genre;
-  List<Rooms>? rooms;
-  GameType? gameType;
+  GameType gameType;
 
   Game(
-      {this.id,
-        this.title,
-        this.slug,
-        this.timeDuration,
-        this.price,
-        this.gameTypeId,
-        this.isActive,
-        this.deletedAt,
-        this.createdAt,
-        this.updatedAt,
-        this.logo,
-        this.guestMin,
-        this.guestMax,
-        this.description,
-        this.ageLimit,
-        this.images,
-        this.video,
-        this.genre,
-        this.rooms,
-        this.gameType});
+      {required this.id,
+      required this.title,
+      this.slug,
+      this.timeDuration,
+      required this.price,
+      required this.gameTypeId,
+      this.isActive,
+      this.deletedAt,
+      this.createdAt,
+      this.updatedAt,
+      required this.logo,
+      this.guestMin,
+      this.guestMax,
+      this.description,
+      this.ageLimit,
+      this.images,
+      this.video,
+      this.genre,
+      required this.gameType});
 
-  Game.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    slug = json['slug'];
-    timeDuration = json['time_duration'];
-    price = json['price'];
-    gameTypeId = json['game_type_id'];
-    isActive = json['is_active'];
-    deletedAt = json['deleted_at'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    logo = json['logo'];
-    guestMin = json['guest_min'];
-    guestMax = json['guest_max'];
-    description = json['description'];
-    ageLimit = json['age_limit'];
-    images = json['images'];
-    video = json['video'];
-    genre = json['genre'];
-    if (json['rooms'] != null) {
-      rooms = <Rooms>[];
-      json['rooms'].forEach((v) {
-        rooms!.add(Rooms.fromJson(v));
-      });
-    }
-    gameType = json['game_type'] != null
-        ? GameType.fromJson(json['game_type'])
-        : null;
-  }
+
+
+  factory Game.fromJson(Map<String, dynamic> json)  => Game(
+  id: json['id'],
+  title: json['title'],
+  price: json['price'],
+  gameTypeId: json['game_type_id'],
+  logo: json['logo'],
+  gameType: GameType.fromJson(json['game_type']),
+  slug: json['slug'],
+  genre: json['genre'],
+  images: json['images']  != null
+      ? _decodeImages(json['images'])
+      : List.empty(),
+  timeDuration: json['time_duration'],
+  deletedAt: json['deleted_at'],
+  createdAt: json['created_at'],
+  updatedAt: json['updated_at'],
+  video: json['video'],
+  ageLimit: json['age_limit'],
+  guestMin: json['guest_min'],
+  guestMax: json['guest_max'],
+  description: json['description'],);
+
+  static _decodeImages(String images) => List<String>.from(json.decode(images));
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -94,58 +90,12 @@ class Game {
     data['images'] = images;
     data['video'] = video;
     data['genre'] = genre;
-    if (rooms != null) {
-      data['rooms'] = rooms!.map((v) => v.toJson()).toList();
-    }
-    if (gameType != null) {
-      data['game_type'] = gameType!.toJson();
-    }
+    data['game_type'] = gameType.toJson();
     return data;
   }
-}
 
-class Rooms {
-  int? id;
-  String? title;
-  int? guestMax;
-  Pivot? pivot;
-
-  Rooms({this.id, this.title, this.guestMax, this.pivot});
-
-  Rooms.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    guestMax = json['guest_max'];
-    pivot = json['pivot'] != null ? Pivot.fromJson(json['pivot']) : null;
+  static List<Game> gamesFromJson(String data) {
+   return List<Game>.from(json.decode(data).map((game) => Game.fromJson(game)));
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['title'] = title;
-    data['guest_max'] = guestMax;
-    if (pivot != null) {
-      data['pivot'] = pivot!.toJson();
-    }
-    return data;
-  }
-}
-
-class Pivot {
-  int? gameId;
-  int? roomId;
-
-  Pivot({this.gameId, this.roomId});
-
-  Pivot.fromJson(Map<String, dynamic> json) {
-    gameId = json['game_id'];
-    roomId = json['room_id'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['game_id'] = gameId;
-    data['room_id'] = roomId;
-    return data;
-  }
 }

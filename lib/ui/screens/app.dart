@@ -2,8 +2,8 @@ import 'package:deepvr/data/services/storge_service.dart';
 import 'package:deepvr/domain/view_models/authentication_model.dart';
 import 'package:deepvr/domain/view_models/login_model.dart';
 import 'package:deepvr/enums/routes.dart';
-import 'package:deepvr/providers/games_provider.dart';
-import 'package:deepvr/services/remote_service.dart';
+import 'package:deepvr/domain/view_models/games_model.dart';
+import 'package:deepvr/data/services/booking_service.dart';
 import 'package:deepvr/ui/widgets/useful_widgets/tab_nav_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +24,7 @@ class _AppState extends State<App> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    locator<RemoteService>()
+    locator<BookingService>()
         .init('https://srt.vrbook.creatrix-digital.ru/api/');
   }
 
@@ -59,7 +59,7 @@ class _AppState extends State<App> {
             future: locator.allReady(),
             builder: (context, snapshot) => snapshot.hasData
                 ? ChangeNotifierProvider.value(
-                    value: locator<GamesProvider>()..getGames(),
+                    value: locator<GamesModel>()..getGames(),
                     child: Consumer<RoutesModel>(
                       builder: (context, model, _) => Scaffold(
                           body: Container(

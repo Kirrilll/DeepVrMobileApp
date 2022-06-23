@@ -1,6 +1,5 @@
 import 'package:deepvr/booking_page_widgets/booking_pages/game_picker_page/game_card.dart';
-import 'package:deepvr/models/game_model/game_model.dart';
-import 'package:deepvr/providers/refactor/booking_model.dart';
+import 'package:deepvr/data/entities/game.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -13,8 +12,8 @@ class GamesContainer extends StatefulWidget {
       {Key? key, required this.games, required this.action, this.selectedId})
       : super(key: key);
 
-  final List<GameModel> games;
-  final void Function(GameModel game) action;
+  final List<Game> games;
+  final void Function(Game game) action;
   final int? selectedId;
 
   @override

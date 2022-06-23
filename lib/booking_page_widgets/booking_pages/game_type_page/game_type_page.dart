@@ -1,8 +1,8 @@
 import 'package:deepvr/booking_page_widgets/booking_step_layout.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/game_type_page/game_type_container.dart';
-import 'package:deepvr/models/game_type_model.dart';
+import 'package:deepvr/data/entities/game_type.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
-import 'package:deepvr/services/remote_service.dart';
+import 'package:deepvr/data/services/booking_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

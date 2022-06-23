@@ -2,13 +2,13 @@ import 'package:deepvr/data/services/storge_service.dart';
 import 'package:deepvr/domain/view_models/authentication_model.dart';
 import 'package:deepvr/domain/view_models/identification_routing_model.dart';
 import 'package:deepvr/locator.dart';
-import 'package:deepvr/ui/pages/profile/profile.dart';
-import 'package:deepvr/ui/pages/profile/signin.dart';
-import 'package:deepvr/ui/pages/profile/signup.dart';
+import 'package:deepvr/ui/screens/profile.dart';
+import 'package:deepvr/ui/screens/signin.dart';
+import 'package:deepvr/ui/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../enums/identification_routes.dart';
+import '../../enums/identification_routes.dart';
 
 class Identification extends StatefulWidget {
   const Identification({Key? key}) : super(key: key);

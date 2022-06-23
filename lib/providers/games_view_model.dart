@@ -1,4 +1,3 @@
-import 'package:deepvr/models/game_model/game_model.dart';
 import 'package:deepvr/models/refactor/booking.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/counter_view_model.dart';

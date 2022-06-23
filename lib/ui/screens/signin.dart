@@ -10,10 +10,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../domain/enums/fetching_state.dart';
-import '../../../domain/view_models/identification_routing_model.dart';
-import '../../../enums/identification_routes.dart';
-import '../../../locator.dart';
+import '../../domain/enums/fetching_state.dart';
+import '../../domain/view_models/identification_routing_model.dart';
+import '../../enums/identification_routes.dart';
+import '../../locator.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);

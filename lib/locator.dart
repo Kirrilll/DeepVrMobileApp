@@ -12,11 +12,11 @@ import 'package:deepvr/providers/booking_results_view_model.dart';
 import 'package:deepvr/providers/counter_view_model.dart';
 import 'package:deepvr/providers/date_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
-import 'package:deepvr/providers/games_provider.dart';
+import 'package:deepvr/domain/view_models/games_model.dart';
 import 'package:deepvr/providers/games_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:deepvr/providers/time_view_model.dart';
-import 'package:deepvr/services/remote_service.dart';
+import 'package:deepvr/data/services/booking_service.dart';
 import 'package:deepvr/data/services/storge_service.dart';
 import 'package:get_it/get_it.dart';
 
@@ -24,7 +24,7 @@ GetIt locator = GetIt.instance;
 
 void setup() {
   locator.registerSingletonAsync(() => StorageService().init());
-  locator.registerSingleton<RemoteService>(RemoteService(), signalsReady: true);
+  locator.registerSingleton<BookingService>(BookingService(), signalsReady: true);
 
   //Аунтефикация
   locator.registerSingleton(AuthenticationModel());
@@ -43,7 +43,7 @@ void setup() {
   //Игры
   locator.registerLazySingleton(() => GamesService());
   //Бронирование
-  locator.registerLazySingleton(() => GamesProvider()..getGames());
+  locator.registerLazySingleton(() => GamesModel()..getGames());
   //начало рефакторинга
   locator.registerLazySingleton(() => BookingModel());
 

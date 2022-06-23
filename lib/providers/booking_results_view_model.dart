@@ -1,7 +1,6 @@
 import 'package:deepvr/entities/date_entity.dart';
 import 'package:deepvr/entities/time_entity.dart';
-import 'package:deepvr/models/game_model/game_model.dart';
-import 'package:deepvr/models/game_type_model.dart';
+import 'package:deepvr/data/entities/game_type.dart';
 import 'package:deepvr/models/order.dart';
 import 'package:deepvr/models/refactor/booking.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
@@ -12,7 +11,7 @@ import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/providers/games_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:deepvr/providers/time_view_model.dart';
-import 'package:deepvr/services/remote_service.dart';
+import 'package:deepvr/data/services/booking_service.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../locator.dart';
@@ -62,7 +61,7 @@ class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
     var bookingModel = locator<BookingModel>();
     var booking = bookingModel.booking;
     setStatus(RequestInfo.loading);
-    var request =  await locator<RemoteService>().postData(Order(
+    var request =  await locator<BookingService>().postData(Order(
         userName: booking.name,
         userPhone: booking.phone,
         guestDate: booking.selectedDate!.date.toString().replaceRange(10, booking.selectedDate!.date.toString().length, ''),
@@ -80,7 +79,7 @@ class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
     var bookingModel = locator<BookingModel>();
     var booking = bookingModel.booking;
     setStatus(RequestInfo.loading);
-    var request =  await locator<RemoteService>().postData(Order(
+    var request =  await locator<BookingService>().postData(Order(
         userName: booking.name,
         userPhone: booking.phone,
         guestDate: booking.selectedDate!.date.toString().replaceRange(10, booking.selectedDate!.date.toString().length, ''),

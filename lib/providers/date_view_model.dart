@@ -7,7 +7,7 @@ import 'package:deepvr/providers/counter_view_model.dart';
 import 'package:deepvr/providers/games_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:deepvr/providers/time_view_model.dart';
-import 'package:deepvr/services/remote_service.dart';
+import 'package:deepvr/data/services/booking_service.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../locator.dart';
@@ -34,7 +34,7 @@ class DateViewModel with ChangeNotifier implements IBookingViewModel{
   }
 
   void getDates(int gameId, int questCount) async{
-    _calendar = await locator<RemoteService>().getDates(gameId, questCount);
+    _calendar = await locator<BookingService>().getDates(gameId, questCount);
     _pageState = PageState.loaded;
   }
 

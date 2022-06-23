@@ -1,4 +1,4 @@
-import 'package:deepvr/models/game_type_model.dart';
+import 'package:deepvr/data/entities/game_type.dart';
 import 'package:deepvr/models/refactor/booking.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
@@ -15,7 +15,7 @@ class GameTypeCard extends StatelessWidget {
         required this.gameType,
       }) : super(key: key);
 
-  final GameTypeModel gameType;
+  final GameType gameType;
 
   @override
   Widget build(BuildContext context) {

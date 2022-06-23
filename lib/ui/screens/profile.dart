@@ -3,8 +3,6 @@ import 'package:deepvr/data/services/storge_service.dart';
 import 'package:deepvr/domain/models/user.dart';
 import 'package:deepvr/domain/view_models/authentication_model.dart';
 import 'package:deepvr/locator.dart';
-import 'package:deepvr/ui/pages/profile/signin.dart';
-import 'package:deepvr/ui/pages/profile/signup.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatelessWidget {

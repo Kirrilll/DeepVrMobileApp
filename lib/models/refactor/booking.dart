@@ -1,12 +1,12 @@
-import 'package:deepvr/models/game_model/game_model.dart';
-import 'package:deepvr/models/game_type_model.dart';
+import 'package:deepvr/data/entities/game.dart';
+import 'package:deepvr/data/entities/game_type.dart';
 
 import '../../entities/date_entity.dart';
 import '../../entities/time_entity.dart';
 
 class Booking {
-  GameTypeModel? selectedType;
-  GameModel? selectedGame;
+  GameType? selectedType;
+  Game? selectedGame;
 
   //У Counter сделать функцию increment, которая получает знач, и лимиты
   int? guestCount;
@@ -30,8 +30,8 @@ class Booking {
 
   factory Booking.copyWith(
       Booking booking,{
-      GameTypeModel? selectedType,
-      GameModel? selectedGame,
+      GameType? selectedType,
+      Game? selectedGame,
       int? guestCount,
       DateEntity? selectedDate,
       TimeEntity? selectedTime,
