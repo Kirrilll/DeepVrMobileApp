@@ -2,7 +2,7 @@ import 'package:deepvr/data/services/storge_service.dart';
 import 'package:deepvr/domain/view_models/authentication_model.dart';
 import 'package:deepvr/domain/view_models/identification_routing_model.dart';
 import 'package:deepvr/locator.dart';
-import 'package:deepvr/ui/screens/profile.dart';
+import 'package:deepvr/ui/screens/profile_main.dart';
 import 'package:deepvr/ui/screens/signin.dart';
 import 'package:deepvr/ui/screens/signup.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +48,7 @@ class _IdentificationState extends State<Identification> {
                         child: const SignUp()),
                     Visibility(
                         visible: model.route == IdentificationRoutes.profile,
-                        child: const Profile()),
+                        child: const ProfileMain()),
                   ],
                 )
             ));

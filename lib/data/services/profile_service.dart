@@ -11,6 +11,7 @@ class ProfileService {
   }
 
   Future<void> setProfile(Profile profile) async {
+    print(profile.name);
     var url = Uri.parse(_apiUrl + 'profile/set');
     var response = await _client.post(url, body: profile.toJson());
     print(response.body);
