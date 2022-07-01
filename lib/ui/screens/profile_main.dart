@@ -149,11 +149,12 @@ class _ProfileMainState extends State<ProfileMain> {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      // Selector<ProfileModel, MapEntry<FetchingState, List<Purchase>>>(
-                      //   selector: (context, model ) => MapEntry(model.purchaseHistoryFetchingStatus, model.smallPurchaseHistory),
-                      //   builder: (context, data, _) =>data.value.map((e) => Text(e.game)),
-                      // )
-
+                      Selector<ProfileModel, MapEntry<FetchingState, List<Purchase>>>(
+                        selector: (context, model ) => MapEntry(model.purchaseHistoryFetchingStatus, model.smallPurchaseHistory),
+                        builder: (context, data, _) => data.key == FetchingState.loading
+                            ? const CircularProgressIndicator()
+                        : data.value.map((e) => Text(e.game)).toList()[0],
+                      )
                     ],
                   ),
                 )
