@@ -4,6 +4,7 @@ import 'package:deepvr/data/services/profile_service.dart';
 import 'package:deepvr/domain/view_models/authentication_model.dart';
 import 'package:deepvr/domain/view_models/identification_routing_model.dart';
 import 'package:deepvr/domain/view_models/login_model.dart';
+import 'package:deepvr/domain/view_models/profile_model.dart';
 import 'package:deepvr/domain/view_models/registration_model.dart';
 import 'package:deepvr/providers/routes_model.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
@@ -24,13 +25,13 @@ GetIt locator = GetIt.instance;
 
 void setup() {
   locator.registerSingletonAsync(() => StorageService().init());
-  locator.registerSingleton<BookingService>(BookingService(), signalsReady: true);
+  locator.registerSingleton<BookingService>(BookingService(),
+      signalsReady: true);
 
   //Аунтефикация
   locator.registerSingleton(AuthenticationModel());
-  locator.registerSingletonWithDependencies(
-          () => IdentificationRoutingModel(),
-          dependsOn: [StorageService]);
+  locator.registerSingletonWithDependencies(() => IdentificationRoutingModel(),
+      dependsOn: [StorageService]);
 
   locator.registerLazySingleton(() => AuthenticationService());
   locator.registerFactory(() => RegistrationModel());
@@ -38,7 +39,9 @@ void setup() {
 
   //Профиль
   locator.registerLazySingleton(() => ProfileService());
-
+  locator.registerLazySingleton(() => ProfileModel()
+    ..getBonuses()
+    ..getPurchaseHistory());
 
   //Игры
   locator.registerLazySingleton(() => GamesService());
