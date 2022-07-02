@@ -27,9 +27,10 @@ class ProfileModel with ChangeNotifier{
         const Duration(seconds: 2),
             () => Bonuses(quantityAll: 4, quantityExpired: 2, quantityReal: 2, nextExpiredDate: '23232323')
     );
+
+    _bonuses.add(Bonus(title: 'Все', count: bonusInfo.quantityAll!));
     _bonuses.add(Bonus(title: 'Активные', count: bonusInfo.quantityReal!));
     _bonuses.add(Bonus(title: 'Временные', count: bonusInfo.quantityExpired!));
-    _bonuses.add(Bonus(title: 'Все', count: bonusInfo.quantityAll!));
     _bonusesFetchingStatus = FetchingState.successful;
     notifyListeners();
   }
@@ -39,7 +40,7 @@ class ProfileModel with ChangeNotifier{
      _purchaseHistory.addAll( await Future.delayed(const Duration(seconds: 1), () => [
        Purchase(id: 3535, guestCount: 5, game: 'Выбор на месте', gameType: 'VR погружение', price: 1200, date: DateTime.parse('2022-10-12')),
        Purchase(id: 3535, guestCount: 9, game: 'Выбор на месте', gameType: 'VR погружение', price: 1900, date: DateTime.parse('2022-10-22')),
-       Purchase(id: 3535, guestCount: 10, game: 'Выбор на месте', gameType: 'VR погружение', price: 2200, date: DateTime.parse('2022-10-20'))
+       Purchase(id: 3535, guestCount: 10, game: 'Выбор на месте', gameType: 'VR погружение впвпвпвпвпвпвпв', price: 2200, date: DateTime.parse('2022-10-20'))
      ]));
      _purchaseHistoryFetchingStatus = FetchingState.successful;
      notifyListeners();

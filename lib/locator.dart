@@ -2,7 +2,6 @@ import 'package:deepvr/data/services/authentication_service.dart';
 import 'package:deepvr/data/services/games_service.dart';
 import 'package:deepvr/data/services/profile_service.dart';
 import 'package:deepvr/domain/view_models/authentication_model.dart';
-import 'package:deepvr/domain/view_models/identification_routing_model.dart';
 import 'package:deepvr/domain/view_models/login_model.dart';
 import 'package:deepvr/domain/view_models/profile_model.dart';
 import 'package:deepvr/domain/view_models/registration_model.dart';
@@ -29,9 +28,7 @@ void setup() {
       signalsReady: true);
 
   //Аунтефикация
-  locator.registerSingleton(AuthenticationModel());
-  locator.registerSingletonWithDependencies(() => IdentificationRoutingModel(),
-      dependsOn: [StorageService]);
+  locator.registerSingletonAsync(() => AuthenticationModel().init(), dependsOn: [StorageService]);
 
   locator.registerLazySingleton(() => AuthenticationService());
   locator.registerFactory(() => RegistrationModel());

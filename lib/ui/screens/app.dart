@@ -47,19 +47,18 @@ class _AppState extends State<App> {
             secondaryContainer: const Color(0xFF1F2032)),
       ),
       home: SafeArea(
-          child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(value: locator<RoutesModel>()),
-          StreamProvider<User>(
-              create: (context) =>  locator<AuthenticationModel>().userController.stream.asBroadcastStream(),
-              initialData: User.initial()
-          )
-        ],
+          child: ChangeNotifierProvider.value(
+        value: locator<RoutesModel>(),
         child: FutureBuilder(
             future: locator.allReady(),
             builder: (context, snapshot) => snapshot.hasData
-                ? ChangeNotifierProvider.value(
-                    value: locator<GamesModel>()..getGames(),
+                ? MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider.value(
+                          value: locator<GamesModel>()..getGames()),
+                      ChangeNotifierProvider.value(
+                          value: locator<AuthenticationModel>())
+                    ],
                     child: Consumer<RoutesModel>(
                       builder: (context, model, _) => Scaffold(
                           body: Container(

@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/enums/fetching_state.dart';
-import '../../domain/view_models/identification_routing_model.dart';
 import '../../enums/identification_routes.dart';
 import '../../locator.dart';
 
@@ -107,9 +106,7 @@ class _SignInState extends State<SignIn> {
                   const SizedBox(height: 34),
                   GestureDetector(
                     onTap: () {
-                      context
-                          .read<IdentificationRoutingModel>()
-                          .navigateNamed(IdentificationRoutes.signUp);
+                      Navigator.pushNamed(context, 'auth/signUp');
                     },
                     child: RichText(
                         textAlign: TextAlign.center,

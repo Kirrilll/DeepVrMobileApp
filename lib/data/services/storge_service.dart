@@ -1,30 +1,24 @@
+import 'package:deepvr/data/entities/stored_data.dart';
 import 'package:deepvr/locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class StorageService{
-
+class StorageService {
   late SharedPreferences _storage;
 
   Future<StorageService> init() async {
     WidgetsFlutterBinding.ensureInitialized();
-     _storage = await SharedPreferences.getInstance();
-     return this;
-  }
-  Future<bool> setToken(String token) async{
-    final result = await _storage.setString('token', token);
-    return result;
+    _storage = await SharedPreferences.getInstance();
+    return this;
   }
 
-  String? getToken(){
-    return _storage.getString('token');
+  Future<bool> setData(StoredData data) async {
+    return await _storage.setString('data', data.toJson());
   }
 
-  Future<bool> setName(String name) async {
-    return await _storage.setString('name', name);
-  }
-  String? getName(){
-    return _storage.getString('name');
+  StoredData? getData() {
+    final result = _storage.getString('data');
+    return result != null ? StoredData.fromJson(result) : null;
   }
 
   Future<void> clear() async {

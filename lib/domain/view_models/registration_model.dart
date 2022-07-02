@@ -18,8 +18,7 @@ class RegistrationModel with ChangeNotifier {
 
   final ProfileService _profileService = locator<ProfileService>();
   final AuthenticationService _authenticationService = locator<AuthenticationService>();
-  final StreamController<User> userController = locator<AuthenticationModel>().userController;
-  final StorageService _storage = locator<StorageService>();
+  final AuthenticationModel _authenticationModel = locator<AuthenticationModel>();
 
   FetchingState get signUpStatus => _signUpStatus;
   String get message => _message!;
@@ -36,9 +35,8 @@ class RegistrationModel with ChangeNotifier {
     }
     else if(response.error == 0){
         final profileResponse = await _profileService.setProfile(Profile(name: name, token: response.token!));
-        userController.add(User(response.token, 'Имя', registration.phone));
+        _authenticationModel.signIn(User(response.token, name, registration.phone));
         setState(FetchingState.successful);
-        await _storage.setToken(response.token!);
     }
     else{
       _message = response.message;

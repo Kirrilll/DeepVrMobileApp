@@ -7,8 +7,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-
-import '../../domain/view_models/identification_routing_model.dart';
 import '../../enums/identification_routes.dart';
 import '../../locator.dart';
 import '../widgets/useful_widgets/default_button.dart';
@@ -143,8 +141,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   const SizedBox(height: 26),
                   GestureDetector(
-                    onTap: () =>
-                        context.read<IdentificationRoutingModel>().pop(),
+                    onTap: () => Navigator.pop(context),
                     child: RichText(
                         textAlign: TextAlign.center,
                         text: const TextSpan(

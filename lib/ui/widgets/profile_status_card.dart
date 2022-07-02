@@ -56,9 +56,7 @@ class ProfileStatusCard extends StatelessWidget {
                   text:  TextSpan(
                       text: 'Все статусы',
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          print('Переход на страницу статусы');
-                        },
+                        ..onTap = () => Navigator.pushNamed(context, 'profile/statuses'),
                       style: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 12,

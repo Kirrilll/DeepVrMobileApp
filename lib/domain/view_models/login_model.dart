@@ -12,7 +12,7 @@ import 'package:flutter/cupertino.dart';
 
 class LoginModel with ChangeNotifier {
   final AuthenticationService _authenticationService = locator<AuthenticationService>();
-  final StreamController<User> _userController = locator<AuthenticationModel>().userController;
+  final AuthenticationModel _authenticationModel = locator<AuthenticationModel>();
   final StorageService _storage = locator<StorageService>();
 
   FetchingState _state = FetchingState.idle;
@@ -35,8 +35,7 @@ class LoginModel with ChangeNotifier {
       setState(FetchingState.error);
     }
     else if(response.error == 0){
-      _userController.add(User(response.token, response.userInfo!.name, response.userInfo!.telephone));
-      await _storage.setToken(response.token!);
+      _authenticationModel.signIn(User(response.token, response.userInfo!.name, response.userInfo!.telephone));
       setState(FetchingState.successful);
     }
     else{
