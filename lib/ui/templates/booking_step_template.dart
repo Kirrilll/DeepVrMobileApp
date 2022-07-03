@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class BookingStepLayout extends StatelessWidget {
-  const BookingStepLayout({
+class BookingStepTemplate extends StatelessWidget {
+  const BookingStepTemplate({
     Key? key,
     required this.stepNumber,
     required this.content,

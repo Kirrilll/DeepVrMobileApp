@@ -2,8 +2,7 @@ import 'package:deepvr/data/entities/login.dart';
 import 'package:deepvr/data/entities/registration.dart';
 import 'package:deepvr/data/services/authentication_service.dart';
 import 'package:deepvr/domain/view_models/login_model.dart';
-import 'package:deepvr/ui/widgets/useful_widgets/default_button.dart';
-import 'package:deepvr/ui/widgets/useful_widgets/default_formfield.dart';
+import 'package:deepvr/ui/shared/default_button.dart';
 import 'package:deepvr/usecases/helpers/validation_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -11,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/enums/fetching_state.dart';
-import '../../enums/identification_routes.dart';
 import '../../locator.dart';
+import '../shared/default_formfield.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);

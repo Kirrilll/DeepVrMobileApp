@@ -1,7 +1,7 @@
 import 'package:deepvr/data/entities/purchase.dart';
 import 'package:deepvr/domain/view_models/profile_model.dart';
 import 'package:deepvr/ui/shared/bottom_modal.dart';
-import 'package:deepvr/ui/widgets/base_profile_template.dart';
+import 'package:deepvr/ui/templates/base_profile_template.dart';
 import 'package:deepvr/ui/widgets/bonuses_card.dart';
 import 'package:deepvr/ui/widgets/purchase_card.dart';
 import 'package:deepvr/ui/widgets/profile_status_card.dart';

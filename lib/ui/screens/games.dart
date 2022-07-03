@@ -17,7 +17,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../booking_page_widgets/booking_pages/game_type_page/game_type_card.dart';
 import '../../locator.dart';
-import '../widgets/useful_widgets/default_button.dart';
+import '../shared/default_button.dart';
 
 class Games extends StatelessWidget {
   const Games({Key? key}) : super(key: key);

@@ -3,8 +3,8 @@ import 'package:deepvr/booking_page_widgets/booking_pages/form_page/phone_field.
 import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:deepvr/ui/shared/bottom_modal.dart';
-import 'package:deepvr/ui/widgets/custom_widgets/custom_checkbox.dart';
-import 'package:deepvr/ui/widgets/useful_widgets/default_button.dart';
+import 'package:deepvr/ui/shared/custom_checkbox.dart';
+import 'package:deepvr/ui/shared/default_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

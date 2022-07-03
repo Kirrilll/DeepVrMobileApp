@@ -7,10 +7,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import '../../enums/identification_routes.dart';
 import '../../locator.dart';
-import '../widgets/useful_widgets/default_button.dart';
-import '../widgets/useful_widgets/default_formfield.dart';
+import '../shared/default_button.dart';
+import '../shared/default_formfield.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);

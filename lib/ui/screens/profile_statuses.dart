@@ -1,4 +1,4 @@
-import 'package:deepvr/ui/widgets/base_profile_template.dart';
+import 'package:deepvr/ui/templates/base_profile_template.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

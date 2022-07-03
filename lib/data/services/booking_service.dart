@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:deepvr/locator.dart';
 import 'package:deepvr/data/entities/game_type.dart';
-import 'package:deepvr/models/location.dart';
 import 'package:deepvr/models/order.dart';
 import 'package:deepvr/models/request.dart';
 import 'package:http/http.dart' as http;

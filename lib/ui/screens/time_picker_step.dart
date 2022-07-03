@@ -1,4 +1,4 @@
-import 'package:deepvr/booking_page_widgets/booking_step_layout.dart';
+import 'package:deepvr/ui/templates/booking_step_template.dart';
 import 'package:deepvr/entities/date_entity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class TimePickerStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: locator<BookingModel>(),
-      child: BookingStepLayout(
+      child: BookingStepTemplate(
           stepNumber: 5,
           content: Selector<BookingModel, DateEntity?>(
               selector: (context, model) => model.booking.selectedDate,

@@ -1,4 +1,4 @@
-import 'package:deepvr/ui/widgets/base_profile_template.dart';
+import 'package:deepvr/ui/templates/base_profile_template.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,9 +8,13 @@ class PurchaseHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const BaseProfileTemplate(
+    return  BaseProfileTemplate(
         content: Center(
-            child: Text('История')
+            child: ListView.separated(
+                itemBuilder: (context, item) => Text(item.toString()),
+                separatorBuilder: (context, item) => SizedBox(height: 5,),
+                itemCount: 5
+            )
         )
     );
   }

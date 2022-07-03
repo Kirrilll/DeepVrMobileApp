@@ -4,13 +4,13 @@ import 'package:deepvr/domain/view_models/login_model.dart';
 import 'package:deepvr/enums/routes.dart';
 import 'package:deepvr/domain/view_models/games_model.dart';
 import 'package:deepvr/data/services/booking_service.dart';
-import 'package:deepvr/ui/widgets/useful_widgets/tab_nav_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/models/user.dart';
 import '../../locator.dart';
 import '../../providers/routes_model.dart';
+import '../widgets/tab_nav_button.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);

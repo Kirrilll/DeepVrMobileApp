@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:deepvr/booking_page_widgets/booking_step_layout.dart';
+import 'package:deepvr/ui/templates/booking_step_template.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/game_picker_page/games_container.dart';
 import 'package:deepvr/data/entities/game.dart';
 import 'package:deepvr/domain/view_models/games_model.dart';
@@ -40,7 +40,7 @@ class _GameCardPageState extends State<GameCardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BookingStepLayout(
+    return BookingStepTemplate(
       stepNumber: 2,
       content: MultiProvider(
         providers: [
