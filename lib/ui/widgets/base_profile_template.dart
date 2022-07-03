@@ -6,12 +6,14 @@ class BaseProfileTemplate extends StatelessWidget {
       {
         required this.content,
         this.title = 'ПРОФИЛЬ',
+        this.navigatorContext,
         Key? key
       })
       : super(key: key);
 
   final Widget content;
   final String title;
+  final BuildContext? navigatorContext;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +25,31 @@ class BaseProfileTemplate extends StatelessWidget {
           child: Stack(
             alignment: AlignmentDirectional.centerEnd,
             children: [
-              Navigator.canPop(context)
-                  ? const Align(
+              Navigator.of(navigatorContext ?? context).canPop()
+                  ?  Align(
                       alignment: Alignment.centerLeft,
-                      child: BackButton(),
+                      child: InkResponse(
+                          onTap: () => Navigator.pop(navigatorContext ?? context),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                  Icons.arrow_back_ios_rounded,
+                                size: 18,
+                                color: Color(0xFFABAFE5),
+                              ),
+                              SizedBox(width: 8),
+                              Text(
+                                  'Back',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Color(0xFFABAFE5),
+                                  fontWeight: FontWeight.w400
+                                ),
+                              )
+                            ],
+                          )
+                      ),
                     )
                   : const SizedBox(),
               Center(
@@ -45,7 +68,7 @@ class BaseProfileTemplate extends StatelessWidget {
                   size: 19,
                 ),
                 onTap: () =>
-                    Navigator.pushReplacementNamed(context, 'profile/settings'),
+                    Navigator.pushNamed(context, 'profile/settings'),
               )
             ],
           ),

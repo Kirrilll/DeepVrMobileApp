@@ -1,5 +1,7 @@
 import 'package:deepvr/domain/view_models/profile_model.dart';
+import 'package:deepvr/ui/routes/settings_navigator.dart';
 import 'package:deepvr/ui/screens/profile_main.dart';
+import 'package:deepvr/ui/screens/profile_settings_main.dart';
 import 'package:deepvr/ui/screens/profile_statuses.dart';
 import 'package:deepvr/ui/screens/purchase_history.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,7 +18,6 @@ class ProfileNavigator extends StatefulWidget {
 
 class _ProfileNavigatorState extends State<ProfileNavigator> {
 
-
   @override
   Widget build(BuildContext context) {
     return Navigator(
@@ -32,6 +33,9 @@ class _ProfileNavigatorState extends State<ProfileNavigator> {
             break;
           case 'profile/history':
             builder = (BuildContext context) => const PurchaseHistory();
+            break;
+          case 'profile/settings':
+            builder = (BuildContext context) => const SettingsNavigator();
             break;
           default:
             builder = (BuildContext _) => const ProfileMain();
