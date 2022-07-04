@@ -1,5 +1,6 @@
 import 'package:deepvr/data/entities/purchase.dart';
 import 'package:deepvr/domain/view_models/profile_model.dart';
+import 'package:deepvr/domain/view_models/purchase_history_model.dart';
 import 'package:deepvr/ui/shared/bottom_modal.dart';
 import 'package:deepvr/ui/templates/base_profile_template.dart';
 import 'package:deepvr/ui/widgets/bonuses_card.dart';
@@ -24,18 +25,17 @@ class ProfileMain extends StatefulWidget {
 class _ProfileMainState extends State<ProfileMain> {
   @override
   void initState() {
-    locator<ProfileModel>()
-      ..getBonuses()
-      ..getPurchaseHistory();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: locator<ProfileModel>(),
-      child: Consumer<ProfileModel>(
-        builder: (context, model, _) => BaseProfileTemplate(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: locator<ProfileModel>()),
+        ChangeNotifierProvider.value(value: locator<PurchaseHistoryModel>())
+      ],
+      child:  BaseProfileTemplate(
             content: Expanded(
           child: SingleChildScrollView(
               child: Column(
@@ -68,29 +68,30 @@ class _ProfileMainState extends State<ProfileMain> {
                     const SizedBox(height: 9),
                     SizedBox(
                       height: 133,
-                      child: Builder(builder: (context) {
-                        switch (model.bonusesFetchingStatus) {
-                          case FetchingState.loading:
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          case FetchingState.successful:
-                            return ListView.separated(
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) => BonusCard(
-                                    count: model.bonuses[index].count,
-                                    type: model.bonuses[index].title),
-                                separatorBuilder: (context, index) =>
-                                    const SizedBox(width: 16),
-                                itemCount: model.bonuses.length);
-                          case FetchingState.error:
-                            return const Center(
-                              child: Text('Ошибка'),
-                            );
-                          default:
-                            return const SizedBox();
-                        }
-                      }),
+                      child: Consumer<ProfileModel>(
+                        builder: (context, model, _) {
+                          switch (model.bonusesFetchingStatus) {
+                            case FetchingState.loading:
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            case FetchingState.successful:
+                              return ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) => BonusCard(
+                                      count: model.bonuses[index].count,
+                                      type: model.bonuses[index].title),
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(width: 16),
+                                  itemCount: model.bonuses.length);
+                            case FetchingState.error:
+                              return const Center(
+                                child: Text('Ошибка'),
+                              );
+                            default:
+                              return const SizedBox();
+                          }
+                        }),
                     )
                   ],
                 ),
@@ -104,60 +105,57 @@ class _ProfileMainState extends State<ProfileMain> {
                   color: Color(0xFF1F2032),
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Заказы',
-                          style: TextStyle(
-                              color: Color(0xFFFFFFFF),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: -0.41),
-                        ),
-                        RichText(
-                            text: TextSpan(
-                                text: 'Смотреть все',
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () => Navigator.pushNamed(
-                                      context, 'profile/history'),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                    color: Color(0xFFABAFE5),
-                                    decoration: TextDecoration.underline)))
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Selector<ProfileModel,
-                            MapEntry<FetchingState, List<Purchase>>>(
-                        selector: (context, model) => MapEntry(
-                            model.purchaseHistoryFetchingStatus,
-                            model.smallPurchaseHistory),
-                        builder: (context, data, _) => data.key ==
-                                FetchingState.loading
-                            ? const Center(child: CircularProgressIndicator())
-                            : Column(
-                                children: <Widget>[
-                                  for (int i = 0;
-                                      i < data.value.length;
-                                      i++) ...<Widget>[
-                                    if (i == 0)
+                child: Consumer<PurchaseHistoryModel>(
+                  builder: (context, model, _) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Заказы',
+                            style: TextStyle(
+                                color: Color(0xFFFFFFFF),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: -0.41),
+                          ),
+                          RichText(
+                              text: TextSpan(
+                                  text: 'Смотреть все',
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () => Navigator.pushNamed(
+                                        context, 'profile/history',
+                                        arguments: model.purchaseHistory),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                      color: Color(0xFFABAFE5),
+                                      decoration: TextDecoration.underline)))
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                              Builder(builder: (context) => model.fetchingStatus == FetchingState.loading
+                              ? const Center(child: CircularProgressIndicator())
+                              : Column(
+                                  children: <Widget>[
+                                    for (int i = 0;
+                                        i < model.smallPurchaseHistory.length;
+                                        i++) ...<Widget>[
+                                      if (i == 0)
+                                        Container(
+                                            height: 1,
+                                            color: const Color(0xFF444656)),
+                                      PurchaseCard(purchase: model.smallPurchaseHistory[i]),
                                       Container(
                                           height: 1,
-                                          color: const Color(0xFF444656)),
-                                    PurchaseCard(purchase: data.value[i]),
-                                    Container(
-                                        height: 1,
-                                        color: const Color(0xFF444656))
-                                  ]
-                                ],
-                              ))
-                  ],
+                                          color: const Color(0xFF444656))
+                                    ]
+                                  ],
+                                ))
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -238,7 +236,6 @@ class _ProfileMainState extends State<ProfileMain> {
             ],
           )),
         )),
-      ),
     );
   }
 }

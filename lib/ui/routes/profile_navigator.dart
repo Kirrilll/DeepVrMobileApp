@@ -1,4 +1,6 @@
+import 'package:deepvr/data/entities/purchase.dart';
 import 'package:deepvr/domain/view_models/profile_model.dart';
+import 'package:deepvr/domain/view_models/purchase_history_model.dart';
 import 'package:deepvr/ui/routes/settings_navigator.dart';
 import 'package:deepvr/ui/screens/profile_main.dart';
 import 'package:deepvr/ui/screens/profile_settings_main.dart';
@@ -17,6 +19,13 @@ class ProfileNavigator extends StatefulWidget {
 }
 
 class _ProfileNavigatorState extends State<ProfileNavigator> {
+
+  @override
+  void initState() {
+    locator<ProfileModel>().getBonuses();
+    locator<PurchaseHistoryModel>().getPurchaseHistory();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
