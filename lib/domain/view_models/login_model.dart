@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:deepvr/data/entities/authentication_response.dart';
+import 'package:deepvr/data/entities/default_response.dart';
 import 'package:deepvr/data/entities/login.dart';
 import 'package:deepvr/data/services/authentication_service.dart';
 import 'package:deepvr/data/services/storge_service.dart';
@@ -13,7 +13,6 @@ import 'package:flutter/cupertino.dart';
 class LoginModel with ChangeNotifier {
   final AuthenticationService _authenticationService = locator<AuthenticationService>();
   final AuthenticationModel _authenticationModel = locator<AuthenticationModel>();
-  final StorageService _storage = locator<StorageService>();
 
   FetchingState _state = FetchingState.idle;
   String? _message;
@@ -29,13 +28,13 @@ class LoginModel with ChangeNotifier {
   Future<void> login(Login login) async {
     _message = null;
     setState(FetchingState.loading);
-    AuthenticationResponse? response = await _authenticationService.login(login);
+    final response = await _authenticationService.login(login);
     if(response == null ){
       _message = 'Сервер не отвечает';
       setState(FetchingState.error);
     }
     else if(response.error == 0){
-      _authenticationModel.signIn(User(response.token, response.userInfo!.name, response.userInfo!.telephone));
+      _authenticationModel.signIn(User(response.token, response.response!.name, response.response!.telephone));
       setState(FetchingState.successful);
     }
     else{

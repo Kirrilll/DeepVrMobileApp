@@ -9,6 +9,7 @@ import 'package:deepvr/ui/screens/purchase_history.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../domain/view_models/statuses_model.dart';
 import '../../locator.dart';
 
 class ProfileNavigator extends StatefulWidget {
@@ -20,10 +21,12 @@ class ProfileNavigator extends StatefulWidget {
 
 class _ProfileNavigatorState extends State<ProfileNavigator> {
 
+
   @override
   void initState() {
     locator<ProfileModel>().getBonuses();
     locator<PurchaseHistoryModel>().getPurchaseHistory();
+    locator<ProfileStatusesModel>()..getUserStatus()..getStatuses();
     super.initState();
   }
 

@@ -28,9 +28,25 @@ class PurchaseHistory extends StatelessWidget {
                     const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('Заказы'),
-                        Text('Сортировка')
+                      children:  [
+                        const Text(
+                            'Заказы',
+                          style: TextStyle(
+                              color: Color(0xFFFFFFFF),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: -0.41),
+                        ),
+                        IconButton(
+                            iconSize: 24,
+                            onPressed: () => model.setSorted(),
+                            icon: Icon(
+                              Icons.sort,
+                              color: model.isSortedDesc
+                                  ? const Color(0xFFABAFE5)
+                                  : const Color(0xFF444656),
+                            )
+                        )
                       ],
                     ),
                     const SizedBox(height: 16),

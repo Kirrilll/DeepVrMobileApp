@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:deepvr/data/entities/stored_data.dart';
 import 'package:deepvr/data/entities/user_info.dart';
 import 'package:deepvr/data/services/profile_service.dart';
@@ -26,9 +25,14 @@ class AuthenticationModel with ChangeNotifier{
   Future<AuthenticationModel> init() async {
     final data = _storageService.getData();
     if(data != null){
-      final userInfo = await Future.delayed(const Duration(milliseconds: 500), () => UserInfo(telephone: '89999999999', email: 'sfsf@mail.ru', name: 'dad' ));
-      user = User(data.token, data.userName, userInfo.telephone);
-      _setAuthenticated(true);
+      final response =  await _profileService.getProfile(data.userName, data.token);
+      if(response != null && response.error == 0){
+        user = User(data.token, data.userName, response.response!.telephone);
+        _setAuthenticated(true);
+      }
+      else{
+        user = User.initial();
+      }
     }
     else {
       user = User.initial();

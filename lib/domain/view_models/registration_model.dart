@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:deepvr/data/entities/profile.dart';
 import 'package:deepvr/data/entities/registration.dart';
 import 'package:deepvr/data/services/authentication_service.dart';
 import 'package:deepvr/data/services/profile_service.dart';
@@ -34,7 +32,7 @@ class RegistrationModel with ChangeNotifier {
       setState(FetchingState.error);
     }
     else if(response.error == 0){
-        final profileResponse = await _profileService.setProfile(Profile(name: name, token: response.token!));
+        final profileResponse = await _profileService.setProfile(name, response.token!);
         _authenticationModel.signIn(User(response.token, name, registration.phone));
         setState(FetchingState.successful);
     }

@@ -6,6 +6,7 @@ import 'package:deepvr/domain/view_models/login_model.dart';
 import 'package:deepvr/domain/view_models/profile_model.dart';
 import 'package:deepvr/domain/view_models/purchase_history_model.dart';
 import 'package:deepvr/domain/view_models/registration_model.dart';
+import 'package:deepvr/domain/view_models/statuses_model.dart';
 import 'package:deepvr/providers/routes_model.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/booking_page_model.dart';
@@ -37,8 +38,9 @@ void setup() {
 
   //Профиль
   locator.registerLazySingleton(() => ProfileService());
-  locator.registerLazySingleton(() => ProfileModel());
-  locator.registerLazySingleton(() => PurchaseHistoryModel());
+  locator.registerSingletonWithDependencies(() => ProfileModel(), dependsOn: [AuthenticationModel]);
+  locator.registerSingletonWithDependencies(() => PurchaseHistoryModel(), dependsOn: [AuthenticationModel]);
+  locator.registerSingletonWithDependencies(() => ProfileStatusesModel(), dependsOn: [AuthenticationModel]);
 
   //Игры
   locator.registerLazySingleton(() => GamesService());

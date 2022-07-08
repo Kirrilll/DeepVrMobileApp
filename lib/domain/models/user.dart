@@ -10,4 +10,9 @@ class User{
     token = null;
     phone = null;
   }
+
+  @override
+  String toString() {
+    return 'User{token: $token, login: $login, phone: $phone}';
+  }
 }
