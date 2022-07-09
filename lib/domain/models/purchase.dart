@@ -1,3 +1,5 @@
+import 'package:deepvr/data/entities/client_purchase.dart';
+
 class Purchase {
   int id;
   int guestCount;

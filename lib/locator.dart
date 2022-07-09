@@ -20,6 +20,7 @@ import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:deepvr/providers/time_view_model.dart';
 import 'package:deepvr/data/services/booking_service.dart';
 import 'package:deepvr/data/services/storge_service.dart';
+import 'package:deepvr/usecases/mappers/purchase_mapper.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt locator = GetIt.instance;
@@ -41,17 +42,16 @@ void setup() {
   locator.registerSingletonWithDependencies(() => ProfileModel(), dependsOn: [AuthenticationModel]);
   locator.registerSingletonWithDependencies(() => PurchaseHistoryModel(), dependsOn: [AuthenticationModel]);
   locator.registerSingletonWithDependencies(() => ProfileStatusesModel(), dependsOn: [AuthenticationModel]);
+  locator.registerLazySingleton(() => PurchaseMapper());
 
   //Игры
   locator.registerLazySingleton(() => GamesService());
-  //Бронирование
   locator.registerLazySingleton(() => GamesModel()..getGames());
   //начало рефакторинга
   locator.registerLazySingleton(() => BookingModel());
 
   //конец рефакторига
-  locator.registerLazySingleton(() =>
-      GameTypeViewModel()); //сделать factory, что-то сделать с getNext и т.д
+  locator.registerLazySingleton(() => GameTypeViewModel()); //сделать factory, что-то сделать с getNext и т.д
   locator.registerLazySingleton<GamesViewModel>(() => GamesViewModel());
   locator.registerLazySingleton(() => CounterViewModel());
   locator.registerLazySingleton(() => DateViewModel());

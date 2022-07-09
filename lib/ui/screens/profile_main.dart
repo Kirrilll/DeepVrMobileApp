@@ -26,6 +26,14 @@ class ProfileMain extends StatefulWidget {
 class _ProfileMainState extends State<ProfileMain> {
   @override
   void initState() {
+    locator<ProfileModel>().getBonuses();
+    locator<PurchaseHistoryModel>().getPurchaseHistory();
+
+    //Должно сработать 1 раз
+    final profileStatusesModel = locator<ProfileStatusesModel>();
+    if(profileStatusesModel.fetchingStatus == FetchingState.idle){
+      profileStatusesModel.getStatuses();
+    }
     super.initState();
   }
 
@@ -35,7 +43,6 @@ class _ProfileMainState extends State<ProfileMain> {
       providers: [
         ChangeNotifierProvider.value(value: locator<ProfileModel>()),
         ChangeNotifierProvider.value(value: locator<PurchaseHistoryModel>()),
-        ChangeNotifierProvider.value(value: locator<ProfileStatusesModel>())
       ],
       child: BaseProfileTemplate(
           content: Expanded(
@@ -45,13 +52,13 @@ class _ProfileMainState extends State<ProfileMain> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Center(
-              child: Consumer<ProfileStatusesModel>(
+              child: Consumer<ProfileModel>(
                 builder: (_, model, __) =>
-                    model.userStatusFetchingState != FetchingState.successful
+                    model.bonusesFetchingStatus != FetchingState.successful
                         ? const CircularProgressIndicator()
                         : ProfileStatusCard.short(
-                            title: model.userStatus.title,
-                            imagePath: model.userStatus.imgPath
+                            title: model.profileStatus.title,
+                            imagePath: model.profileStatus.imgPath
                     ),
               ),
             ),

@@ -13,7 +13,7 @@ class GamesModel with ChangeNotifier{
   List<Game>? get games => _games;
 
 
-  void getGames() async{
+  Future<void> getGames() async{
     locator<GamesService>().getAllGames().then((res){
       _games = res;
       _isLoaded = true;

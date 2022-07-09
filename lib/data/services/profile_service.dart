@@ -1,7 +1,7 @@
+import 'package:deepvr/data/entities/client_purchase.dart';
 import 'package:deepvr/data/entities/default_response.dart';
 import 'package:deepvr/data/entities/loyalty_status.dart';
 import 'package:deepvr/data/entities/user_info.dart';
-import 'package:deepvr/domain/models/bonus.dart';
 import 'package:http/http.dart' as http;
 
 import '../entities/bonus_info.dart';
@@ -34,13 +34,16 @@ class ProfileService {
     return null;
   }
 
-  Future<void> getPurchaseHistory( String token) async {
+  Future<DefaultResponse<List<ClientPurchase>>?> getPurchaseHistory( String token) async {
     var url = Uri.parse(_apiUrl + 'booking/history');
     var response = await _client.post(url, body: <String, dynamic>{
       'token': token,
     });
-    print('history');
-    print(response.body);
+    if(response.statusCode == 200){
+      print(response.body);
+      return DefaultResponse.fromJsonString(response.body, ClientPurchase.listFromJson);
+    }
+    return null;
   }
 
   Future<DefaultResponse<BonusInfo>?> getBonuses(String token) async {

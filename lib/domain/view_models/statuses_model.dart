@@ -10,46 +10,21 @@ import '../../locator.dart';
 
 class ProfileStatusesModel with ChangeNotifier{
   List<ProfileStatus> _statuses = List.empty(growable: true);
-  FetchingState _allStatusesFetchingStatus = FetchingState.idle;
-  FetchingState _userStatusFetching = FetchingState.idle;
+  FetchingState _fetchingStatus = FetchingState.idle;
   final ProfileService _profileService = locator<ProfileService>();
-  int? _userStatusId;
   List<ProfileStatus> get statuses => _statuses;
-  FetchingState get allStatusesFetchingStatus => _allStatusesFetchingStatus;
-  FetchingState get userStatusFetchingState{
-    if(_allStatusesFetchingStatus == FetchingState.successful && _userStatusFetching == FetchingState.successful) {
-      return FetchingState.successful;
-    }
-    return FetchingState.loading;
-  }
-  ProfileStatus get userStatus => _statuses.firstWhere((status) => status.id == _userStatusId);
+  FetchingState get fetchingStatus => _fetchingStatus;
 
-  setAllStatusState(FetchingState status){
-    _allStatusesFetchingStatus = status;
+  setState(FetchingState status){
+    _fetchingStatus = status;
     notifyListeners();
   }
 
-  setUserStatusState(FetchingState status){
-    _userStatusFetching = status;
-    notifyListeners();
-  }
 
   Future<void> getStatuses() async {
-    setAllStatusState(FetchingState.loading);
+    setState(FetchingState.loading);
     final response = await _profileService.getStatusesList();
     _statuses = response?.response?.map((e) => ProfileStatus.fromEntity(e)).toList() ?? List.empty();
-    setAllStatusState(FetchingState.successful);
+    setState(FetchingState.successful);
   }
-
-  Future<void> getUserStatus() async{
-    if(_userStatusId == null){
-      setUserStatusState(FetchingState.loading);
-    }
-    final result = await Future.delayed(const Duration(milliseconds: 500), () => 1);
-    if(result != _userStatusId){
-      _userStatusId = result;
-      setUserStatusState(FetchingState.successful);
-    }
-  }
-
 }
