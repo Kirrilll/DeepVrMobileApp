@@ -1,3 +1,5 @@
+import 'package:deepvr/data/entities/default_response.dart';
+import 'package:deepvr/data/entities/loyalty_status.dart';
 import 'package:deepvr/data/services/profile_service.dart';
 import 'package:deepvr/domain/enums/fetching_state.dart';
 import 'package:deepvr/domain/models/profile_status.dart';
@@ -7,13 +9,11 @@ import 'package:flutter/cupertino.dart';
 import '../../locator.dart';
 
 class ProfileStatusesModel with ChangeNotifier{
-  final List<ProfileStatus> _statuses = List.empty(growable: true);
+  List<ProfileStatus> _statuses = List.empty(growable: true);
   FetchingState _allStatusesFetchingStatus = FetchingState.idle;
   FetchingState _userStatusFetching = FetchingState.idle;
   final ProfileService _profileService = locator<ProfileService>();
   int? _userStatusId;
-
-
   List<ProfileStatus> get statuses => _statuses;
   FetchingState get allStatusesFetchingStatus => _allStatusesFetchingStatus;
   FetchingState get userStatusFetchingState{
@@ -36,14 +36,8 @@ class ProfileStatusesModel with ChangeNotifier{
 
   Future<void> getStatuses() async {
     setAllStatusState(FetchingState.loading);
-
-    await _profileService.getStatusesList();
-    final result = await Future.delayed(const Duration(seconds: 1), () => [
-      ProfileStatus(id: 1, imgPath: 'assets/images/status.png', title: 'Новичок', bonusPercent: 5),
-      ProfileStatus(id: 2, imgPath: 'assets/images/status.png', title: 'Игроман', bonusPercent: 10),
-      ProfileStatus(id: 3, imgPath: 'assets/images/status.png', title: 'Профи', bonusPercent: 15)
-    ]);
-    _statuses.addAll(result);
+    final response = await _profileService.getStatusesList();
+    _statuses = response?.response?.map((e) => ProfileStatus.fromEntity(e)).toList() ?? List.empty();
     setAllStatusState(FetchingState.successful);
   }
 

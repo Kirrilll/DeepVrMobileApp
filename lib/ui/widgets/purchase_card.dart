@@ -1,4 +1,4 @@
-import 'package:deepvr/data/entities/purchase.dart';
+import 'package:deepvr/domain/models/purchase.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -54,7 +54,7 @@ class PurchaseCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 60),
                 Text(
-                    'от ${purchase.date.day} ${purchase.date.month}',
+                    'от ${purchase.getDate()}',
                   style: const TextStyle(
                     fontSize: 12,
                     color: Color(0xFFFAFAFC)

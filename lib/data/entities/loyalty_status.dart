@@ -33,4 +33,8 @@ class LoyaltyStatus{
     );
   }
 
+  static List<LoyaltyStatus> listFromJson(String jsonSource){
+    return List<LoyaltyStatus>.from(json.decode(jsonSource).map((x) => LoyaltyStatus.fromJsonMap(x)));
+  }
+
 }

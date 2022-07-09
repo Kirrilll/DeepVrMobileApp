@@ -13,4 +13,8 @@ class Purchase {
       required this.gameType,
       required this.price,
       required this.date});
+
+  String getDate(){
+    return '${(date.day < 10 ? '0': '') + date.day.toString()}.${(date.month < 10 ? '0': '') + date.day.toString()}.${date.year}';
+  }
 }

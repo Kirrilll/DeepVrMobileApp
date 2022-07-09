@@ -1,4 +1,5 @@
 import 'package:deepvr/data/entities/default_response.dart';
+import 'package:deepvr/data/entities/loyalty_status.dart';
 import 'package:deepvr/data/entities/user_info.dart';
 import 'package:deepvr/domain/models/bonus.dart';
 import 'package:http/http.dart' as http;
@@ -33,14 +34,13 @@ class ProfileService {
     return null;
   }
 
-  Future<void> getPurchaseHistory(String name, String token) async {
+  Future<void> getPurchaseHistory( String token) async {
     var url = Uri.parse(_apiUrl + 'booking/history');
     var response = await _client.post(url, body: <String, dynamic>{
-      'name': name,
       'token': token,
     });
-    // print('history');
-    // print(response.body);
+    print('history');
+    print(response.body);
   }
 
   Future<DefaultResponse<BonusInfo>?> getBonuses(String token) async {
@@ -52,11 +52,13 @@ class ProfileService {
     return null;
   }
 
-  Future<void> getStatusesList() async {
+  Future<DefaultResponse<List<LoyaltyStatus>>?> getStatusesList() async {
     var url = Uri.parse(_apiUrl + 'bonus/list');
     var response = await _client.get(url);
-    // print('statuses');
-    // print(response.body);
+    if(response.statusCode == 200){
+      return DefaultResponse.fromJsonString(response.body, LoyaltyStatus.listFromJson);
+    }
+    return null;
   }
 
   Future<void> activatePromo(String token, String promoCode) async {

@@ -17,13 +17,15 @@ class BonusInfo{
         required this.loyaltyStatus
       });
 
-  factory BonusInfo.fromJson(Map<String, dynamic> json) {
+  factory BonusInfo.fromJson(String jsonSource) {
+
+    Map<String, dynamic> jsonMap = json.decode(jsonSource);
     return BonusInfo(
-        quantityAll: json['quantity_all'],
-        quantityReal: json['quantity_real'],
-        quantityExpired: json['quantity_expired'],
-        nextExpiredDate: json['next_expired_date'],
-        loyaltyStatus: LoyaltyStatus.fromJsonMap(json['loyalty_category'])
+        quantityAll: jsonMap['quantity_all'],
+        quantityReal: jsonMap['quantity_real'],
+        quantityExpired: jsonMap['quantity_expired'],
+        nextExpiredDate: jsonMap['next_expired_date'],
+        loyaltyStatus: LoyaltyStatus.fromJsonMap(jsonMap['loyalty_category'])
     );
   }
 

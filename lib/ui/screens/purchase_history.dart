@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../data/entities/purchase.dart';
+import '../../domain/models/purchase.dart';
 import '../../locator.dart';
 
 

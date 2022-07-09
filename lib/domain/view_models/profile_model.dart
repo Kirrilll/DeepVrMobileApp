@@ -1,5 +1,5 @@
 import 'package:deepvr/data/entities/bonus_info.dart';
-import 'package:deepvr/data/entities/purchase.dart';
+import 'package:deepvr/domain/models/purchase.dart';
 import 'package:deepvr/data/services/profile_service.dart';
 import 'package:deepvr/domain/enums/fetching_state.dart';
 import 'package:deepvr/domain/models/bonus.dart';

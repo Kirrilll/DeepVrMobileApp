@@ -4,7 +4,7 @@ import 'package:deepvr/domain/view_models/authentication_model.dart';
 import 'package:deepvr/locator.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../data/entities/purchase.dart';
+import '../models/purchase.dart';
 import '../enums/fetching_state.dart';
 
 class PurchaseHistoryModel with ChangeNotifier{
@@ -26,7 +26,7 @@ class PurchaseHistoryModel with ChangeNotifier{
 
   Future<void> getPurchaseHistory() async{
     setState(FetchingState.loading);
-    await _profileService.getPurchaseHistory(_authenticationModel.user.login!, _authenticationModel.user.token!);
+    await _profileService.getPurchaseHistory( _authenticationModel.user.token!);
     _purchaseHistory = List.of( await Future.delayed(const Duration(seconds: 1), () => [
       Purchase(id: 3535, guestCount: 5, game: 'Выбор на месте', gameType: 'VR погружение', price: 1200, date: DateTime.parse('2022-10-12')),
       Purchase(id: 3535, guestCount: 9, game: 'Выбор на месте', gameType: 'VR погружение', price: 1900, date: DateTime.parse('2022-10-22')),

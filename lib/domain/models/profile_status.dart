@@ -1,3 +1,5 @@
+import 'package:deepvr/data/entities/loyalty_status.dart';
+
 class ProfileStatus{
   final int id;
   final String imgPath;
@@ -6,5 +8,10 @@ class ProfileStatus{
 
   ProfileStatus({required this.id ,required this.imgPath, required this.title, required this.bonusPercent});
 
-
+  factory ProfileStatus.fromEntity(LoyaltyStatus loyaltyStatus) => ProfileStatus(
+      id: loyaltyStatus.id,
+      imgPath: 'assets/images/status.png',
+      title: loyaltyStatus.title,
+      bonusPercent: loyaltyStatus.cashback
+  );
 }

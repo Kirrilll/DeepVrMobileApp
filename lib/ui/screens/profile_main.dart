@@ -1,4 +1,4 @@
-import 'package:deepvr/data/entities/purchase.dart';
+import 'package:deepvr/domain/models/purchase.dart';
 import 'package:deepvr/domain/view_models/profile_model.dart';
 import 'package:deepvr/domain/view_models/purchase_history_model.dart';
 import 'package:deepvr/domain/view_models/statuses_model.dart';
