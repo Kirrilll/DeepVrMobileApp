@@ -40,7 +40,7 @@ class ProfileService {
       'token': token,
     });
     if(response.statusCode == 200){
-      print(response.body);
+      // print(response.body);
       return DefaultResponse.fromJsonString(response.body, ClientPurchase.listFromJson);
     }
     return null;
@@ -64,9 +64,12 @@ class ProfileService {
     return null;
   }
 
-  Future<void> activatePromo(String token, String promoCode) async {
+  Future<DefaultResponse<List>?> activatePromo(String token, String promoCode) async {
     var url = Uri.parse(_apiUrl + 'promo/activate');
-    var response = await _client.post(url,
-        body: <String, dynamic>{'token': token, 'promo_code': promoCode});
+    var response = await _client.post(url, body: <String, dynamic>{'token': token, 'promo_code': promoCode});
+    if(response.statusCode == 200){
+      return DefaultResponse.fromJsonString(response.body, (body) => List.empty());
+    }
+    return null;
   }
 }

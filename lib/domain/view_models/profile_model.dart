@@ -11,22 +11,31 @@ import 'package:flutter/cupertino.dart';
 class ProfileModel with ChangeNotifier{
   List<Bonus>? _bonuses;
   ProfileStatus? _profileStatus;
-  FetchingState _fetchingStatus = FetchingState.idle;
+  FetchingState _profileFetchingStatus = FetchingState.idle;
+  FetchingState _promoCodeActivationStatus = FetchingState.idle;
+  String? _errorMessage;
   final ProfileService _profileService = locator<ProfileService>();
   final AuthenticationModel _authenticationModel = locator<AuthenticationModel>();
 
 
   List<Bonus> get bonuses => _bonuses!;
   ProfileStatus get profileStatus => _profileStatus!;
-  FetchingState get bonusesFetchingStatus => _fetchingStatus;
+  String? get errorMessage => _errorMessage;
+  FetchingState get bonusesFetchingStatus => _profileFetchingStatus;
+  FetchingState get promoCodeActivationStatus => _promoCodeActivationStatus;
 
-  void setState(FetchingState state){
-    _fetchingStatus = state;
+  void _setBonusesState(FetchingState state){
+    _profileFetchingStatus = state;
+    notifyListeners();
+  }
+
+  void _setPromoCodeActivationState(FetchingState state){
+    _promoCodeActivationStatus = state;
     notifyListeners();
   }
 
   Future<void> getBonuses() async{
-    setState(FetchingState.loading);
+    _setBonusesState(FetchingState.loading);
     final response =  await _profileService.getBonuses(_authenticationModel.user.token!);
 
     if(response!.error == 0) {
@@ -36,13 +45,24 @@ class ProfileModel with ChangeNotifier{
       bonuses.add(Bonus(title: 'Временные', count: response.response!.quantityExpired));
       _bonuses = bonuses;
       _profileStatus = ProfileStatus.fromEntity(response.response!.loyaltyStatus);
-      setState(FetchingState.successful);
+      _setBonusesState(FetchingState.successful);
     }
     else{
-      setState(FetchingState.error);
+      _setBonusesState(FetchingState.error);
     }
+  }
 
-
+  Future<void> activatePromoCode(String promoCode) async {
+    _setPromoCodeActivationState(FetchingState.loading);
+    final response = await _profileService.activatePromo(_authenticationModel.user.token!, promoCode);
+    if(response != null && response.error == 0){
+      _setPromoCodeActivationState(FetchingState.successful);
+      getBonuses();
+    }
+    else{
+      _errorMessage = response?.message ?? 'Нет соединения';
+      _setPromoCodeActivationState(FetchingState.error);
+    }
   }
 
 }
