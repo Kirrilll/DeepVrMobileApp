@@ -1,5 +1,5 @@
 import 'package:deepvr/data/entities/game_type.dart';
-import 'package:deepvr/models/refactor/booking.dart';
+import 'package:deepvr/models/booking.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:flutter/cupertino.dart';

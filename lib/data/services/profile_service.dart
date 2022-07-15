@@ -40,7 +40,6 @@ class ProfileService {
       'token': token,
     });
     if(response.statusCode == 200){
-      // print(response.body);
       return DefaultResponse.fromJsonString(response.body, ClientPurchase.listFromJson);
     }
     return null;

@@ -1,4 +1,4 @@
-import 'package:deepvr/models/refactor/booking.dart';
+import 'package:deepvr/models/booking.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/date_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';

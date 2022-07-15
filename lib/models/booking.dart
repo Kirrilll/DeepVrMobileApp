@@ -1,14 +1,12 @@
 import 'package:deepvr/data/entities/game.dart';
 import 'package:deepvr/data/entities/game_type.dart';
 
-import '../../entities/date_entity.dart';
-import '../../entities/time_entity.dart';
+import '../entities/date_entity.dart';
+import '../entities/time_entity.dart';
 
 class Booking {
   GameType? selectedType;
   Game? selectedGame;
-
-  //У Counter сделать функцию increment, которая получает знач, и лимиты
   int? guestCount;
   DateEntity? selectedDate;
   TimeEntity? selectedTime;
@@ -36,7 +34,8 @@ class Booking {
       DateEntity? selectedDate,
       TimeEntity? selectedTime,
       String? name,
-      String? phone}) {
+      String? phone,
+      }) {
     return Booking(
         selectedType ?? booking.selectedType,
         selectedGame ?? booking.selectedGame,
@@ -44,7 +43,8 @@ class Booking {
         selectedDate ?? booking.selectedDate,
         selectedTime ?? booking.selectedTime,
         name ?? booking.name,
-        phone ?? booking.phone);
+        phone ?? booking.phone,
+    );
   }
 
 

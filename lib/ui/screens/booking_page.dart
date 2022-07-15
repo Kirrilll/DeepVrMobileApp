@@ -1,20 +1,12 @@
-import 'package:deepvr/booking_page_widgets/booking_pages/date_picker_page/date_picker_page.dart';
-import 'package:deepvr/booking_page_widgets/booking_pages/form_page/form_page.dart';
-import 'package:deepvr/booking_page_widgets/booking_pages/result_page/order_page.dart';
-import 'package:deepvr/booking_page_widgets/booking_pages/result_page/result_page.dart';
-import 'package:deepvr/booking_page_widgets/booking_pages/result_page/suc%D1%81essful_page.dart';
 import 'package:deepvr/locator.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/booking_results_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:deepvr/ui/shared/default_button.dart';
+import 'package:deepvr/usecases/configurations/booking_step_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../booking_page_widgets/booking_pages/game_picker_page/game_page.dart';
-import '../../booking_page_widgets/booking_pages/game_type_page/game_type_page.dart';
-import '../../booking_page_widgets/booking_pages/players_counter_page/players_counter_page.dart';
-import 'time_picker_step.dart';
 import '../widgets/custom_stepper.dart';
 
 class BookingPage extends StatefulWidget {
@@ -30,51 +22,22 @@ class _BookingPageState extends State<BookingPage> {
   //Стоит сделать переменную, которая хранит в себе BookingPage interface
   //Там getNExt, getPrev, там проверка
 
-
   VoidCallback _onStepContinue(BookingModel model) {
     return () {
       FocusScope.of(context).unfocus();
-      model.currModel.additionalFunc();
-      if(model.currModel.getNext()!= null){
-        setState(() {
-          selectedIndex++;
-        });
-      }
-      model.setViewModel(model.currModel.getNext() ?? model.currModel);
+      // model.currModel.additionalFunc();
+      model.next();
     };
   }
 
   VoidCallback? _onStepCancel(BookingModel model) {
-    return model.currModel.isMayBack()
+    return model.mayBack
         ? () {
             FocusScope.of(context).unfocus();
-            if(model.currModel.getPrev()!= null){
-              setState(() {
-                selectedIndex--;
-              });
-              model.setViewModel(model.currModel.getPrev()!);
-            }
+            model.back();
           }
         : null;
   }
-
-  bool _isResultPage(IBookingViewModel model) {
-    return model.runtimeType == BookingResultsViewModel;
-  }
-  //Это костыль, как можно раньше убрать это
-  bool _isControlsEnabled(IBookingViewModel model) {
-    if (!_isResultPage(model) && selectedIndex == 6) return false;
-    return true;
-  }
-
-  late int selectedIndex;
-
-  @override
-  void initState() {
-    selectedIndex = locator<BookingModel>().currModel.getPageNumber();
-    super.initState();
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -83,19 +46,11 @@ class _BookingPageState extends State<BookingPage> {
       child: Consumer<BookingModel>(builder: (context, model, _) {
         return CustomStepper(
           type: StepperType.horizontal,
-          currentStep: selectedIndex,
-          steps: [
-            const Step(title: Text(""), content: GameTypesPage()),
-            Step(title: const Text(""), content: GameCardPage()),
-            const Step(title: Text(""), content: PlayersCounterPage()),
-            const Step(title: Text(""), content: DatePickerPage()),
-            const Step(title: Text(""), content: TimePickerStep()),
-            const Step(title: Text(""), content: FormPage()),
-            const Step(title: Text(''), content: BookingResultPage(), state: StepState.disabled)
-          ],
+          currentStep: model.currStepIndex,
+          steps: bookingSteps,
           onStepContinue: _onStepContinue(model),
           onStepCancel: _onStepCancel(model),
-          controlsBuilder: _isControlsEnabled(model.currModel)
+          controlsBuilder: model.steps[model.currStepIndex].isControlPanelShow
               ? (context, details) {
                   return Container(
                     clipBehavior: Clip.hardEdge,
@@ -109,12 +64,15 @@ class _BookingPageState extends State<BookingPage> {
                       children: [
                         CancelStepButton(onStepCancel: details.onStepCancel),
                         const SizedBox(width: 9),
-                        DefaultButton(
-                          actTitle: _isResultPage(model.currModel)
-                              ? 'Готово'
-                              : "Далее",
-                          actionCallback: details.onStepContinue,
-                          isActive: model.currModel.isFinished(model.booking),
+                        Expanded(
+                          child: DefaultButton(
+                            actTitle:
+                                model.currStepIndex == model.steps.length - 1
+                                    ? 'Готово'
+                                    : "Далее",
+                            actionCallback: details.onStepContinue,
+                            isActive: model.mayNext,
+                          ),
                         )
                       ],
                     ),

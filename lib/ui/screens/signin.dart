@@ -84,23 +84,18 @@ class _SignInState extends State<SignIn> {
                   const SizedBox(height: 48),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        model.state == FetchingState.loading
-                            ? const CircularProgressIndicator()
-                            : DefaultButton(
-                                actTitle: "Войти",
-                                actionCallback: () {
-                                  if (_formState.currentState!.validate()) {
-                                    model.login(Login(
-                                        phone: _phoneController.value.text,
-                                        password:
-                                            _passwordController.value.text));
-                                  }
-                                }),
-                      ],
-                    ),
+                    child: model.state == FetchingState.loading
+                        ? const Center(child: CircularProgressIndicator())
+                        : DefaultButton(
+                            actTitle: "Войти",
+                            actionCallback: () {
+                              if (_formState.currentState!.validate()) {
+                                model.login(Login(
+                                    phone: _phoneController.value.text,
+                                    password:
+                                        _passwordController.value.text));
+                              }
+                            }),
                   ),
                   const SizedBox(height: 34),
                   GestureDetector(

@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../entities/time_entity.dart';
 import '../../locator.dart';
-import '../../models/refactor/booking.dart';
+import '../../models/booking.dart';
 import '../../providers/refactor/booking_model.dart';
 
 class TimePickerStep extends StatelessWidget {

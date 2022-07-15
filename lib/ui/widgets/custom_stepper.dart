@@ -1,3 +1,4 @@
+import 'package:deepvr/models/booking_step.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class CustomStepper extends StatefulWidget {
   })  : assert(0 <= currentStep && currentStep < steps.length),
         super(key: key);
 
-  final List<Step> steps;
+  final List<BookingStep> steps;
   final ScrollPhysics? physics;
   final StepperType type;
   final int currentStep;
@@ -39,9 +40,8 @@ class CustomStepper extends StatefulWidget {
 class _CustomStepperState extends State<CustomStepper>
     with TickerProviderStateMixin {
   late List<GlobalKey> _keys;
-  final Map<int, StepState> _oldStates = <int, StepState>{};
 
-  late List<Step> itemsWithEnabledProgressLine;
+  late List<BookingStep> itemsWithEnabledProgressLine;
 
   @override
   void initState() {
@@ -51,11 +51,7 @@ class _CustomStepperState extends State<CustomStepper>
       (int i) => GlobalKey(),
     );
 
-    for (int i = 0; i < widget.steps.length; i += 1) {
-      _oldStates[i] = widget.steps[i].state;
-    }
-
-    itemsWithEnabledProgressLine = widget.steps.where((step) => step.state != StepState.disabled).toList();
+    itemsWithEnabledProgressLine = widget.steps.where((step) => step.isHeaderShow).toList();
 
   }
 
@@ -63,10 +59,6 @@ class _CustomStepperState extends State<CustomStepper>
   void didUpdateWidget(CustomStepper oldWidget) {
     super.didUpdateWidget(oldWidget);
     assert(widget.steps.length == oldWidget.steps.length);
-
-    for (int i = 0; i < oldWidget.steps.length; i += 1) {
-      _oldStates[i] = oldWidget.steps[i].state;
-    }
   }
 
   bool _isFirst(int index) {
@@ -124,21 +116,7 @@ class _CustomStepperState extends State<CustomStepper>
   }
 
   Widget _buildIcon(int index) {
-    if (widget.steps[index].state != _oldStates[index]) {
-      return AnimatedCrossFade(
-        firstChild: _buildCircle(index, true),
-        secondChild: _buildCircle(0, true),
-        firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
-        secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
-        sizeCurve: Curves.fastOutSlowIn,
-        crossFadeState: widget.steps[index].state == StepState.error
-            ? CrossFadeState.showSecond
-            : CrossFadeState.showFirst,
-        duration: kThemeAnimationDuration,
-      );
-    } else {
       return _buildCircle(index, false);
-    }
   }
 
   Widget _buildVerticalControls(int stepIndex) {
@@ -189,7 +167,7 @@ class _CustomStepperState extends State<CustomStepper>
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        if (widget.steps[widget.currentStep].state != StepState.disabled)
+        if (widget.steps[widget.currentStep].isHeaderShow)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
             child: Row(
@@ -227,11 +205,3 @@ class _CustomStepperState extends State<CustomStepper>
   }
 }
 
-class BookingStep {
-  Widget content;
-  bool isRoadMapEnabled;
-  bool isControlsPanelEnabled;
-
-  BookingStep({required this.content, this.isControlsPanelEnabled = true, this.isRoadMapEnabled = true});
-
-}

@@ -2,7 +2,7 @@ import 'package:deepvr/entities/date_entity.dart';
 import 'package:deepvr/entities/time_entity.dart';
 import 'package:deepvr/data/entities/game_type.dart';
 import 'package:deepvr/models/order.dart';
-import 'package:deepvr/models/refactor/booking.dart';
+import 'package:deepvr/models/booking.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/counter_view_model.dart';

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../locator.dart';
-import '../../../models/refactor/booking.dart';
+import '../../../models/booking.dart';
 import '../../../providers/game_type_view_model.dart';
 import '../../../providers/refactor/booking_model.dart';
 

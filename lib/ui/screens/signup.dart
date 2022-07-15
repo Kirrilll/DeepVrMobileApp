@@ -119,24 +119,19 @@ class _SignUpState extends State<SignUp> {
                   const SizedBox(height: 48),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        model.signUpStatus == FetchingState.loading
-                            ? const CircularProgressIndicator()
-                            : DefaultButton(
-                                actTitle: "Зарегестрироваться",
-                                actionCallback: () {
-                                  model.signUp(Registration(
-                                    phone: _phoneController.value.text,
-                                    password: _passwordController.value.text,
-                                    passwordRepeat: _repeatPasswordController.value.text,
-                                    email: _mailController.value.text
-                                  ), _loginController.value.text);
-                                },
-                              ),
-                      ],
-                    ),
+                    child: model.signUpStatus == FetchingState.loading
+                        ? const Center(child: CircularProgressIndicator())
+                        : DefaultButton(
+                            actTitle: "Зарегестрироваться",
+                            actionCallback: () {
+                              model.signUp(Registration(
+                                phone: _phoneController.value.text,
+                                password: _passwordController.value.text,
+                                passwordRepeat: _repeatPasswordController.value.text,
+                                email: _mailController.value.text
+                              ), _loginController.value.text);
+                            },
+                          ),
                   ),
                   const SizedBox(height: 26),
                   GestureDetector(

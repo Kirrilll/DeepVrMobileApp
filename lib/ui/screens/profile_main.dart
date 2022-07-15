@@ -1,4 +1,5 @@
 import 'package:deepvr/domain/models/purchase.dart';
+import 'package:deepvr/domain/view_models/authentication_model.dart';
 import 'package:deepvr/domain/view_models/profile_model.dart';
 import 'package:deepvr/domain/view_models/purchase_history_model.dart';
 import 'package:deepvr/domain/view_models/statuses_model.dart';
@@ -15,6 +16,7 @@ import 'package:provider/provider.dart';
 
 import '../../domain/enums/fetching_state.dart';
 import '../../locator.dart';
+import '../shared/default_button.dart';
 
 class ProfileMain extends StatefulWidget {
   const ProfileMain({Key? key}) : super(key: key);
@@ -55,6 +57,115 @@ class _ProfileMainState extends State<ProfileMain> {
       default:
         return const Color(0xFF1F2032);
     }
+  }
+
+  Widget _buildBottomSheet(BuildContext context) {
+    return ChangeNotifierProvider.value(
+      value: locator<ProfileModel>(),
+      child: Consumer<ProfileModel>(
+        builder: (_, model, __) => BottomModal(
+          children: [
+            const SizedBox(height: 10),
+            Align(
+              alignment: Alignment.centerRight,
+              child: InkResponse(
+                onTap: () => Navigator.pop(context),
+                child: const Icon(
+                  Icons.clear,
+                  size: 30,
+                  color: Color(0xFF444656),
+                ),
+              ),
+            ),
+            const SizedBox(height: 42),
+            Text(
+              'Введите промокод',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Focus(
+                    child: Builder(builder: (context) {
+                      FocusNode node = Focus.of(context);
+                      return Container(
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(15)),
+                            border: Border.all(
+                                color: _buildBorderColor(
+                                    model.promoCodeActivationStatus))),
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.center,
+                          controller: _promoCodeController,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: node.hasFocus
+                                  ? const Color(0xFFFFFFFF)
+                                  : const Color(0xFFABAFE5)),
+                          decoration: InputDecoration(
+                            filled: true,
+                            contentPadding: const EdgeInsets.all(16),
+                            fillColor: Theme.of(context)
+                                .colorScheme
+                                .secondaryContainer,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide.none),
+                            suffix: model.promoCodeActivationStatus ==
+                                    FetchingState.loading
+                                ? const SizedBox(
+                                    width: 16,
+                                    height: 16,
+                                    child: CircularProgressIndicator())
+                                : const SizedBox(),
+                          ),
+                          onSubmitted: (text) => model.activatePromoCode(
+                              _promoCodeController.value.text),
+                        ),
+                      );
+                    }),
+                  ),
+                  model.promoCodeActivationStatus == FetchingState.error
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Text(
+                            model.errorMessage!,
+                            textAlign: TextAlign.start,
+                            style: const TextStyle(
+                                color: Color(0xFFEE6E7E), fontSize: 14),
+                          ),
+                        )
+                      : const SizedBox()
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'Много информации',
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary, fontSize: 11),
+            ),
+            const SizedBox(height: 63),
+            SizedBox(
+                height: 64,
+                child: DefaultButton(
+                    actTitle: 'Применить',
+                    actionCallback: () {
+                      model.activatePromoCode(_promoCodeController.value.text);
+                      Focus.of(context).unfocus();
+                    }))
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -113,8 +224,10 @@ class _ProfileMainState extends State<ProfileMain> {
                           return ListView.separated(
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) => BonusCard(
-                                  count: model.bonuses[index].count,
-                                  type: model.bonuses[index].title),
+                                    count: model.bonuses[index].count,
+                                    type: model.bonuses[index].title,
+                                    expiredDate: model.bonuses[index].expiredDateStr,
+                                  ),
                               separatorBuilder: (context, index) =>
                                   const SizedBox(width: 16),
                               itemCount: model.bonuses.length);
@@ -131,86 +244,40 @@ class _ProfileMainState extends State<ProfileMain> {
               ),
             ),
             const SizedBox(height: 16),
-            const Text(
-              'Введите промокод',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Color(0xFFABAFE5),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Consumer<ProfileModel>(
-                builder: (_, model, __) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Focus(
-                      child: Builder(builder: (context) {
-                        FocusNode node = Focus.of(context);
-                        return Container(
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(15)),
-                              border: Border.all(
-                                  color: _buildBorderColor(
-                                      model.promoCodeActivationStatus))),
-                          child: TextField(
-                            textAlignVertical: TextAlignVertical.center,
-                            controller: _promoCodeController,
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: node.hasFocus
-                                    ? const Color(0xFFFFFFFF)
-                                    : const Color(0xFFABAFE5)),
-                            decoration: InputDecoration(
-                              filled: true,
-                              contentPadding: const EdgeInsets.all(16),
-                              fillColor: Theme.of(context)
-                                  .colorScheme
-                                  .secondaryContainer,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: BorderSide.none),
-                              suffix: model.promoCodeActivationStatus ==
-                                      FetchingState.loading
-                                  ? const SizedBox(
-                                      width: 16,
-                                      height: 16,
-                                      child: CircularProgressIndicator())
-                                  : InkResponse(
-                                      child: const Icon(
-                                        Icons.send,
-                                        size: 10,
-                                      ),
-                                      onTap: () {
-                                        model.activatePromoCode(
-                                            _promoCodeController.value.text);
-                                        Focus.of(context).unfocus();
-                                      },
-                                    ),
-                            ),
-                            onSubmitted: (text) => model.activatePromoCode(
-                                _promoCodeController.value.text),
-                          ),
-                        );
-                      }),
-                    ),
-                    model.promoCodeActivationStatus == FetchingState.error
-                        ? Padding(
-                          padding: const EdgeInsets.only(top: 8),
-                          child: Text(
-                              model.errorMessage!,
-                              textAlign: TextAlign.start,
-                              style: const TextStyle(
-                                  color: Color(0xFFEE6E7E), fontSize: 14),
-                            ),
-                        )
-                        : const SizedBox()
-                  ],
+            InkResponse(
+              onTap: () => showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (_) => _buildBottomSheet(_)),
+              child: DecoratedBox(
+                decoration: const BoxDecoration(
+                    border: Border.symmetric(
+                        horizontal: BorderSide(color: Color(0xFF444656)))),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'Промокод или сертификат',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                        color: Color(0xFF444656),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
+            const SizedBox(height: 16),
             Container(
               padding: const EdgeInsets.all(16),
               decoration: const BoxDecoration(
@@ -276,25 +343,15 @@ class _ProfileMainState extends State<ProfileMain> {
             ),
             const SizedBox(height: 16),
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: const BoxDecoration(
                 color: Color(0xFF1F2032),
                 borderRadius: BorderRadius.all(Radius.circular(15)),
               ),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Выбрать город',
-                      style: TextStyle(
-                          color: Color(0xFFFFFFFF),
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: -0.41),
-                    ),
-                    InkResponse(
-                      radius: 10,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  InkResponse(
                       onTap: () => showBottomSheet(
                           context: context,
                           builder: (context) => const BottomModal(
@@ -330,23 +387,64 @@ class _ProfileMainState extends State<ProfileMain> {
                                       height: 7,
                                     )
                                   ])),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Выбрать город',
+                                style: TextStyle(
+                                    color: Color(0xFFFFFFFF),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: -0.41),
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: const [
+                                  Text(
+                                    'Саратов',
+                                    style: TextStyle(
+                                        color: Color(0xFFABAFE5), fontSize: 14),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios_rounded,
+                                    size: 16,
+                                  )
+                                ],
+                              ),
+                            ]),
+                      )),
+                  Container(height: 1, color: const Color(0xFF444656)),
+                  InkResponse(
+                    onTap: () => locator<AuthenticationModel>().signOut(),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.end,
                         children: const [
                           Text(
-                            'Саратов',
+                            'Выйти из аккаунта',
                             style: TextStyle(
-                                color: Color(0xFFABAFE5), fontSize: 14),
+                                color: Color(0xFFFFFFFF),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: -0.41),
                           ),
                           Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            size: 16,
+                            Icons.logout,
+                            color: Color(0xFFABAFE5),
                           )
                         ],
                       ),
                     ),
-                  ]),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 16)
           ],

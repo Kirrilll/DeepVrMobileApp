@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../../locator.dart';
-import '../../../models/refactor/booking.dart';
+import '../../../models/booking.dart';
 
 class GamesContainer extends StatefulWidget {
   const GamesContainer(

@@ -1,15 +1,12 @@
 import 'package:deepvr/booking_page_widgets/booking_pages/game_picker_page/games_container.dart';
 import 'package:deepvr/data/entities/game.dart';
 import 'package:deepvr/enums/routes.dart';
-import 'package:deepvr/models/refactor/booking.dart';
+import 'package:deepvr/models/booking.dart';
 import 'package:deepvr/providers/routes_model.dart';
-import 'package:deepvr/providers/booking_page_model.dart';
-import 'package:deepvr/providers/counter_view_model.dart';
-import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/domain/view_models/games_model.dart';
-import 'package:deepvr/providers/games_view_model.dart';
 import 'package:deepvr/providers/refactor/booking_model.dart';
 import 'package:deepvr/ui/shared/bottom_modal.dart';
+import 'package:deepvr/usecases/configurations/booking_step_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -99,7 +96,7 @@ class GameBottomModalSheet extends StatelessWidget {
         selectedType: game.gameType,
         selectedGame: game,
         guestCount: game.guestMin ?? game.gameType.guestMin));
-    bookingModel.setViewModel(locator<CounterViewModel>());
+    bookingModel.setCurrStep(StepsSelector.counter);
   }
 
   @override
@@ -185,17 +182,13 @@ class GameBottomModalSheet extends StatelessWidget {
       const SizedBox(height: 16),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 22),
-        child: Row(
-          children: [
-            DefaultButton(
-                actionCallback: () {
-                  _selectGame(game);
-                  Navigator.of(context).pop();
-                  locator<RoutesModel>().navigateToNamed(Routes.booking);
-                },
-                actTitle: 'Забронировать')
-          ],
-        ),
+        child: DefaultButton(
+            actionCallback: () {
+              _selectGame(game);
+              Navigator.of(context).pop();
+              locator<RoutesModel>().navigateToNamed(Routes.booking);
+            },
+            actTitle: 'Забронировать'),
       )
     ]);
   }
