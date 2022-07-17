@@ -1,4 +1,4 @@
-import 'package:deepvr/models/booking_step.dart';
+import 'package:deepvr/domain/models/booking_step.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 

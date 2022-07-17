@@ -1,32 +1,32 @@
 import 'package:deepvr/data/entities/game_type.dart';
-import 'package:deepvr/models/booking.dart';
+import 'package:deepvr/domain/models/booking.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
-import 'package:deepvr/providers/refactor/booking_model.dart';
+import 'package:deepvr/domain/view_models/booking_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../locator.dart';
-import '../../../ui/widgets/selectable_item.dart';
+import '../../locator.dart';
+import 'selectable_item.dart';
 
 class GameTypeCard extends StatelessWidget {
   const GameTypeCard(
       {Key? key,
         required this.gameType,
+        required this.select,
+        required this.selectedId
       }) : super(key: key);
 
   final GameType gameType;
+  final int? selectedId;
+  final void Function() select;
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BookingModel>(
-      builder:(context, model, _ ) => GestureDetector(
-        onTap: () {
-          //Изменился тип, изменилось все, поэтому идет сброс
-          model.updateBooking(Booking.copyWith(Booking.initial(), selectedType: gameType));
-          },
+    return GestureDetector(
+        onTap: () => select(),
         child: SelectableItem(
-          isSelected: model.booking.selectedType != null && model.booking.selectedType!.id == gameType.id,
+          isSelected: selectedId != null && selectedId == gameType.id,
           item: Container(
             padding: const EdgeInsets.all(30),
             decoration: BoxDecoration(
@@ -66,8 +66,7 @@ class GameTypeCard extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 

@@ -1,11 +1,11 @@
-import 'package:deepvr/booking_page_widgets/booking_pages/game_picker_page/game_card.dart';
+import 'package:deepvr/ui/widgets/game_card.dart';
 import 'package:deepvr/data/entities/game.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../../locator.dart';
-import '../../../models/booking.dart';
+import '../../locator.dart';
+import '../../domain/models/booking.dart';
 
 class GamesContainer extends StatefulWidget {
   const GamesContainer(

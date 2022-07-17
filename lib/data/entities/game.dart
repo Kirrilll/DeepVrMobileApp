@@ -98,4 +98,11 @@ class Game {
    return List<Game>.from(json.decode(data).map((game) => Game.fromJson(game)));
   }
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Game && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 }

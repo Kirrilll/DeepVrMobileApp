@@ -2,26 +2,31 @@ import 'package:deepvr/data/services/authentication_service.dart';
 import 'package:deepvr/data/services/games_service.dart';
 import 'package:deepvr/data/services/profile_service.dart';
 import 'package:deepvr/domain/view_models/authentication_model.dart';
+import 'package:deepvr/domain/view_models/calendar_model.dart';
+import 'package:deepvr/domain/view_models/booking_games_model.dart';
 import 'package:deepvr/domain/view_models/login_model.dart';
+import 'package:deepvr/domain/view_models/players_counter_model.dart';
 import 'package:deepvr/domain/view_models/profile_model.dart';
 import 'package:deepvr/domain/view_models/purchase_history_model.dart';
 import 'package:deepvr/domain/view_models/registration_model.dart';
 import 'package:deepvr/domain/view_models/statuses_model.dart';
+import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/providers/routes_model.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/booking_page_model.dart';
 import 'package:deepvr/providers/booking_results_view_model.dart';
 import 'package:deepvr/providers/counter_view_model.dart';
 import 'package:deepvr/providers/date_view_model.dart';
-import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/domain/view_models/games_model.dart';
 import 'package:deepvr/providers/games_view_model.dart';
-import 'package:deepvr/providers/refactor/booking_model.dart';
+import 'package:deepvr/domain/view_models/booking_model.dart';
 import 'package:deepvr/providers/time_view_model.dart';
 import 'package:deepvr/data/services/booking_service.dart';
 import 'package:deepvr/data/services/storge_service.dart';
 import 'package:deepvr/usecases/mappers/purchase_mapper.dart';
 import 'package:get_it/get_it.dart';
+
+import 'domain/view_models/game_types_model.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -32,7 +37,6 @@ void setup() {
 
   //Аунтефикация
   locator.registerSingletonAsync(() => AuthenticationModel().init(), dependsOn: [StorageService]);
-
   locator.registerLazySingleton(() => AuthenticationService());
   locator.registerFactory(() => RegistrationModel());
   locator.registerFactory(() => LoginModel());
@@ -47,11 +51,18 @@ void setup() {
   //Игры
   locator.registerLazySingleton(() => GamesService());
   locator.registerLazySingleton(() => GamesModel()..getGames());
-  //начало рефакторинга
-  locator.registerLazySingleton(() => BookingModel());
 
-  //конец рефакторига
-  locator.registerLazySingleton(() => GameTypeViewModel()); //сделать factory, что-то сделать с getNext и т.д
+
+  //Бронирование
+  locator.registerLazySingleton(() => BookingModel()..initStepsModels());
+  locator.registerLazySingleton(() => GameTypeModel()..getGameTypes());
+  locator.registerLazySingleton(() => BookingGamesModel());
+  locator.registerLazySingleton(() => PlayerCounterModel());
+  locator.registerLazySingleton(() => CalendarModel());
+  //Удалить
+  locator.registerLazySingleton(() => GameTypeViewModel());
+
+  //конец рефакторига//сделать factory, что-то сделать с getNext и т.д
   locator.registerLazySingleton<GamesViewModel>(() => GamesViewModel());
   locator.registerLazySingleton(() => CounterViewModel());
   locator.registerLazySingleton(() => DateViewModel());

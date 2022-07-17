@@ -1,7 +1,7 @@
 import 'package:deepvr/booking_page_widgets/booking_pages/form_page/login_field.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/form_page/phone_field.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
-import 'package:deepvr/providers/refactor/booking_model.dart';
+import 'package:deepvr/domain/view_models/booking_model.dart';
 import 'package:deepvr/ui/shared/bottom_modal.dart';
 import 'package:deepvr/ui/shared/custom_checkbox.dart';
 import 'package:deepvr/ui/shared/default_button.dart';

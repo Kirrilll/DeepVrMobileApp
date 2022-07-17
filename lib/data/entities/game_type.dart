@@ -49,4 +49,12 @@ class GameType {
   static List<GameType> gameTypesFromJson(String str) {
     return List<GameType>.from(json.decode(str).map((x) => GameType.fromJson(x)));
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is GameType && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 }

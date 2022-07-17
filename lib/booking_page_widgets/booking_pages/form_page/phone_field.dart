@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../locator.dart';
-import '../../../models/booking.dart';
-import '../../../providers/refactor/booking_model.dart';
+import '../../../domain/models/booking.dart';
+import '../../../domain/view_models/booking_model.dart';
 
 class PhoneField extends StatelessWidget {
   const PhoneField({

@@ -1,21 +1,23 @@
-import 'package:deepvr/entities/date_entity.dart';
-import 'package:deepvr/models/booking.dart';
+import 'package:deepvr/domain/models/date.dart';
+import 'package:deepvr/domain/models/booking.dart';
+import 'package:deepvr/locator.dart';
 import 'package:deepvr/providers/date_view_model.dart';
-import 'package:deepvr/providers/refactor/booking_model.dart';
+import 'package:deepvr/domain/view_models/booking_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../locator.dart';
+import '../../domain/view_models/calendar_model.dart';
 
-class DateView extends StatelessWidget {
-  DateView({Key? key, this.isEmpty = false, required this.date})
+
+class DateItem extends StatelessWidget {
+  DateItem({Key? key, this.isEmpty = false, required this.date})
       : super(key: key);
 
-  DateView.empty({Key? key, this.isEmpty = true, this.date}) : super(key: key);
+  DateItem.empty({Key? key, this.isEmpty = true, this.date}) : super(key: key);
 
   bool isEmpty;
-  final DateEntity? date;
+  final Date? date;
 
   Color _buildBackgroundColor() {
     if (date!.date.day == DateTime.now().day &&
@@ -43,19 +45,12 @@ class DateView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return !isEmpty
-        ? Consumer<BookingModel>(
-            builder: (context, model, _) => ElevatedButton(
+        ? Selector<BookingModel, Date?>(
+            selector: (_, model) => model.booking.selectedDate,
+            shouldRebuild: (prev, next) => next == date || prev == date,
+            builder: (context, selectedDate, _) => ElevatedButton(
                 onPressed: date!.availableTime.isNotEmpty
-                    //Сбрасываем время, без copy, потому что проверка на null
-                    ? () => model.updateBooking(Booking(
-                          model.booking.selectedType,
-                          model.booking.selectedGame,
-                          model.booking.guestCount,
-                          date,
-                          null,
-                          model.booking.name,
-                          model.booking.phone,
-                        ))
+                    ? () => locator<CalendarModel>().selectDate(date)
                     : null,
                 style: ElevatedButton.styleFrom(
                     primary: _buildBackgroundColor(),
@@ -64,8 +59,7 @@ class DateView extends StatelessWidget {
                     padding: const EdgeInsets.all(6),
                     fixedSize: const Size(43, 43),
                     shape: null,
-                    side: model.booking.selectedDate != null &&
-                            model.booking.selectedDate == date
+                    side: selectedDate != null && selectedDate == date
                         ? const BorderSide(color: Color(0XFF8556FF), width: 2)
                         : BorderSide.none),
                 child: Text(

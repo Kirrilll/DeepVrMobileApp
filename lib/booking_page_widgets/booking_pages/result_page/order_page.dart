@@ -2,7 +2,7 @@ import 'package:deepvr/providers/booking_results_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../models/booking.dart';
+import '../../../domain/models/booking.dart';
 
 //TODO страница с инлексами в CustomStepper
 class OrderPage extends StatelessWidget {

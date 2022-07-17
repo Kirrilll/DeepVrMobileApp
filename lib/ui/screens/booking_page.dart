@@ -1,9 +1,6 @@
 import 'package:deepvr/locator.dart';
-import 'package:deepvr/providers/base_booking_viewmodel.dart';
-import 'package:deepvr/providers/booking_results_view_model.dart';
-import 'package:deepvr/providers/refactor/booking_model.dart';
+import 'package:deepvr/domain/view_models/booking_model.dart';
 import 'package:deepvr/ui/shared/default_button.dart';
-import 'package:deepvr/usecases/configurations/booking_step_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,25 +13,22 @@ class BookingPage extends StatefulWidget {
   _BookingPageState createState() => _BookingPageState();
 }
 
-//TODO внедрить BookingBase в Step
-//Как-то через  StreamProvider сделать переходы
-class _BookingPageState extends State<BookingPage> {
-  //Стоит сделать переменную, которая хранит в себе BookingPage interface
-  //Там getNExt, getPrev, там проверка
 
-  VoidCallback _onStepContinue(BookingModel model) {
+class _BookingPageState extends State<BookingPage> {
+   final BookingModel _bookingModel = locator<BookingModel>();
+
+  VoidCallback _onStepContinue() {
     return () {
       FocusScope.of(context).unfocus();
-      // model.currModel.additionalFunc();
-      model.next();
+      _bookingModel.next();
     };
   }
 
-  VoidCallback? _onStepCancel(BookingModel model) {
-    return model.mayBack
+  VoidCallback? _onStepCancel() {
+    return _bookingModel.mayBack
         ? () {
             FocusScope.of(context).unfocus();
-            model.back();
+            _bookingModel.back();
           }
         : null;
   }
@@ -43,19 +37,20 @@ class _BookingPageState extends State<BookingPage> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: locator<BookingModel>(),
-      child: Consumer<BookingModel>(builder: (context, model, _) {
+      child: Selector<BookingModel, int>(
+        selector: (_, model) => model.currStepIndex,
+          builder: (context, stepIndex, _) {
         return CustomStepper(
           type: StepperType.horizontal,
-          currentStep: model.currStepIndex,
-          steps: bookingSteps,
-          onStepContinue: _onStepContinue(model),
-          onStepCancel: _onStepCancel(model),
-          controlsBuilder: model.steps[model.currStepIndex].isControlPanelShow
+          currentStep: stepIndex,
+          steps: _bookingModel.steps,
+          onStepContinue: _onStepContinue(),
+          onStepCancel: _onStepCancel(),
+          controlsBuilder: _bookingModel.steps[stepIndex].isControlPanelShow
               ? (context, details) {
                   return Container(
                     clipBehavior: Clip.hardEdge,
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                     decoration: BoxDecoration(boxShadow: const [
                       BoxShadow(color: Color(0xFF1F2032), offset: Offset(0, 1))
                     ], color: Theme.of(context).colorScheme.background),
@@ -64,14 +59,17 @@ class _BookingPageState extends State<BookingPage> {
                       children: [
                         CancelStepButton(onStepCancel: details.onStepCancel),
                         const SizedBox(width: 9),
-                        Expanded(
-                          child: DefaultButton(
-                            actTitle:
-                                model.currStepIndex == model.steps.length - 1
-                                    ? 'Готово'
-                                    : "Далее",
-                            actionCallback: details.onStepContinue,
-                            isActive: model.mayNext,
+                        Selector<BookingModel, bool>(
+                          selector: (_, model) => model.mayNext,
+                          builder: (_, mayNext, __) => Expanded(
+                            child: DefaultButton(
+                              actTitle:
+                              stepIndex == _bookingModel.steps.length - 1
+                                      ? 'Готово'
+                                      : "Далее",
+                              actionCallback: details.onStepContinue,
+                              isActive: mayNext,
+                            ),
                           ),
                         )
                       ],

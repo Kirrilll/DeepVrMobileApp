@@ -1,4 +1,4 @@
-import 'package:deepvr/models/booking.dart';
+import 'package:deepvr/domain/models/booking.dart';
 import 'package:flutter/cupertino.dart';
 
 abstract class IBookingViewModel{

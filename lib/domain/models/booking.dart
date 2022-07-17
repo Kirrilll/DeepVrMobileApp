@@ -1,15 +1,16 @@
 import 'package:deepvr/data/entities/game.dart';
 import 'package:deepvr/data/entities/game_type.dart';
+import 'package:deepvr/domain/models/time.dart';
 
-import '../entities/date_entity.dart';
-import '../entities/time_entity.dart';
+import 'date.dart';
+
 
 class Booking {
   GameType? selectedType;
   Game? selectedGame;
   int? guestCount;
-  DateEntity? selectedDate;
-  TimeEntity? selectedTime;
+  Date? selectedDate;
+  Time? selectedTime;
   String? name;
   String? phone;
 
@@ -31,8 +32,8 @@ class Booking {
       GameType? selectedType,
       Game? selectedGame,
       int? guestCount,
-      DateEntity? selectedDate,
-      TimeEntity? selectedTime,
+      Date? selectedDate,
+      Time? selectedTime,
       String? name,
       String? phone,
       }) {

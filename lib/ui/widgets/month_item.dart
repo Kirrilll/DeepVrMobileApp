@@ -1,12 +1,12 @@
-import 'package:deepvr/entities/date_entity.dart';
+import 'package:deepvr/domain/models/date.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../entities/month.dart';
-import 'date_view.dart';
+import '../../domain/models/month.dart';
+import 'date_item.dart';
 
-class MonthView extends StatelessWidget {
-  const MonthView({
+class MonthItem extends StatelessWidget {
+  const MonthItem({
     Key? key,
     required this.month
   }) : super(key: key);
@@ -20,11 +20,11 @@ class MonthView extends StatelessWidget {
     int currWeekday = 0;
     while(tempDays.isNotEmpty){
       if(tempDays.first.date.weekday == currWeekday + 1){
-        days.add(DateView(date: DateEntity.copyFrom(tempDays.first)));
+        days.add(DateItem(date: Date.copyFrom(tempDays.first)));
         tempDays.removeAt(0);
       }
       else{
-        days.add(DateView.empty());
+        days.add(DateItem.empty());
       }
       currWeekday = (currWeekday +1) % 7;
     }
@@ -40,11 +40,11 @@ class MonthView extends StatelessWidget {
     int currWeekday = 0;
     while(tempDays.isNotEmpty){
       if(tempDays.first.date.weekday == currWeekday + 1){
-        days.add(DateView(date: DateEntity.copyFrom(tempDays.first)));
+        days.add(DateItem(date: Date.copyFrom(tempDays.first)));
         tempDays.removeAt(0);
       }
       else{
-        days.add(DateView.empty());
+        days.add(DateItem.empty());
       }
       currWeekday = (currWeekday +1) % 7;
     }

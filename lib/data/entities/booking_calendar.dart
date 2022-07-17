@@ -1,26 +1,19 @@
-import 'dart:developer';
-
-import 'package:deepvr/models/booking_date_model/room_model.dart';
 import 'dart:convert';
 
-class BookingDateModel {
+class BookingCalendar {
   Map<String, Map<String, List<int>>> schedule;
   Map<int, Room> rooms;
   Map<String, String> datesUi;
 
-  BookingDateModel(
+  BookingCalendar(
       {required this.schedule, required this.rooms, required this.datesUi});
 
-  factory BookingDateModel.fromJsonStr(String str) =>
-      BookingDateModel.fromJson(json.decode(str));
+  factory BookingCalendar.fromJsonStr(String str) =>
+      BookingCalendar.fromJson(json.decode(str));
 
-  factory BookingDateModel.fromJson(Map<String, dynamic> json) {
+  factory BookingCalendar.fromJson(Map<String, dynamic> json) {
     Map<String, Map<String, List<int>>> schedule = {};
     Map<int, Room> rooms = {};
-
-    //Sprint('-------------------------------------------');
-    //log(json['schedule'].toString());
-
     json['schedule'].forEach((key, value) {
 
       schedule.putIfAbsent(key, () {
@@ -41,9 +34,35 @@ class BookingDateModel {
       rooms.putIfAbsent(int.parse(key), () => Room.fromJson(value));
     });
 
-    return BookingDateModel(
+    return BookingCalendar(
         schedule: schedule,
         rooms: rooms,
         datesUi: Map<String, String>.from(json['dates_ui']));
+  }
+}
+
+class Room {
+  String title;
+  int guestMax;
+
+  Room({
+    required this.title,
+    required this.guestMax
+  });
+
+  factory Room.fromJson(Map<String, dynamic> json) => Room (
+      title:json['title'],
+      guestMax:json['guest_max']
+  );
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
+    data['guest_max'] = guestMax;
+    return data;
+  }
+
+  static List<Room> roomsFromJson(String str){
+    return List<Room>.from(json.decode(str).map((x) => Room.fromJson(x)));
   }
 }

@@ -1,15 +1,14 @@
-import 'package:deepvr/entities/date_entity.dart';
-import 'package:deepvr/entities/time_entity.dart';
+import 'package:deepvr/domain/models/date.dart';
 import 'package:deepvr/data/entities/game_type.dart';
 import 'package:deepvr/models/order.dart';
-import 'package:deepvr/models/booking.dart';
+import 'package:deepvr/domain/models/booking.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/booking_form_view_model.dart';
 import 'package:deepvr/providers/counter_view_model.dart';
 import 'package:deepvr/providers/date_view_model.dart';
 import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/providers/games_view_model.dart';
-import 'package:deepvr/providers/refactor/booking_model.dart';
+import 'package:deepvr/domain/view_models/booking_model.dart';
 import 'package:deepvr/providers/time_view_model.dart';
 import 'package:deepvr/data/services/booking_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -89,7 +88,7 @@ class BookingResultsViewModel with ChangeNotifier implements IBookingViewModel{
     if(request!.error == 0){
       setStatus(RequestInfo.successful);
     }
-    bookingModel.init();
+    bookingModel.reset();
   }
 
   @override

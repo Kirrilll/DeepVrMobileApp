@@ -1,4 +1,4 @@
-import 'package:deepvr/models/booking.dart';
+import 'package:deepvr/domain/models/booking.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/counter_view_model.dart';
 import 'package:flutter/cupertino.dart';

@@ -1,7 +1,7 @@
 import 'package:deepvr/booking_page_widgets/booking_pages/result_page/order_page.dart';
 import 'package:deepvr/booking_page_widgets/booking_pages/result_page/suc%D1%81essful_page.dart';
 import 'package:deepvr/providers/booking_results_view_model.dart';
-import 'package:deepvr/providers/refactor/booking_model.dart';
+import 'package:deepvr/domain/view_models/booking_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

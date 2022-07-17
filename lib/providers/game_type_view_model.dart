@@ -1,7 +1,7 @@
 
 
 import 'package:deepvr/data/entities/game_type.dart';
-import 'package:deepvr/models/booking.dart';
+import 'package:deepvr/domain/models/booking.dart';
 import 'package:deepvr/providers/base_booking_viewmodel.dart';
 import 'package:deepvr/providers/games_view_model.dart';
 import 'package:flutter/foundation.dart';

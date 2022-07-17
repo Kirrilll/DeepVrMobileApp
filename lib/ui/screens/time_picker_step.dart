@@ -1,13 +1,13 @@
 import 'package:deepvr/ui/templates/booking_step_template.dart';
-import 'package:deepvr/entities/date_entity.dart';
+import 'package:deepvr/domain/models/date.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../entities/time_entity.dart';
+import '../../domain/models/time.dart';
 import '../../locator.dart';
-import '../../models/booking.dart';
-import '../../providers/refactor/booking_model.dart';
+import '../../domain/models/booking.dart';
+import '../../domain/view_models/booking_model.dart';
 
 class TimePickerStep extends StatelessWidget {
   const TimePickerStep({
@@ -20,7 +20,7 @@ class TimePickerStep extends StatelessWidget {
       value: locator<BookingModel>(),
       child: BookingStepTemplate(
           stepNumber: 5,
-          content: Selector<BookingModel, DateEntity?>(
+          content: Selector<BookingModel, Date?>(
               selector: (context, model) => model.booking.selectedDate,
               builder: (context, selectedDate, _) => selectedDate != null
                   ? TimeContainer(availableTime: selectedDate.availableTime)
@@ -34,7 +34,7 @@ class TimeContainer extends StatelessWidget {
   const TimeContainer({Key? key, required this.availableTime})
       : super(key: key);
 
-  final List<TimeEntity> availableTime;
+  final List<Time> availableTime;
 
   //В теории данные приходят сюда
   @override
@@ -53,9 +53,9 @@ class TimeContainer extends StatelessWidget {
 class TimeItem extends StatelessWidget {
   const TimeItem({Key? key, required this.time}) : super(key: key);
 
-  final TimeEntity time;
+  final Time time;
 
-  bool _isSelected(TimeEntity? time) => this.time == time;
+  bool _isSelected(Time? time) => this.time == time;
 
   @override
   Widget build(BuildContext context) {

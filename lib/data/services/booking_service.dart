@@ -5,7 +5,7 @@ import 'package:deepvr/models/order.dart';
 import 'package:deepvr/models/request.dart';
 import 'package:http/http.dart' as http;
 
-import '../../models/booking_date_model/booking_date_model.dart';
+import '../entities/booking_calendar.dart';
 
 class BookingService{
 
@@ -31,12 +31,12 @@ class BookingService{
   }
 
   
-  Future<BookingDateModel?> getDates(int gameId, int questCount) async {
+  Future<BookingCalendar?> getDates(int gameId, int questCount) async {
     var uri = Uri.parse(_apiUrl + 'booking-dates/$gameId?guest_quantity=$questCount');
     var response = await _client.get(uri);
     if(response.statusCode == 200){
       var json = response.body;
-      return BookingDateModel.fromJsonStr(json);
+      return BookingCalendar.fromJsonStr(json);
 
     }
   }

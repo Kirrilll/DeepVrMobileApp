@@ -1,25 +1,32 @@
 
+import 'package:deepvr/domain/view_models/calendar_model.dart';
+import 'package:deepvr/domain/view_models/booking_games_model.dart';
+import 'package:deepvr/domain/view_models/game_types_model.dart';
+import 'package:deepvr/domain/view_models/players_counter_model.dart';
+import 'package:deepvr/locator.dart';
 import 'package:flutter/material.dart';
 
-import '../../booking_page_widgets/booking_pages/date_picker_page/date_picker_page.dart';
+import '../../domain/view_models/calendar_model.dart';
+import '../../ui/screens/calendar_screen.dart';
 import '../../booking_page_widgets/booking_pages/form_page/form_page.dart';
-import '../../booking_page_widgets/booking_pages/game_picker_page/game_page.dart';
-import '../../booking_page_widgets/booking_pages/game_type_page/game_type_page.dart';
-import '../../booking_page_widgets/booking_pages/players_counter_page/players_counter_page.dart';
+import '../../ui/screens/game_page.dart';
+import '../../domain/view_models/game_types_model.dart';
+import '../../ui/screens/game_type_screen.dart';
+import '../../ui/screens/players_counter_screen.dart';
 import '../../booking_page_widgets/booking_pages/result_page/result_page.dart';
-import '../../models/booking_step.dart';
+import '../../domain/models/booking_step.dart';
 import '../../ui/screens/time_picker_step.dart';
 
 
 List<BookingStep> bookingSteps = [
-  BookingStep.standard(content: const GameTypesPage(), isFinished: (booking) => booking.selectedType !=null ),
-  BookingStep.standard(content:  GameCardPage(), isFinished: (booking) => booking.selectedGame != null),
-  BookingStep.standard(content: const PlayersCounterPage(), isFinished: (booking) => booking.guestCount != null),
-  BookingStep.standard(content: const DatePickerPage(), isFinished: (booking) => booking.selectedDate != null),
-  BookingStep.standard(content: const TimePickerStep(), isFinished: (booking) => booking.selectedTime != null),
-  BookingStep.standard(content: const FormPage(), isFinished: (booking) => booking.name != null && booking.phone != null),
-  BookingStep(const BookingResultPage(), true, false, (sd) => true,),
-  BookingStep.last(content: const Center(child: Text('Ждем')), isFinished: (sa) => true)
+  BookingStep.standard(content: const GameTypesPage(), viewModel: locator<GameTypeModel>()),
+  BookingStep.standard(content:  GameCardPage(), viewModel: locator<BookingGamesModel>()),
+  BookingStep.standard(content: const PlayersCounterPage(), viewModel: locator<PlayerCounterModel>()),
+  BookingStep.standard(content: const CalendarScreen(), viewModel: locator<CalendarModel>()),
+  // BookingStep.standard(content: const TimePickerStep(), isFinished: (booking) => booking.selectedTime != null),
+  // BookingStep.standard(content: const FormPage(), isFinished: (booking) => booking.name != null && booking.phone != null),
+  // BookingStep(const BookingResultPage(), true, false, (sd) => true,),
+  // BookingStep.last(content: const Center(child: Text('Ждем')), isFinished: (sa) => true)
 ];
 
 class StepsSelector {
