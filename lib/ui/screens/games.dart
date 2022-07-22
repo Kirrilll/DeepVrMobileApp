@@ -2,7 +2,7 @@ import 'package:deepvr/ui/widgets/games_container.dart';
 import 'package:deepvr/data/entities/game.dart';
 import 'package:deepvr/enums/routes.dart';
 import 'package:deepvr/domain/models/booking.dart';
-import 'package:deepvr/providers/routes_model.dart';
+import 'package:deepvr/domain/view_models/routes_model.dart';
 import 'package:deepvr/domain/view_models/games_model.dart';
 import 'package:deepvr/domain/view_models/booking_model.dart';
 import 'package:deepvr/ui/shared/bottom_modal.dart';
@@ -91,12 +91,8 @@ class GameBottomModalSheet extends StatelessWidget {
 
   void _selectGame(Game game) {
     var bookingModel = locator<BookingModel>();
-    bookingModel.reset();
-    bookingModel.updateBooking(Booking.copyWith(bookingModel.booking,
-        selectedType: game.gameType,
-        selectedGame: game,
-        guestCount: game.guestMin ?? game.gameType.guestMin));
-    bookingModel.setCurrStep(StepsSelector.counter);
+    bookingModel.selectedType = game.gameType;
+    bookingModel.selectedGame = game;
   }
 
   @override

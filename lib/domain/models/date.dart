@@ -21,7 +21,7 @@ class Date{
 
   @override
   String toString() {
-    return '$date ${availableTime.length}';
+    return date.toString().substring(0, 9);
   }
 
   @override

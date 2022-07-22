@@ -1,16 +1,12 @@
 import 'dart:developer';
 import 'package:deepvr/locator.dart';
 import 'package:deepvr/data/entities/game_type.dart';
-import 'package:deepvr/models/order.dart';
-import 'package:deepvr/models/request.dart';
+import 'package:deepvr/data/entities/request.dart';
 import 'package:http/http.dart' as http;
 
 import '../entities/booking_calendar.dart';
 
 class BookingService{
-
-
-
   bool isInit = false;
   final _client = http.Client();
   late String _apiUrl;
@@ -41,13 +37,12 @@ class BookingService{
     }
   }
 
-  Future<Request?> postData(Order order, int gameId) async {
+  Future<Request?> book(Map<String, dynamic> data, int gameId) async {
     var uri = Uri.parse(_apiUrl + 'booking-request/$gameId');
-
-    var response  = await _client.post(uri, body: order.toJson());
+    var response  = await _client.post(uri, body: data);
     if(response.statusCode == 200){
       return Request.requestFromJson(response.body);
     }
-
+    return null;
   }
 }

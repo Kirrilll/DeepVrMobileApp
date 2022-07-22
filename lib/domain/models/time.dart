@@ -16,4 +16,15 @@ class Time{
     });
     return  timeEntities;
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Time &&
+          runtimeType == other.runtimeType &&
+          time == other.time &&
+          idRooms == other.idRooms;
+
+  @override
+  int get hashCode => time.hashCode ^ idRooms.hashCode;
 }

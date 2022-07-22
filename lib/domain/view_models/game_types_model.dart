@@ -13,18 +13,8 @@ class GameTypeModel extends BaseBookingStepModel with ChangeNotifier, FetchMixin
   List<GameType>? _gameTypes;
 
   List<GameType> get gameTypes => _gameTypes ?? List.empty();
-  GameType? get selectedType => bookingModel.booking.selectedType;
 
 
-  void setSelectedType(GameType? type){
-    bookingModel.updateBooking(Booking.copyWith(
-        Booking.initial(),
-        selectedType: type,
-        phone: bookingModel.booking.phone,
-        name: bookingModel.booking.name
-    ));
-    notifyListeners();
-  }
 
   Future<void> getGameTypes() async{
     setStatus(FetchingState.loading);
@@ -37,8 +27,4 @@ class GameTypeModel extends BaseBookingStepModel with ChangeNotifier, FetchMixin
       setStatus(FetchingState.successful);
     }
   }
-
-  @override
-  bool isFinished() => bookingModel.booking.selectedType != null;
-
 }

@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../../domain/models/user.dart';
 import '../../locator.dart';
-import '../../providers/routes_model.dart';
+import '../../domain/view_models/routes_model.dart';
 import '../widgets/tab_nav_button.dart';
 
 class App extends StatefulWidget {

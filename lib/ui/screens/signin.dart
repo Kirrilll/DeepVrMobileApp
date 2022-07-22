@@ -5,7 +5,6 @@ import 'package:deepvr/domain/view_models/login_model.dart';
 import 'package:deepvr/ui/shared/default_button.dart';
 import 'package:deepvr/usecases/helpers/validation_helper.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,9 +1,11 @@
 import 'package:deepvr/locator.dart';
 import 'package:deepvr/domain/view_models/booking_model.dart';
+import 'package:deepvr/ui/screens/successful_screen.dart';
 import 'package:deepvr/ui/shared/default_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../usecases/helpers/tuple.dart';
 import '../widgets/custom_stepper.dart';
 
 class BookingPage extends StatefulWidget {
@@ -17,10 +19,18 @@ class BookingPage extends StatefulWidget {
 class _BookingPageState extends State<BookingPage> {
    final BookingModel _bookingModel = locator<BookingModel>();
 
+
+   @override
+  void initState() {
+    _bookingModel.init();
+    super.initState();
+  }
+
+
   VoidCallback _onStepContinue() {
     return () {
-      FocusScope.of(context).unfocus();
-      _bookingModel.next();
+        FocusScope.of(context).unfocus();
+        _bookingModel.next();
     };
   }
 
@@ -37,16 +47,18 @@ class _BookingPageState extends State<BookingPage> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: locator<BookingModel>(),
-      child: Selector<BookingModel, int>(
-        selector: (_, model) => model.currStepIndex,
-          builder: (context, stepIndex, _) {
-        return CustomStepper(
+      child: Selector<BookingModel, Tuple<int, bool>>(
+        selector: (_, model) => Tuple(item1: model.stepIndex, item2: model.isBooked),
+          builder: (context, tuple, _) {
+        return tuple.item2
+            ? const SuccessfulScreen()
+        : CustomStepper(
           type: StepperType.horizontal,
-          currentStep: stepIndex,
+          currentStep: tuple.item1,
           steps: _bookingModel.steps,
           onStepContinue: _onStepContinue(),
           onStepCancel: _onStepCancel(),
-          controlsBuilder: _bookingModel.steps[stepIndex].isControlPanelShow
+          controlsBuilder: _bookingModel.steps[tuple.item1].isControlPanelShow
               ? (context, details) {
                   return Container(
                     clipBehavior: Clip.hardEdge,
@@ -64,7 +76,7 @@ class _BookingPageState extends State<BookingPage> {
                           builder: (_, mayNext, __) => Expanded(
                             child: DefaultButton(
                               actTitle:
-                              stepIndex == _bookingModel.steps.length - 1
+                              tuple.item1 == _bookingModel.steps.length - 1
                                       ? 'Готово'
                                       : "Далее",
                               actionCallback: details.onStepContinue,

@@ -1,13 +1,13 @@
 import 'package:deepvr/enums/routes.dart';
-import 'package:deepvr/providers/routes_model.dart';
+import 'package:deepvr/domain/view_models/routes_model.dart';
 import 'package:deepvr/ui/shared/default_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../locator.dart';
+import '../../locator.dart';
 
-class Successful extends StatelessWidget {
-  const Successful({Key? key}) : super(key: key);
+class SuccessfulScreen extends StatelessWidget {
+  const SuccessfulScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

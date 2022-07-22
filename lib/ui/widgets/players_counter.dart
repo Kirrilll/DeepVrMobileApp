@@ -1,9 +1,4 @@
-import 'package:deepvr/domain/view_models/players_counter_model.dart';
 import 'package:deepvr/locator.dart';
-import 'package:deepvr/domain/models/booking.dart';
-import 'package:deepvr/providers/counter_view_model.dart';
-import 'package:deepvr/providers/game_type_view_model.dart';
-import 'package:deepvr/providers/games_view_model.dart';
 import 'package:deepvr/domain/view_models/booking_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +8,22 @@ class PlayerCounter extends StatelessWidget {
   const PlayerCounter({
     Key? key,
   }) : super(key: key);
+
+  void Function()? increment(){
+    final BookingModel _bookingModel = locator<BookingModel>();
+    if(_bookingModel.guestCount! < _bookingModel.maxCount){
+      return () => _bookingModel.guestCount = _bookingModel.guestCount!+1;
+    }
+    return null;
+  }
+
+  void Function()? decrement(){
+    final BookingModel _bookingModel = locator<BookingModel>();
+    if(_bookingModel.guestCount! > _bookingModel.minCount){
+      return () => _bookingModel.guestCount = _bookingModel.guestCount!-1;
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +39,14 @@ class PlayerCounter extends StatelessWidget {
                   children: [
                     Image.asset('assets/images/realistic_vrglasses.png'),
                     Selector<BookingModel, int?>(
-                      selector: (_, model) => model.booking.guestCount,
+                      selector: (_, model) => model.guestCount,
                       builder: (_, guestCount, __) => guestCount!= null
                        ? Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           IconButton(
-                              onPressed:()=>  locator<PlayerCounterModel>().decrement(),
+                              onPressed: decrement(),
                               padding: const EdgeInsets.all(0),
                               iconSize: 20,
                               icon: const Icon(
@@ -65,7 +76,7 @@ class PlayerCounter extends StatelessWidget {
                             ),
                           ),
                           IconButton(
-                              onPressed: ()=>  locator<PlayerCounterModel>().increment(),
+                              onPressed: increment(),
                               icon: const Icon(
                                 Icons.add,
                                 size: 20,

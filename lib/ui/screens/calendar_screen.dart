@@ -4,11 +4,6 @@ import 'package:deepvr/domain/enums/fetching_state.dart';
 import 'package:deepvr/domain/view_models/calendar_model.dart';
 import 'package:deepvr/ui/templates/booking_step_template.dart';
 import 'package:deepvr/ui/widgets/calendar.dart';
-import 'package:deepvr/domain/models/date.dart';
-import 'package:deepvr/domain/models/month.dart';
-import 'package:deepvr/data/entities/booking_calendar.dart';
-import 'package:deepvr/providers/date_view_model.dart';
-import 'package:deepvr/providers/game_type_view_model.dart';
 import 'package:deepvr/domain/view_models/booking_model.dart';
 import 'package:deepvr/data/services/booking_service.dart';
 import 'package:deepvr/usecases/helpers/tuple.dart';
@@ -26,11 +21,11 @@ class CalendarScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Selector<BookingModel, Tuple<int?, int?>>(
       selector: (_, model) => Tuple(
-          item1: model.booking.selectedGame?.id,
-          item2: model.booking.guestCount),
+          item1: model.selectedGame?.id,
+          item2: model.guestCount),
       builder: (_, tuple, __) => tuple.item2 != null && tuple.item1 != null
           ? ChangeNotifierProvider.value(
-              value: locator<CalendarModel>()..getCalendar(),
+              value: locator<CalendarModel>()..getCalendar(tuple.item1!, tuple.item2!),
               child: Consumer<CalendarModel>(builder: (_, model, __) {
                 return BookingStepTemplate(
                     stepNumber: 4,
