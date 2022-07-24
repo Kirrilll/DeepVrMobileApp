@@ -62,14 +62,28 @@ class Booking {
 
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'guest_quantity': guestCount,
-      'guest_date ': selectedDate,
-      'guest_time': selectedTime,
-      'user_phone': phone,
-      'user_name': name,
-    };
-  }
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Booking &&
+          runtimeType == other.runtimeType &&
+          selectedType == other.selectedType &&
+          selectedGame == other.selectedGame &&
+          guestCount == other.guestCount &&
+          selectedDate == other.selectedDate &&
+          selectedTime == other.selectedTime &&
+          phone == other.phone &&
+          name == other.name &&
+          isAgree == other.isAgree;
 
+  @override
+  int get hashCode =>
+      selectedType.hashCode ^
+      selectedGame.hashCode ^
+      guestCount.hashCode ^
+      selectedDate.hashCode ^
+      selectedTime.hashCode ^
+      phone.hashCode ^
+      name.hashCode ^
+      isAgree.hashCode;
 }

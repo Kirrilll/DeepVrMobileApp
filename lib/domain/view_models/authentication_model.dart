@@ -28,8 +28,6 @@ class AuthenticationModel with ChangeNotifier{
       final response =  await _profileService.getProfile(data.userName, data.token);
       if(response != null && response.error == 0){
         user = User(data.token, data.userName, response.response!.telephone);
-        print(user);
-        print('---------------------');
         _setAuthenticated(true);
       }
       else{

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:deepvr/data/entities/game_type.dart';
 import 'package:deepvr/data/services/booking_service.dart';
 import 'package:deepvr/domain/enums/fetching_state.dart';
+import 'package:deepvr/domain/models/booking_information.dart';
 import 'package:deepvr/domain/models/booking_state.dart';
 import 'package:deepvr/domain/models/booking.dart';
 import 'package:deepvr/domain/models/booking_step.dart';
@@ -41,6 +42,7 @@ class BookingModel with ChangeNotifier {
   FetchingState get bookingStatus => _state.bookingStatus;
   String? get errorMessage => _errorMessage;
   bool get mayBook => _steps.last.isFinished(_state.booking);
+  BookingInformation get bookingInformation => _state.bookingInformation ?? BookingInformation.fromBooking(_state.booking);
 
   set selectedType(GameType? type) => updateBooking(_bookingHelper.setGameType(type, _state.booking));
   set selectedGame(Game? game) => updateBooking(_bookingHelper.setGame(game, _state.booking));
@@ -55,25 +57,27 @@ class BookingModel with ChangeNotifier {
   void init(){
     Booking initialBooking = Booking.copyWith(
         _state.booking,
-        // phone: locator<AuthenticationModel>().user.phone,
-        // name: locator<AuthenticationModel>().user.login
+        phone: locator<AuthenticationModel>().user.phone,
+        name: locator<AuthenticationModel>().user.login
     );
 
     int lastFinishedStepIndex = _steps.lastIndexWhere((step) => step.isFinished(_state.booking));
 
-    if(!_state.isBooked){
-      _state.booking = initialBooking;
-      _state.stepIndex = lastFinishedStepIndex == -1 ? 0: lastFinishedStepIndex;
-    }
-    else{
+    if(_state.isBooked){
       _state =  BookingState.initial().copyWith(
           booking: Booking.copyWith(
-            Booking.initial(),
-            phone: initialBooking.phone,
-            name: initialBooking.name
+              Booking.initial(),
+              phone: initialBooking.phone,
+              name: initialBooking.name
           )
-        );
+      );
+      return;
     }
+    _setState(_state.copyWith(
+        stepIndex: lastFinishedStepIndex == -1 ? 0: lastFinishedStepIndex,
+        booking: initialBooking)
+    );
+
   }
 
   void next() {
@@ -100,6 +104,17 @@ class BookingModel with ChangeNotifier {
     } else {
       _setStepIndex(_state.stepIndex + 1);
     }
+  }
+  void getBookingInfo(){
+    _setState(_state.copyWith(bookingStatus: FetchingState.loading));
+    Future.value(BookingInformation(
+        guestDate: selectedDate!.date.toString().substring(0, 10),
+        guestCount: guestCount!,
+        gameTitle: selectedGame!.title,
+        guestTime: selectedTime!.time,
+        roomTitle: selectedType!.title,
+        bookingPrice: selectedGame!.price * guestCount!
+    )).then((res) => _setState(_state.copyWith(bookingStatus: FetchingState.successful, bookingInformation: res)));
   }
 
   void back() {

@@ -41,10 +41,12 @@ class SuccessfulScreen extends StatelessWidget {
             const Spacer(),
             Row(
               children: [
-                DefaultButton(
+                Expanded(
+                  child: DefaultButton(
                     actTitle: 'Жду встречи!',
                     actionCallback: () => locator<RoutesModel>().navigateToNamed(Routes.identification)
-                ),
+                  ),
+                )
               ],
             ),
             //const SizedBox(height: 35)
