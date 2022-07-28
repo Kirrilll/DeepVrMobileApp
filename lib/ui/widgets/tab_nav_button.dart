@@ -1,4 +1,4 @@
-import 'package:deepvr/enums/routes.dart';
+import 'package:deepvr/domain/enums/routes.dart';
 import 'package:flutter/material.dart';
 
 class TabNavButton extends StatelessWidget {
@@ -17,7 +17,7 @@ class TabNavButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkResponse(
       onTap: () => navToNamed(),
       child: Column(
         children: [

@@ -1,4 +1,4 @@
-import 'package:deepvr/enums/routes.dart';
+import 'package:deepvr/domain/enums/routes.dart';
 import 'package:deepvr/domain/view_models/routes_model.dart';
 import 'package:deepvr/ui/shared/default_button.dart';
 import 'package:flutter/cupertino.dart';

@@ -61,12 +61,17 @@ flutter:
     - assets/images/
     - assets/fonts/
   fonts:
-   - family: Gilroy
-     fonts:
-       - asset: assets/fonts/Gilroy-Regular.ttf
-         weight: 400
-       - asset: assets/fonts/Gilroy-Bold.ttf
-         weight: 700
+    - family: Bebas
+      fonts:
+        - asset: assets/fonts/Bebas Neue.ttf
+    - family: Gilroy
+      fonts:
+        - asset: assets/fonts/Gilroy-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Gilroy-Bold.ttf
+          weight: 700
+
+
 
 
 

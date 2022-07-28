@@ -1,9 +1,9 @@
 import 'package:deepvr/domain/models/booking_step.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
-//Можно добавить, чтобы закиддывать свой виджет кнопки
-//Свой разделитель
+//TODO перемотка при инициализации
 class CustomStepper extends StatefulWidget {
   const CustomStepper({
     Key? key,
@@ -29,8 +29,6 @@ class CustomStepper extends StatefulWidget {
   final VoidCallback? onStepCancel;
   final ControlsWidgetBuilder? controlsBuilder;
   final double? elevation;
-
-  /// custom margin on vertical stepper.
   final EdgeInsetsGeometry? margin;
 
   @override
@@ -43,6 +41,9 @@ class _CustomStepperState extends State<CustomStepper>
 
   late List<BookingStep> itemsWithEnabledProgressLine;
 
+  final ScrollController _headerProgressBarController = ScrollController();
+
+
   @override
   void initState() {
     super.initState();
@@ -50,9 +51,7 @@ class _CustomStepperState extends State<CustomStepper>
       widget.steps.length,
       (int i) => GlobalKey(),
     );
-
     itemsWithEnabledProgressLine = widget.steps.where((step) => step.isHeaderShow).toList();
-
   }
 
   @override
@@ -73,7 +72,7 @@ class _CustomStepperState extends State<CustomStepper>
     return widget.currentStep == index;
   }
 
-  Widget _buildLine(bool visible) {
+  Widget _buildLine() {
     return const DottedLine(
       lineThickness: 2,
       dashLength: 5,
@@ -81,6 +80,33 @@ class _CustomStepperState extends State<CustomStepper>
       dashColor: Color(0xFF1F2032),
       dashRadius: 20,
     );
+  }
+
+  void  _onStepContinueAnim(int stepIndex){
+    final offset = (_headerProgressBarController.position.maxScrollExtent / itemsWithEnabledProgressLine.length) * (stepIndex+1);
+    _headerProgressBarController.animateTo(offset, duration: const Duration(milliseconds: 100), curve: Curves.ease);
+  }
+
+  void Function()? _onStepContinueGenerator(int stepIndex) {
+    if(widget.steps.length-1 == stepIndex) {
+      return widget.onStepContinue;
+    }
+    return () {
+      _onStepContinueAnim(stepIndex);
+      widget.onStepContinue!();
+    };
+  }
+
+  void Function()? _onStepBackGenerator(int stepIndex){
+    if(_isFirst(stepIndex) || widget.steps.length-1 == stepIndex){
+      return widget.onStepCancel;
+    }
+    return () {
+      final scrollOffset = _headerProgressBarController.position.maxScrollExtent / itemsWithEnabledProgressLine.length;
+      final offset = scrollOffset * stepIndex - scrollOffset;
+      _headerProgressBarController.animateTo(offset, duration: const Duration(milliseconds: 100), curve: Curves.ease);
+      widget.onStepCancel!();
+    };
   }
 
   Widget _buildCircle(int index, bool oldState) {
@@ -99,8 +125,7 @@ class _CustomStepperState extends State<CustomStepper>
           shape: BoxShape.circle,
         ),
         child: Container(
-          decoration:
-              const BoxDecoration(shape: BoxShape.circle, color: Colors.black),
+          decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.black),
           child: Center(
             child: Text(
               (index + 1).toString(),
@@ -116,7 +141,7 @@ class _CustomStepperState extends State<CustomStepper>
   }
 
   Widget _buildIcon(int index) {
-      return _buildCircle(index, false);
+    return _buildCircle(index, false);
   }
 
   Widget _buildVerticalControls(int stepIndex) {
@@ -125,8 +150,8 @@ class _CustomStepperState extends State<CustomStepper>
         context,
         ControlsDetails(
           currentStep: widget.currentStep,
-          onStepContinue: widget.onStepContinue,
-          onStepCancel: widget.onStepCancel,
+          onStepContinue: _onStepContinueGenerator(stepIndex),
+          onStepCancel: _onStepBackGenerator(stepIndex),
           stepIndex: stepIndex,
         ),
       );
@@ -136,22 +161,6 @@ class _CustomStepperState extends State<CustomStepper>
   }
 
   Widget _buildHorizontal() {
-    final List<Widget> children = <Widget>[
-      for (int i = 0; i < itemsWithEnabledProgressLine.length; i += 1) ...<Widget>[
-          InkResponse(
-            onTap: () =>widget.onStepTapped?.call(i),
-            child: Opacity(opacity: _isCurrent(i) ? 1 : 0.4, child: _buildIcon(i)),
-          ),
-        if (!_isLast(i))
-          Expanded(
-              child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 2),
-                  child: _buildLine(true)))
-      ],
-    ];
-
-
-
     final List<Widget> stepPanels = <Widget>[];
     for (int i = 0; i < widget.steps.length; i += 1) {
       stepPanels.add(
@@ -166,12 +175,31 @@ class _CustomStepperState extends State<CustomStepper>
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         if (widget.steps[widget.currentStep].isHeaderShow)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-            child: Row(
-              children: children,
+          SizedBox(
+            height: 72,
+            child: ListView.separated(
+              controller: _headerProgressBarController,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+              scrollDirection: Axis.horizontal,
+              itemCount: itemsWithEnabledProgressLine.length,
+              itemBuilder: (_, index) => InkResponse(
+                onTap: () => widget.onStepTapped?.call(index),
+                child: Opacity(
+                    opacity: _isCurrent(index) ? 1 : 0.4,
+                    child: _buildIcon(index)),
+              ),
+              separatorBuilder: (_, index) => !_isLast(index)
+                  ? Container(
+                      width: 18,
+                      margin: const EdgeInsets.symmetric(horizontal: 2),
+                      child: Center(
+                        child: _buildLine(),
+                      ))
+                  : const SizedBox(),
             ),
           ),
         Expanded(
@@ -204,4 +232,3 @@ class _CustomStepperState extends State<CustomStepper>
     return _buildHorizontal();
   }
 }
-

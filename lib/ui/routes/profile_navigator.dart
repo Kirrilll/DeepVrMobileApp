@@ -8,10 +8,6 @@ import 'package:deepvr/ui/screens/profile_statuses.dart';
 import 'package:deepvr/ui/screens/purchase_history.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../domain/view_models/statuses_model.dart';
-import '../../locator.dart';
-
 class ProfileNavigator extends StatelessWidget {
   const ProfileNavigator({Key? key}) : super(key: key);
 
@@ -23,21 +19,32 @@ class ProfileNavigator extends StatelessWidget {
         WidgetBuilder builder;
         switch(settings.name){
           case 'profile/main':
-            builder = (BuildContext context) => const ProfileMain();
-            break;
+            return PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => const ProfileMain(),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero
+            );
           case 'profile/statuses':
-            builder = (BuildContext context) => const ProfileStatuses();
-            break;
+            return PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => const ProfileStatuses(),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero
+            );
           case 'profile/history':
-            builder = (BuildContext context) => const PurchaseHistory();
-            break;
+            return PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => const PurchaseHistory(),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero
+            );
           case 'profile/settings':
-            builder = (BuildContext context) => const SettingsNavigator();
-            break;
+            return PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => const SettingsNavigator(),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero
+            );
           default:
-            builder = (BuildContext _) => const ProfileMain();
+            return MaterialPageRoute<void>(builder: (BuildContext context) => const ProfileMain(), settings: settings);
         }
-        return MaterialPageRoute<void>(builder: builder, settings: settings);
       },
     );
   }

@@ -30,6 +30,7 @@ class BookingStepTemplate extends StatelessWidget {
             style: const TextStyle(
               color: Colors.white,
               letterSpacing: 1,
+              fontFamily: 'Bebas',
               fontWeight: FontWeight.w700,
               fontSize: 46,
             ),

@@ -1,30 +1,41 @@
 import 'package:deepvr/ui/screens/signin.dart';
 import 'package:deepvr/ui/screens/signup.dart';
-import 'package:deepvr/usecases/delegates/no_anim_transition_delegate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AuthNavigator extends StatelessWidget {
+class AuthNavigator extends StatefulWidget {
   const AuthNavigator({Key? key}) : super(key: key);
 
+  @override
+  State<AuthNavigator> createState() => _AuthNavigatorState();
+}
+
+class _AuthNavigatorState extends State<AuthNavigator> {
   @override
   Widget build(BuildContext context) {
     return Navigator(
       initialRoute: 'auth/signIn',
-      transitionDelegate: NoAnimationTransitionDelegate(),
       onGenerateRoute: (settings){
         WidgetBuilder builder;
         switch(settings.name){
           case 'auth/signIn':
-            builder = (BuildContext context) => const SignIn();
-            break;
+            return PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => const SignIn(),
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero
+            );
           case 'auth/signUp':
-            builder = (BuildContext context) => const SignUp();
-            break;
+            return PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => const SignUp(),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero
+            );
           default:
-            builder = (BuildContext _) => const Center(child: Text('ошибка роутинга'),);
+            return MaterialPageRoute<void>(
+                builder: (BuildContext _) => const Center(child: Text('ошибка роутинга')),
+                settings: settings
+            );
         }
-        return MaterialPageRoute<void>(builder: builder, settings: settings);
       },
     );
   }

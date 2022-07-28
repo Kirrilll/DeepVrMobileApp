@@ -15,7 +15,7 @@ class PlayersCounterPage extends StatelessWidget {
     return const BookingStepTemplate(
         content: PlayerCounter(),
         stepNumber: 3,
-        stepTitle: 'Выберите количесвто игроков',
+        stepTitle: 'Выберите количество игроков',
     );
   }
 }

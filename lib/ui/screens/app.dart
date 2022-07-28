@@ -1,7 +1,7 @@
 import 'package:deepvr/data/services/storge_service.dart';
 import 'package:deepvr/domain/view_models/authentication_model.dart';
 import 'package:deepvr/domain/view_models/login_model.dart';
-import 'package:deepvr/enums/routes.dart';
+import 'package:deepvr/domain/enums/routes.dart';
 import 'package:deepvr/domain/view_models/games_model.dart';
 import 'package:deepvr/data/services/booking_service.dart';
 import 'package:flutter/material.dart';
@@ -22,15 +22,12 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    locator<BookingService>()
-        .init('https://srt.vrbook.creatrix-digital.ru/api/');
+    locator<BookingService>().init('https://srt.vrbook.creatrix-digital.ru/api/');
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -44,7 +41,8 @@ class _AppState extends State<App> {
             primary: Colors.white,
             secondary: const Color(0xFFABAFE5),
             background: const Color(0xFF050411),
-            secondaryContainer: const Color(0xFF1F2032)),
+            secondaryContainer: const Color(0xFF1F2032)
+        ),
       ),
       home: SafeArea(
           child: ChangeNotifierProvider.value(
@@ -64,7 +62,6 @@ class _AppState extends State<App> {
                           body: Container(
                               color: Theme.of(context).backgroundColor,
                               child: model.selectedPage),
-                          //TODO засунуть в отдельный виджет верстку IconButton
                           bottomNavigationBar: Container(
                             color: Theme.of(context).backgroundColor,
                             padding: const EdgeInsets.fromLTRB(35, 11, 35, 15),

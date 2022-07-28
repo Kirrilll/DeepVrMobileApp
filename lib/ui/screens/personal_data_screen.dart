@@ -8,7 +8,7 @@ class PersonalDataScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  BookingStepTemplate(
+    return const BookingStepTemplate(
         stepNumber: 6,
         content: PersonalDataForm(),
         stepTitle: 'Заполните данные о себе'

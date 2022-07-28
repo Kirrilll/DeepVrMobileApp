@@ -246,6 +246,7 @@ class _ProfileMainState extends State<ProfileMain> {
             const SizedBox(height: 16),
             InkResponse(
               onTap: () => showModalBottomSheet(
+                  backgroundColor: Colors.transparent,
                   isScrollControlled: true,
                   context: context,
                   builder: (_) => _buildBottomSheet(_)),

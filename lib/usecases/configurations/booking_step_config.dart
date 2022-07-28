@@ -24,9 +24,11 @@ List<BookingStep> bookingSteps = [
           ValidationHelper.validatePhone(booking.phone ?? '') == null &&
           (booking.name?.isNotEmpty ?? false)
   ),
+  //BookingStep.standard(content: const TimeScreen(), isFinished: (booking) => booking.selectedTime!= null),
   BookingStep(const BookingResultScreen(), true, false, (booking) => bookingSteps.sublist(0, bookingSteps.length-1)
       .map((step) => step.isFinished(booking))
-      .reduce((value, element) => value && element),),
+      .reduce((value, element) => value && element)
+  ),
 ];
 
 class StepsSelector {

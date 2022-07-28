@@ -13,22 +13,36 @@ class SettingsNavigator extends StatelessWidget {
         WidgetBuilder builder;
         switch(settings.name){
           case 'profile/settings/main':
-            builder = (BuildContext _) => SettingsMain(rootContext: context);
-            break;
+            return PageRouteBuilder(
+                pageBuilder: (_, animation, secondaryAnimation) => SettingsMain(rootContext: context),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero
+            );
           case 'profile/settings/update':
-            builder = (BuildContext _) => const Center(child: Text('Обновить профиль'));
-            break;
+            return PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => const Center(child: Text('Обновить профиль'),),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero
+            );
           case 'profile/settings/about':
-            builder = (BuildContext _) => const Center(child: Text('Ононас'));
-            break;
+            return PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => const Center(child: Text('О нас'),),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero
+            );
           case 'profile/settings/feedback':
-            builder = (BuildContext _) => const Center(child: Text('Позвоните нам'));
-            break;
+            return PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => const Center(child: Text('Звонить сюда'),),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero
+            );
           default:
-            builder = (BuildContext _) => const Center(child: Text('Ошибка перемещения'));
-            break;
+            return PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => const Center(child: Text('Ошибка перемещения'),),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero
+            );
         }
-        return MaterialPageRoute<void>(builder: builder, settings: settings);
       },
     );
   }

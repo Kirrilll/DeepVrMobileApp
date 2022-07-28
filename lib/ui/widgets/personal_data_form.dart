@@ -36,7 +36,7 @@ class _PersonalDataFormState extends State<PersonalDataForm> {
         Align(
           alignment: Alignment.centerRight,
           child: InkResponse(
-            onTap: () => print('close'),
+            onTap: () => Navigator.pop(context),
             child: const Icon(
               Icons.clear,
               size: 30,
@@ -177,8 +177,10 @@ class _PersonalDataFormState extends State<PersonalDataForm> {
                 GestureDetector(
                   onTap: () => showModalBottomSheet(
                       isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
                       context: context,
-                      builder: buildSheet),
+                      builder: buildSheet
+                  ),
                   child: DecoratedBox(
                     decoration: const BoxDecoration(
                         border: Border.symmetric(

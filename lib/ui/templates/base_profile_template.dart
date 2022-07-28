@@ -59,6 +59,7 @@ class BaseProfileTemplate extends StatelessWidget {
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1,
+                      fontFamily: 'Bebas',
                       color: Color(0xFFFFFFFF)),
                 ),
               ),
@@ -67,8 +68,7 @@ class BaseProfileTemplate extends StatelessWidget {
                   Icons.info,
                   size: 19,
                 ),
-                onTap: () =>
-                    Navigator.pushNamed(context, 'profile/settings'),
+                onTap: () => Navigator.pushNamed(context, 'profile/settings'),
               )
             ],
           ),

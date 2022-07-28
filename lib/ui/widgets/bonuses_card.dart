@@ -48,6 +48,7 @@ class BonusCard extends StatelessWidget {
                 color: Color(0xFF1F2653),
                 fontWeight: FontWeight.w700,
                 fontSize: 46,
+                fontFamily: 'Bebas',
                 letterSpacing: 1),
           ),
           const SizedBox(height: 4),
