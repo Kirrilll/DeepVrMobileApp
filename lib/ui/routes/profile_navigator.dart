@@ -16,7 +16,6 @@ class ProfileNavigator extends StatelessWidget {
     return Navigator(
       initialRoute: 'profile/main',
       onGenerateRoute: (settings){
-        WidgetBuilder builder;
         switch(settings.name){
           case 'profile/main':
             return PageRouteBuilder(

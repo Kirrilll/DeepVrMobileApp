@@ -1,3 +1,4 @@
+import 'package:deepvr/domain/enums/fetching_state.dart';
 import 'package:deepvr/ui/widgets/event_card.dart';
 import 'package:deepvr/ui/widgets/games_container.dart';
 import 'package:deepvr/data/entities/game.dart';
@@ -15,9 +16,14 @@ import '../widgets/game_type_card.dart';
 import '../../locator.dart';
 import '../shared/default_button.dart';
 
-class GamesMainScreen extends StatelessWidget {
+class GamesMainScreen extends StatefulWidget {
   const GamesMainScreen({Key? key}) : super(key: key);
 
+  @override
+  State<GamesMainScreen> createState() => _GamesMainScreenState();
+}
+
+class _GamesMainScreenState extends State<GamesMainScreen> {
   void Function(Game) _showGameProfile(BuildContext context) {
     return (game) => showModalBottomSheet(
         context: context,
@@ -44,6 +50,12 @@ class GamesMainScreen extends StatelessWidget {
   );
 
   @override
+  void initState() {
+    locator<GamesModel>().getEvents();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -62,11 +74,16 @@ class GamesMainScreen extends StatelessWidget {
                       const SizedBox(height: 16),
                       SizedBox(
                         height: 104,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 4,
-                          itemBuilder: (context, index) =>  EventCard(isWatched: index.isEven, title: 'КОООТИКИ',),
-                          separatorBuilder: (context, index) => index !=3? const SizedBox(width: 16):const SizedBox(),
+                        child: Builder(
+                          builder: (context) => viewModel.eventsFetchingStatus == FetchingState.successful
+                          ? ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: viewModel.events!.length,
+                              itemBuilder: (context, index) =>  EventCard.fromModel(viewModel.events![index]),
+                              separatorBuilder: (context, index) => index !=3? const SizedBox(width: 16):const SizedBox(),
+                            )
+                              : const Center(child: CircularProgressIndicator(),)
+
                         ),
                       ),
                       const SizedBox(height: 25),

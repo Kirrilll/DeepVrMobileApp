@@ -1,16 +1,16 @@
 import 'package:deepvr/domain/enums/routes.dart';
 import 'package:deepvr/ui/routes/person_navigator.dart';
-import 'package:deepvr/ui/screens/achievements.dart';
+import 'package:deepvr/ui/routes/achievements_navigator.dart';
 import 'package:deepvr/ui/screens/booking_page.dart';
+import 'package:deepvr/ui/screens/games_main.dart';
 import 'package:flutter/cupertino.dart';
-import '../../ui/routes/games_navigator.dart';
 
 
 class RoutesModel with ChangeNotifier{
   final routes =<Routes, Widget> {
-    Routes.games : const GamesNavigator(),
+    Routes.games : const GamesMainScreen(),
     Routes.booking: const BookingPage(),
-    Routes.achievements : const Achievements(),
+    Routes.achievements : const AchievementsNavigator(),
     Routes.identification : const PersonNavigator()
   };
 
