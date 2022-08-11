@@ -44,7 +44,7 @@ class SuccessfulScreen extends StatelessWidget {
                 Expanded(
                   child: DefaultButton(
                     actTitle: 'Жду встречи!',
-                    actionCallback: () => locator<RoutesModel>().navigateToNamed(Routes.identification)
+                    actionCallback: () => locator<RoutesModel>().navigateToNamed(RoutesModel.person)
                   ),
                 )
               ],

@@ -35,11 +35,12 @@ dependencies:
   shared_preferences: ^2.0.13
   dotted_line: ^3.1.0
   youtube_player_flutter: ^8.1.0
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  auto_route: ^4.2.1
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
+  auto_route_generator: ^4.2.1
+  build_runner: 2.2.0
   flutter_test:
     sdk: flutter
 

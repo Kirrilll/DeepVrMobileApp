@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,8 @@ class ProfileStatusCard extends StatelessWidget {
   final String? bonuses;
   final bool isShort;
   final bool? isUsers;
+
+  void navToStatuses(BuildContext context) => context.router.pushNamed('statuses');
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +59,7 @@ class ProfileStatusCard extends StatelessWidget {
                   text:  TextSpan(
                       text: 'Все статусы',
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () => Navigator.pushNamed(context, 'profile/statuses'),
+                        ..onTap = () => navToStatuses(context),
                       style: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 12,

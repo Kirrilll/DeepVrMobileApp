@@ -59,12 +59,11 @@ class GamesModel with ChangeNotifier {
       Event(
           id: 0,
           isWatched: false,
-          avatar:
-              'https://i.pinimg.com/236x/c3/bd/fa/c3bdfa68b3c6fd1ee1e297486eaf226b.jpg',
+          avatar: 'https://i.pinimg.com/236x/c3/bd/fa/c3bdfa68b3c6fd1ee1e297486eaf226b.jpg',
           title: 'День рождения',
           pages: [
-            'https://abrakadabra.fun/uploads/posts/2021-12/1640108539_1-abrakadabra-fun-p-kiberpank-na-telefon-1.jpg',
-            'https://oboi-telefon.ru/wallpapers/12453/39635.jpg'
+            'https://wonder-day.com/wp-content/uploads/2022/03/wonder-day-phone-wallpaper-for-kids-61.jpg',
+            'https://wonder-day.com/wp-content/uploads/2022/03/wonder-day-phone-wallpaper-for-kids-61.jpg'
           ])
     ], eventsFetchingStatus: FetchingState.successful));
   }

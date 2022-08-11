@@ -20,13 +20,13 @@ class _AuthNavigatorState extends State<AuthNavigator> {
         switch(settings.name){
           case 'auth/signIn':
             return PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) => const SignIn(),
+                pageBuilder: (context, animation, secondaryAnimation) => const SignInScreen(),
               transitionDuration: Duration.zero,
               reverseTransitionDuration: Duration.zero
             );
           case 'auth/signUp':
             return PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) => const SignUp(),
+                pageBuilder: (context, animation, secondaryAnimation) => const SignUpScreen(),
                 transitionDuration: Duration.zero,
                 reverseTransitionDuration: Duration.zero
             );

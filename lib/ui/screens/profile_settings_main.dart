@@ -1,49 +1,53 @@
-import 'package:deepvr/ui/templates/base_profile_template.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:deepvr/ui/templates/profile_template.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SettingsMain extends StatelessWidget {
   const SettingsMain({
     Key? key,
-    required this.rootContext
   }) : super(key: key);
 
-  final BuildContext rootContext;
+
+  void _navigateNamed(BuildContext context, String name) =>  context.router.pushNamed(name);
+  void navToAbout(BuildContext context) => _navigateNamed(context,'about');
+  void navToUpdate(BuildContext context) => _navigateNamed(context,'feedback');
+  void navToFeedback(BuildContext context) => _navigateNamed(context,'update');
+
 
   @override
   Widget build(BuildContext context) {
-    return BaseProfileTemplate(
-      navigatorContext: rootContext,
-        content: Column(
-          children: [
-            const SizedBox(height: 42),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-              color: Color(0xFF1F2032)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+    return  ProfileTemplate(
+      content: Column(
             children: [
-              SettingsButton(
-                  onPressed: () => Navigator.pushNamed(context, 'profile/settings/update'),
-                  title: 'Изменить профиль'
-              ),
-              Container(height: 1, color: const Color(0xFF444656)),
-              SettingsButton(
-                  onPressed: () => Navigator.pushNamed(context, 'profile/settings/about'),
-                  title: 'О приложении '
-              ),
-              Container(height: 1, color: const Color(0xFF444656)),
-              SettingsButton(
-                  onPressed: () => Navigator.pushNamed(context, 'profile/settings/feedback'),
-                  title: 'Обратная связь'
-              )
-            ],
+              const SizedBox(height: 42),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+                color: Color(0xFF1F2032)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SettingsButton(
+                    onPressed: () => navToUpdate(context),
+                    title: 'Изменить профиль'
+                ),
+                Container(height: 1, color: const Color(0xFF444656)),
+                SettingsButton(
+                    onPressed: () => navToAbout(context),
+                    title: 'О приложении '
+                ),
+                Container(height: 1, color: const Color(0xFF444656)),
+                SettingsButton(
+                    onPressed: () => navToFeedback(context),
+                    title: 'Обратная связь'
+                )
+              ],
+            )
           )
-        )
-          ],
-        )
+            ],
+          ),
     );
   }
 }

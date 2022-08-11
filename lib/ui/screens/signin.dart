@@ -1,6 +1,5 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:deepvr/data/entities/login.dart';
-import 'package:deepvr/data/entities/registration.dart';
-import 'package:deepvr/data/services/authentication_service.dart';
 import 'package:deepvr/domain/view_models/login_model.dart';
 import 'package:deepvr/ui/shared/default_button.dart';
 import 'package:deepvr/usecases/helpers/validation_helper.dart';
@@ -12,18 +11,20 @@ import '../../domain/enums/fetching_state.dart';
 import '../../locator.dart';
 import '../shared/default_formfield.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({Key? key}) : super(key: key);
 
   @override
-  _SignInState createState() => _SignInState();
+  _SignInScreenState createState() => _SignInScreenState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignInScreenState extends State<SignInScreen> {
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
 
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  void navigateToRegistration(BuildContext context) => context.router.pushNamed('signup');
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +75,7 @@ class _SignInState extends State<SignIn> {
                             formState: _formState,
                             iconPath: 'assets/icons/password.png',
                             hintText: 'Введите пароль',
-                            validator: (value) =>
-                                ValidationHelper.validatePassword(value!),
+                            validator: (value) => ValidationHelper.validatePassword(value!),
                             isPassword: true,
                           ),
                         ],
@@ -91,16 +91,13 @@ class _SignInState extends State<SignIn> {
                               if (_formState.currentState!.validate()) {
                                 model.login(Login(
                                     phone: _phoneController.value.text,
-                                    password:
-                                        _passwordController.value.text));
+                                    password: _passwordController.value.text));
                               }
                             }),
                   ),
                   const SizedBox(height: 34),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, 'auth/signUp');
-                    },
+                    onTap: () => navigateToRegistration(context),
                     child: RichText(
                         textAlign: TextAlign.center,
                         text: const TextSpan(

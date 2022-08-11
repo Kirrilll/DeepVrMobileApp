@@ -1,6 +1,6 @@
 import 'package:deepvr/domain/enums/fetching_state.dart';
 import 'package:deepvr/domain/view_models/purchase_history_model.dart';
-import 'package:deepvr/ui/templates/base_profile_template.dart';
+import 'package:deepvr/ui/templates/profile_template.dart';
 import 'package:deepvr/ui/widgets/purchase_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +15,11 @@ class PurchaseHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  BaseProfileTemplate(
-        content: ChangeNotifierProvider.value(
-          value: locator<PurchaseHistoryModel>(),
-          child: Consumer<PurchaseHistoryModel>(
-            builder:(context, model, _) =>  Expanded(
-              child: Padding(
+    return  ProfileTemplate(
+      content: ChangeNotifierProvider.value(
+            value: locator<PurchaseHistoryModel>(),
+            child: Consumer<PurchaseHistoryModel>(
+              builder:(context, model, _) =>  Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -71,7 +70,6 @@ class PurchaseHistory extends StatelessWidget {
               ),
             ),
           ),
-        )
     );
   }
 }

@@ -210,7 +210,7 @@ class GameBottomModalSheet extends StatelessWidget {
                   actionCallback: () {
                     _selectGame(game);
                     Navigator.of(context).pop();
-                    locator<RoutesModel>().navigateToNamed(Routes.booking);
+                    locator<RoutesModel>().navigateToNamed(RoutesModel.booking);
                   },
                   actTitle: 'Забронировать'),
             ),

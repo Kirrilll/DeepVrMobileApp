@@ -3,7 +3,6 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-//TODO перемотка при инициализации
 class CustomStepper extends StatefulWidget {
   const CustomStepper({
     Key? key,
@@ -52,7 +51,10 @@ class _CustomStepperState extends State<CustomStepper>
       (int i) => GlobalKey(),
     );
     itemsWithEnabledProgressLine = widget.steps.where((step) => step.isHeaderShow).toList();
+    WidgetsBinding.instance.addPostFrameCallback((duration) => _onStepContinueAnim(widget.currentStep));
   }
+
+
 
   @override
   void didUpdateWidget(CustomStepper oldWidget) {

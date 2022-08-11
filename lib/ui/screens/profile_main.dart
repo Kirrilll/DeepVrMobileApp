@@ -1,10 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:deepvr/domain/models/purchase.dart';
 import 'package:deepvr/domain/view_models/authentication_model.dart';
 import 'package:deepvr/domain/view_models/profile_model.dart';
 import 'package:deepvr/domain/view_models/purchase_history_model.dart';
 import 'package:deepvr/domain/view_models/statuses_model.dart';
 import 'package:deepvr/ui/shared/bottom_modal.dart';
-import 'package:deepvr/ui/templates/base_profile_template.dart';
+import 'package:deepvr/ui/templates/profile_template.dart';
 import 'package:deepvr/ui/widgets/bonuses_card.dart';
 import 'package:deepvr/ui/widgets/purchase_card.dart';
 import 'package:deepvr/ui/widgets/profile_status_card.dart';
@@ -47,6 +48,7 @@ class _ProfileMainState extends State<ProfileMain> {
     _promoCodeController.dispose();
     super.dispose();
   }
+  void navToHistory(BuildContext context) => context.router.pushNamed('history');
 
   Color _buildBorderColor(FetchingState status) {
     switch (status) {
@@ -170,13 +172,12 @@ class _ProfileMainState extends State<ProfileMain> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(value: locator<ProfileModel>()),
-        ChangeNotifierProvider.value(value: locator<PurchaseHistoryModel>()),
-      ],
-      child: BaseProfileTemplate(
-          content: Expanded(
+    return ProfileTemplate(
+      content: MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(value: locator<ProfileModel>()),
+          ChangeNotifierProvider.value(value: locator<PurchaseHistoryModel>()),
+        ],
         child: SingleChildScrollView(
             child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -305,9 +306,7 @@ class _ProfileMainState extends State<ProfileMain> {
                             text: TextSpan(
                                 text: 'Смотреть все',
                                 recognizer: TapGestureRecognizer()
-                                  ..onTap = () => Navigator.pushNamed(
-                                      context, 'profile/history',
-                                      arguments: model.purchaseHistory),
+                                  ..onTap = () => navToHistory(context),
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 12,
@@ -449,8 +448,8 @@ class _ProfileMainState extends State<ProfileMain> {
             ),
             const SizedBox(height: 16)
           ],
-        )),
-      )),
+        ))
+      ),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:deepvr/data/entities/registration.dart';
 import 'package:deepvr/domain/enums/fetching_state.dart';
 import 'package:deepvr/domain/view_models/registration_model.dart';
@@ -11,19 +12,21 @@ import '../../locator.dart';
 import '../shared/default_button.dart';
 import '../shared/default_formfield.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _repeatPasswordController = TextEditingController();
   final TextEditingController _loginController = TextEditingController();
   final TextEditingController _mailController = TextEditingController();
+
+  void navigateToSignIn(BuildContext context) => context.router.pop();
 
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
   @override
@@ -135,7 +138,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   const SizedBox(height: 26),
                   GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () => navigateToSignIn(context),
                     child: RichText(
                         textAlign: TextAlign.center,
                         text: const TextSpan(
