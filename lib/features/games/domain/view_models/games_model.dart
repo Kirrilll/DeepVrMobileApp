@@ -1,12 +1,11 @@
 import 'package:deepvr/data/entities/game_type.dart';
-import 'package:deepvr/data/services/games_service.dart';
-import 'package:deepvr/data/services/booking_service.dart';
 import 'package:deepvr/domain/models/event.dart';
+import 'package:deepvr/features/games/domain/services/games_service.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../data/entities/game.dart';
-import '../../locator.dart';
-import '../enums/fetching_state.dart';
+import '../../../../locator.dart';
+import '../../../../domain/enums/fetching_state.dart';
 
 class GamesState {
   FetchingState eventsFetchingStatus;
@@ -41,13 +40,26 @@ class GamesState {
 }
 
 class GamesModel with ChangeNotifier {
-  List<Game>? _games;
   GamesState _state = GamesState.initial();
+  final GamesService _gamesService = locator<GamesService>();
 
-  bool get isLoaded => _state.gamesFetchingStatus == FetchingState.successful;
+  GamesModel(){
+    _gamesService.addListener(() {
+      if(_gamesService.fetchingStatus == FetchingState.successful){
+        _updateState(_state.copyWith(
+            gamesFetchingStatus: FetchingState.successful,
+            games: _gamesService.games
+        ));
+      }
+      _updateState(_state.copyWith(gamesFetchingStatus: _gamesService.fetchingStatus));
+    });
+  }
+
+  FetchingState get gamesFetchingStatus => _state.gamesFetchingStatus;
   List<Game>? get games => _state.games;
   List<Event>? get events => _state.events;
   FetchingState get eventsFetchingStatus => _state.eventsFetchingStatus;
+
 
   _updateState(GamesState gamesState) {
     _state = gamesState;
@@ -68,17 +80,8 @@ class GamesModel with ChangeNotifier {
     ], eventsFetchingStatus: FetchingState.successful));
   }
 
-  List<Game> getGamesByType(GameType? type) => type != null
-      ? _games?.where((game) => game.gameType.id == type.id).toList() ??
-          List.empty()
-      : _games ?? List.empty();
 
   Future<void> getGames() async {
-    _updateState(_state.copyWith(gamesFetchingStatus: FetchingState.loading));
-    final res = await locator<GamesService>().getAllGames();
-    if (res != null) {
-      _updateState(_state.copyWith(
-          gamesFetchingStatus: FetchingState.successful, games: res));
-    }
+    await _gamesService.fetchGames();
   }
 }

@@ -18,7 +18,7 @@ import '../screens/about_screen.dart' as _i12;
 import '../screens/all_achievements_screen.dart' as _i16;
 import '../screens/booking_page.dart' as _i15;
 import '../screens/feedback_screen.dart' as _i13;
-import '../screens/games_main.dart' as _i18;
+import '../../features/games/ui/screens/games_main.dart' as _i18;
 import '../screens/home_screen.dart' as _i3;
 import '../screens/home_wrapper_screen.dart' as _i1;
 import '../screens/my_achievements_screen.dart' as _i17;

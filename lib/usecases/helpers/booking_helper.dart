@@ -1,4 +1,4 @@
-import 'package:deepvr/data/entities/game.dart';
+import 'package:deepvr/features/games/data/entities/game.dart';
 import 'package:deepvr/data/entities/game_type.dart';
 import 'package:deepvr/domain/models/booking.dart';
 import 'package:deepvr/domain/models/date.dart';

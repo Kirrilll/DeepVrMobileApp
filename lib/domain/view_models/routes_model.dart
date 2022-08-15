@@ -1,7 +1,7 @@
 import 'package:deepvr/domain/enums/routes.dart';
 import 'package:deepvr/domain/models/tab.dart';
 import 'package:deepvr/ui/screens/booking_page.dart';
-import 'package:deepvr/ui/screens/games_main.dart';
+import 'package:deepvr/features/games/ui/screens/games_main.dart';
 import 'package:flutter/cupertino.dart';
 
 

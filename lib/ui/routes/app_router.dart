@@ -6,7 +6,7 @@ import 'package:deepvr/ui/screens/about_screen.dart';
 import 'package:deepvr/ui/screens/all_achievements_screen.dart';
 import 'package:deepvr/ui/screens/booking_page.dart';
 import 'package:deepvr/ui/screens/feedback_screen.dart';
-import 'package:deepvr/ui/screens/games_main.dart';
+import 'package:deepvr/features/games/ui/screens/games_main.dart';
 import 'package:deepvr/ui/screens/home_screen.dart';
 import 'package:deepvr/ui/screens/home_wrapper_screen.dart';
 import 'package:deepvr/ui/screens/my_achievements_screen.dart';

@@ -5,7 +5,7 @@ import 'package:deepvr/usecases/helpers/validation_helper.dart';
 import '../../ui/screens/booking_result_screen.dart';
 import '../../ui/screens/calendar_screen.dart';
 import '../../ui/screens/personal_data_screen.dart';
-import '../../ui/screens/game_page.dart';
+import '../../features/booking/ui/screens/game_page.dart';
 import '../../ui/screens/game_type_screen.dart';
 import '../../ui/screens/players_counter_screen.dart';
 import '../../domain/models/booking_step.dart';

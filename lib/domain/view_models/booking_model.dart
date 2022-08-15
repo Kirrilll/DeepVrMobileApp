@@ -12,7 +12,7 @@ import 'package:deepvr/usecases/configurations/booking_step_config.dart';
 import 'package:deepvr/usecases/helpers/booking_helper.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../data/entities/game.dart';
+import '../../features/games/data/entities/game.dart';
 import '../../locator.dart';
 import '../models/date.dart';
 import '../models/time.dart';

@@ -1,7 +1,7 @@
 import 'package:deepvr/data/entities/client_purchase.dart';
 import 'package:deepvr/domain/models/purchase.dart';
 import 'package:deepvr/domain/view_models/game_types_model.dart';
-import 'package:deepvr/domain/view_models/games_model.dart';
+import 'package:deepvr/features/games/domain/view_models/games_model.dart';
 import 'package:deepvr/locator.dart';
 
 class PurchaseMapper{

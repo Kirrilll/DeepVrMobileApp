@@ -1,10 +1,9 @@
 import 'package:deepvr/domain/enums/fetching_state.dart';
 import 'package:deepvr/ui/widgets/event_card.dart';
-import 'package:deepvr/ui/widgets/games_container.dart';
-import 'package:deepvr/data/entities/game.dart';
-import 'package:deepvr/domain/enums/routes.dart';
+import 'package:deepvr/features/games/ui/widgets/games_container.dart';
+import 'package:deepvr/features/games/data/entities/game.dart';
 import 'package:deepvr/domain/view_models/routes_model.dart';
-import 'package:deepvr/domain/view_models/games_model.dart';
+import 'package:deepvr/features/games/domain/view_models/games_model.dart';
 import 'package:deepvr/domain/view_models/booking_model.dart';
 import 'package:deepvr/ui/shared/bottom_modal.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,9 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../widgets/game_type_card.dart';
-import '../../locator.dart';
-import '../shared/default_button.dart';
+import '../../../../ui/widgets/game_type_card.dart';
+import '../../../../locator.dart';
+import '../../../../ui/shared/default_button.dart';
 
 class GamesMainScreen extends StatefulWidget {
   const GamesMainScreen({Key? key}) : super(key: key);
@@ -34,7 +33,8 @@ class _GamesMainScreenState extends State<GamesMainScreen> {
             : YoutubePlayerBuilder(
                 player: YoutubePlayer(
                   controller: YoutubePlayerController(
-                      initialVideoId: YoutubePlayer.convertUrlToId(game.video!)!,
+                      initialVideoId:
+                          YoutubePlayer.convertUrlToId(game.video!)!,
                       flags: const YoutubePlayerFlags(
                           autoPlay: false, loop: true)),
                 ),
@@ -46,8 +46,7 @@ class _GamesMainScreenState extends State<GamesMainScreen> {
       fontWeight: FontWeight.w700,
       fontSize: 24,
       color: Colors.white,
-      fontFamily: 'Bebas'
-  );
+      fontFamily: 'Bebas');
 
   @override
   void initState() {
@@ -64,42 +63,47 @@ class _GamesMainScreenState extends State<GamesMainScreen> {
             ChangeNotifierProvider.value(value: locator<GamesModel>()),
             ChangeNotifierProvider.value(value: locator<BookingModel>())
           ],
-          child: Consumer<GamesModel>(
-            builder: (context, viewModel, _) => viewModel.isLoaded
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('НОВОСТИ', style: _headerStyle, textAlign: TextAlign.left),
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        height: 104,
-                        child: Builder(
-                          builder: (context) => viewModel.eventsFetchingStatus == FetchingState.successful
-                          ? ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: viewModel.events!.length,
-                              itemBuilder: (context, index) =>  EventCard.fromModel(viewModel.events![index]),
-                              separatorBuilder: (context, index) => index !=3? const SizedBox(width: 16):const SizedBox(),
-                            )
-                              : const Center(child: CircularProgressIndicator(),)
-
-                        ),
-                      ),
-                      const SizedBox(height: 25),
-                      Text(
-                        'ИГРЫ',
-                        style: _headerStyle,
-                        textAlign: TextAlign.left,
-                      ),
-                      const SizedBox(height: 16),
-                      Expanded(
-                          child: GamesContainer(
-                              games: viewModel.games!,
-                              action: _showGameProfile(context)))
-                    ],
-                  )
-                : const Center(child: CircularProgressIndicator()),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('НОВОСТИ', style: _headerStyle, textAlign: TextAlign.left),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 104,
+                child: Consumer<GamesModel>(
+                    builder: (_, model, __) =>
+                        model.eventsFetchingStatus == FetchingState.successful
+                            ? ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: model.events!.length,
+                                itemBuilder: (context, index) => EventCard.fromModel(model.events![index]),
+                                separatorBuilder: (context, index) => index != 3
+                                    ? const SizedBox(width: 16)
+                                    : const SizedBox(),
+                              )
+                            : const Center(
+                                child: CircularProgressIndicator(),
+                              )),
+              ),
+              const SizedBox(height: 25),
+              Text(
+                'ИГРЫ',
+                style: _headerStyle,
+                textAlign: TextAlign.left,
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                  child: Consumer<GamesModel>(
+                builder: (_, model, __) =>
+                    model.gamesFetchingStatus == FetchingState.successful
+                        ? GamesContainer(
+                            games: model.games!,
+                            action: _showGameProfile(context)
+                    )
+                        : const Center(child: CircularProgressIndicator()),
+              ))
+            ],
           )),
     );
   }
@@ -122,7 +126,7 @@ class GameBottomModalSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomModal(children: [
       SizedBox(
-        height: MediaQuery.of(context).size.height*0.85,
+        height: MediaQuery.of(context).size.height * 0.85,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -144,7 +148,8 @@ class GameBottomModalSheet extends StatelessWidget {
                         : 'Без ограничения',
                     iconPath: 'assets/icons/vrglasses.png'),
                 TypeLimitation(
-                  name: (game.timeDuration ?? game.gameType.timeDuration).toString() +
+                  name: (game.timeDuration ?? game.gameType.timeDuration)
+                          .toString() +
                       ' мин.',
                   iconPath: 'assets/icons/clock.png',
                 ),
