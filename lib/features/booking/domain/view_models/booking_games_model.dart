@@ -1,32 +1,19 @@
-import 'package:deepvr/domain/enums/fetching_state.dart';
-import 'package:deepvr/features/fetching_item.dart';
+import 'dart:async';
+
+import 'package:deepvr/core/usecases/special_types/fetching_item.dart';
+import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
 import 'package:deepvr/features/games/data/entities/game.dart';
 import 'package:deepvr/features/games/domain/services/games_service.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../../locator.dart';
+import '../../../../core/domain/locator.dart';
+import '../../../../core/usecases/mixins/fetch_mixin.dart';
 
-class BookingGamesModel with ChangeNotifier{
-  FetchingState _fetchingStatus = FetchingState.idle;
+class BookingGamesModel with ChangeNotifier, FetchMixin {
   final GamesService _gamesService = locator<GamesService>();
 
-  FetchingState get fetchingStatus => _fetchingStatus;
+  Stream<List<Game>> gamesStreamByTypeId(int id) => _gamesService.gamesByTypeId(id);
 
-  BookingGamesModel(){
-    _fetchingStatus = _gamesService.fetchingStatus;
-    _gamesService.addListener(() {
-      _updateState(_gamesService.fetchingStatus);
-    });
-  }
+  Stream<List<Game>> get gamesStream => _gamesService.games;
 
-  _updateState(FetchingState status){
-    _fetchingStatus = status;
-    notifyListeners();
-  }
-
-   List<Game> getGamesByType(int? gameTypeId) {
-    return gameTypeId != null
-        ? _gamesService.getByGameType(gameTypeId)
-        : _gamesService.games;
-  }
- }
+}

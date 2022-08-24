@@ -1,17 +1,17 @@
 
-import 'package:deepvr/data/entities/game_type.dart';
-import 'package:deepvr/domain/enums/fetching_state.dart';
+import 'package:deepvr/features/booking/data/entities/game_type.dart';
+import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
 import 'package:deepvr/features/booking/domain/view_models/booking_games_model.dart';
-import 'package:deepvr/ui/templates/booking_step_template.dart';
+import 'package:deepvr/features/booking/ui/templates/booking_step_template.dart';
 import 'package:deepvr/features/games/ui/widgets/games_container.dart';
 import 'package:deepvr/features/games/data/entities/game.dart';
 import 'package:deepvr/features/games/domain/view_models/games_model.dart';
-import 'package:deepvr/usecases/helpers/tuple.dart';
+import 'package:deepvr/core/usecases/special_types/tuple.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../locator.dart';
+import '../../../../core/domain/locator.dart';
 import '../../../../domain/view_models/booking_model.dart';
 
 class GameCardPage extends StatelessWidget {
@@ -29,18 +29,19 @@ class GameCardPage extends StatelessWidget {
         stepNumber: 2,
         content: Selector<BookingModel, Tuple<GameType?, Game?>>(
             selector: (_, model) => Tuple(item1: model.selectedType, item2: model.selectedGame),
-            builder: (_, selectedTuple, __) => Consumer<BookingGamesModel>(
-              builder: (_, gamesModel, __) =>
-                  gamesModel.fetchingStatus == FetchingState.successful
-                      ? GamesContainer(
-                            games: gamesModel.getGamesByType(selectedTuple.item1?.id),
-                            action: _selectGame(locator<BookingModel>()),
-                            selectedId: selectedTuple.item2?.id,
-                          )
-                      : const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-            ),
+            builder: (_, selectedTuple, __) => StreamBuilder<List<Game>>(
+                stream: locator<BookingGamesModel>().gamesStreamByTypeId(selectedTuple.item1?.id ?? 0),
+                builder: (_, snapshot) {
+                  if(snapshot.hasData){
+                    return GamesContainer(
+                      games: snapshot.requireData,
+                      action: _selectGame(locator<BookingModel>()),
+                      selectedId: selectedTuple.item2?.id,
+                    );
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                }
+            )
           ),
         stepTitle: 'Выберите VR-игру',
       ),

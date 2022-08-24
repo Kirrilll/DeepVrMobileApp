@@ -1,15 +1,15 @@
-import 'package:deepvr/data/entities/booking_calendar.dart';
-import 'package:deepvr/data/services/booking_service.dart';
-import 'package:deepvr/domain/enums/fetching_state.dart';
-import 'package:deepvr/locator.dart';
-import 'package:deepvr/usecases/mixins/fetch_mixin.dart';
+import 'package:deepvr/features/booking/data/entities/booking_calendar.dart';
+import 'package:deepvr/features/booking/data/repositories/booking_repository.dart';
+import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
+import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/core/usecases/mixins/fetch_mixin.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../models/month.dart';
 
 class CalendarModel with ChangeNotifier, FetchMixin {
   BookingCalendar? _calendar;
-  final BookingService _bookingService = locator<BookingService>();
+  final BookingRepository _bookingService = locator<BookingRepository>();
   int _monthIndex = 0;
 
 

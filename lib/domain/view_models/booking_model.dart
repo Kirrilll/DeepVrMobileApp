@@ -1,19 +1,19 @@
 import 'dart:async';
 
-import 'package:deepvr/data/entities/game_type.dart';
-import 'package:deepvr/data/services/booking_service.dart';
-import 'package:deepvr/domain/enums/fetching_state.dart';
+import 'package:deepvr/features/booking/data/entities/game_type.dart';
+import 'package:deepvr/features/booking/data/repositories/booking_repository.dart';
+import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
 import 'package:deepvr/domain/models/booking_information.dart';
 import 'package:deepvr/domain/models/booking_state.dart';
 import 'package:deepvr/domain/models/booking.dart';
 import 'package:deepvr/domain/models/booking_step.dart';
-import 'package:deepvr/domain/view_models/authentication_model.dart';
-import 'package:deepvr/usecases/configurations/booking_step_config.dart';
-import 'package:deepvr/usecases/helpers/booking_helper.dart';
+import 'package:deepvr/features/authentication/domain/services/authentication_service.dart';
+import 'package:deepvr/core/usecases/configurations/booking_step_config.dart';
+import 'package:deepvr/core/usecases/helpers/booking_helper.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../features/games/data/entities/game.dart';
-import '../../locator.dart';
+import '../../core/domain/locator.dart';
 import '../models/date.dart';
 import '../models/time.dart';
 
@@ -22,7 +22,7 @@ class BookingModel with ChangeNotifier {
   BookingState _state = BookingState.initial();
   String? _errorMessage;
   final BookingHelper _bookingHelper = locator<BookingHelper>();
-  final BookingService _bookingService = locator<BookingService>();
+  final BookingRepository _bookingService = locator<BookingRepository>();
   List<BookingStep> get steps => _steps;
   bool get isBooked => _state.isBooked;
   int get stepIndex => _state.stepIndex;
@@ -57,8 +57,8 @@ class BookingModel with ChangeNotifier {
   void init(){
     Booking initialBooking = Booking.copyWith(
         _state.booking,
-        phone: locator<AuthenticationModel>().user.phone,
-        name: locator<AuthenticationModel>().user.login
+        phone: locator<AuthenticationService>().user.phone,
+        name: locator<AuthenticationService>().user.login
     );
 
     int lastFinishedStepIndex = _steps.lastIndexWhere((step) => step.isFinished(_state.booking));

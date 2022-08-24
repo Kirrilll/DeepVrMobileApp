@@ -1,70 +1,32 @@
-import 'package:deepvr/domain/enums/fetching_state.dart';
-import 'package:deepvr/features/fetching_item.dart';
-import 'package:deepvr/features/games/data/repositories/games_repository.dart';
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
 
+import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/core/usecases/mixins/fetch_mixin.dart';
+import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
+import 'package:deepvr/features/games/data/repositories/games_repository.dart';
+import 'package:flutter/material.dart';
 import '../../data/entities/game.dart';
 
-class _GamesState{
-  FetchingState fetchingStatus = FetchingState.idle;
-  List<Game>? games;
 
-  _GamesState({
-    required this.fetchingStatus,
-    this.games,
-  });
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is _GamesState &&
-          runtimeType == other.runtimeType &&
-          fetchingStatus == other.fetchingStatus &&
-          games == other.games);
-
-  @override
-  int get hashCode => fetchingStatus.hashCode ^ games.hashCode;
-
-
-  _GamesState copyWith({
-    FetchingState? fetchingStatus,
-    List<Game>? games,
-  }) {
-    return _GamesState(
-      fetchingStatus: fetchingStatus ?? this.fetchingStatus,
-      games: games ?? this.games,
-    );
-  }
-
-}
-
-class GamesService with ChangeNotifier{
-  _GamesState _liveData = _GamesState(fetchingStatus: FetchingState.idle);
+class GamesService{
   final GamesRepository _gamesRepository = GamesRepository();
+  late Future<List<Game>> _gamesFuture;
+  bool isFetched = false;
 
-  FetchingState get fetchingStatus => _liveData.fetchingStatus;
-  List<Game> get games  => _liveData.games!;
 
-  void _updateState(_GamesState data){
-    _liveData = data;
-    notifyListeners();
+  Stream<List<Game>> get games {
+    if(!isFetched){
+      _gamesFuture = _gamesRepository.getAllGames();
+      isFetched = true;
+    }
+    return _gamesFuture.asStream();
   }
 
-  Future<void> fetchGames() async {
-    if(_liveData.games != null) return;
-    _updateState(_liveData.copyWith(fetchingStatus: FetchingState.loading));
-    final result =  await _gamesRepository.getAllGames();
-    if(result == null){
-      _updateState(_liveData.copyWith(fetchingStatus: FetchingState.error));
-    }
-    else{
-      _updateState(_liveData.copyWith(fetchingStatus: FetchingState.successful, games: result));
-    }
-  }
-
-  List<Game> getByGameType(int gameTypeId) {
+  Stream<List<Game>> gamesByTypeId(int id){
     return games
-        .where((game) => game.gameType.id == gameTypeId)
-        .toList();
+        .map((games) => games
+              .where((game) => game.gameTypeId == id).toList());
   }
+
+
 }

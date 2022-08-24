@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../ui/widgets/selectable_item.dart';
+import '../../../booking/ui/widgets/selectable_item.dart';
 
 class GameCard extends StatelessWidget {
   const GameCard({
@@ -27,8 +27,6 @@ class GameCard extends StatelessWidget {
           isSelected: isSelected,
           item: Container(
             clipBehavior: Clip.hardEdge,
-            height: 216,
-            width: 162,
             child: Stack(
               fit: StackFit.expand,
               children: [

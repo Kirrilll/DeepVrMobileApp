@@ -1,4 +1,4 @@
-import 'package:deepvr/data/entities/client_purchase.dart';
+import 'package:deepvr/features/profile/data/entities/client_purchase.dart';
 
 class Purchase {
   int id;

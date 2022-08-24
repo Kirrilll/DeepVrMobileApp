@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../../../locator.dart';
+import '../../../../core/domain/locator.dart';
 import '../../../../domain/models/booking.dart';
 
 class GamesContainer extends StatefulWidget {
@@ -23,29 +23,40 @@ class GamesContainer extends StatefulWidget {
 class _GamesContainerState extends State<GamesContainer> {
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        itemBuilder: (context, index) {
-          int currIndex = index * 2;
-          var isExist = currIndex + 1 != widget.games.length;
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GameCard(
-                  gameModel: widget.games[currIndex],
-                  action: () => widget.action(widget.games[currIndex]),
-                  isSelected: widget.games[currIndex].id == widget.selectedId,
-              ),
-              isExist
-                  ? GameCard(
-                      gameModel: widget.games[currIndex + 1],
-                      action: () => widget.action(widget.games[currIndex + 1]),
-                      isSelected: widget.games[currIndex+1].id == widget.selectedId,
-              )
-                  : const SizedBox()
-            ],
-          );
-        },
-        separatorBuilder: (_, index) => const SizedBox(height: 20),
-        itemCount: (widget.games.length / 2).round());
+    return Align(
+      alignment: Alignment.topCenter,
+      child: SingleChildScrollView(
+        child: Wrap(
+          spacing: 20,
+          runSpacing: 20,
+          runAlignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: widget.games
+              .map((game) => SizedBox(
+                    height: 216,
+                    width: 162,
+                    child: GameCard(
+                        gameModel: game,
+                        isSelected: game.id == widget.selectedId,
+                        action: () => widget.action(game)),
+                  ))
+              .toList(),
+        ),
+      ),
+    );
+    // return GridView.builder(
+    //     itemCount: widget.games.length,
+    //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    //       crossAxisCount: 2,
+    //       mainAxisSpacing: 20,
+    //       crossAxisSpacing: 20,
+    //       childAspectRatio: 0.75
+    //     ),
+    //     itemBuilder: (_, index) => GameCard(
+    //       gameModel: widget.games[index],
+    //       action: () => widget.action(widget.games[index]),
+    //       isSelected: widget.games[index].id == widget.selectedId,
+    //     )
+    // );
   }
 }

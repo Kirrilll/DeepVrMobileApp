@@ -1,5 +1,5 @@
-import 'package:deepvr/locator.dart';
-import 'package:deepvr/ui/screens/app.dart';
+import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/core/ui/screens/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

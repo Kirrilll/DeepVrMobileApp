@@ -1,5 +1,5 @@
 import 'package:deepvr/features/games/data/entities/game.dart';
-import 'package:deepvr/data/entities/game_type.dart';
+import 'package:deepvr/features/booking/data/entities/game_type.dart';
 import 'package:deepvr/domain/models/time.dart';
 
 import 'date.dart';

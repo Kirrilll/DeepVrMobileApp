@@ -1,4 +1,4 @@
-import 'package:deepvr/domain/enums/fetching_state.dart';
+import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
 import 'package:deepvr/domain/models/booking.dart';
 import 'package:deepvr/domain/models/booking_information.dart';
 

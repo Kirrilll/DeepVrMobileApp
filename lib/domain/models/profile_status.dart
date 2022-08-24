@@ -1,4 +1,4 @@
-import 'package:deepvr/data/entities/loyalty_status.dart';
+import 'package:deepvr/features/profile/data/entities/loyalty_status.dart';
 
 class ProfileStatus{
   final int id;

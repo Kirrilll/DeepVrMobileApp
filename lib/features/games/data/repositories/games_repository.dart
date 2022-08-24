@@ -6,12 +6,15 @@ class GamesRepository{
   final _client = http.Client();
   final _apiUrl = 'https://srt.vrbook.creatrix-digital.ru/api/';
 
-  Future<List<Game>?> getAllGames() async{
+  Future<List<Game>> getAllGames() async{
     var url = Uri.parse(_apiUrl + 'games');
     final response = await _client.get(url);
+    print('fetch');
     if(response.statusCode == 200){
       return Game.gamesFromJson(response.body);
     }
-    return null;
+    else {
+      throw Exception('Ошибка подключения');
+    }
   }
 }

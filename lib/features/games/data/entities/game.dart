@@ -1,29 +1,29 @@
 import 'dart:convert';
 
-import 'package:deepvr/data/entities/game_type.dart';
+import 'package:deepvr/features/booking/data/entities/game_type.dart';
 
 class Game {
-  int id;
-  String title;
-  String? slug;
-  int? timeDuration;
-  int price;
-  int gameTypeId;
-  int? isActive;
-  DateTime? deletedAt;
-  String? createdAt;
-  String? updatedAt;
-  String? logo;
-  int? guestMin;
-  int? guestMax;
-  String? description;
-  int? ageLimit;
-  List<String>? images;
-  String? video;
-  String? genre;
-  GameType gameType;
+  final int id;
+  final String title;
+  final String? slug;
+  final int? timeDuration;
+  final int price;
+  final int gameTypeId;
+  final int? isActive;
+  final DateTime? deletedAt;
+  final String? createdAt;
+  final String? updatedAt;
+  final String? logo;
+  final int? guestMin;
+  final int? guestMax;
+  final String? description;
+  final int? ageLimit;
+  final List<String>? images;
+  final String? video;
+  final String? genre;
+  final GameType gameType;
 
-  Game(
+  const Game(
       {required this.id,
       required this.title,
       this.slug,
@@ -46,7 +46,7 @@ class Game {
 
 
 
-  factory Game.fromJson(Map<String, dynamic> json)  => Game(
+  factory Game.fromJson(Map<String, dynamic> json)  =>  Game(
   id: json['id'],
   title: json['title'],
   price: json['price'],
