@@ -191,24 +191,27 @@ class _CustomStepperState extends State<CustomStepper>
               minHeight: 72,
               maxHeight: 72,
             ),
-            child: ListView.separated(
-                controller: _headerProgressBarController,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                scrollDirection: Axis.horizontal,
-                itemCount: itemsWithEnabledProgressLine.length,
-                itemBuilder: (_, index) => InkResponse(
-                      onTap: () => widget.onStepTapped?.call(index),
-                      child: Opacity(
-                          opacity: _isCurrent(index) ? 1 : 0.4,
-                          child: _buildIcon(index)),
-                    ),
-                separatorBuilder: (_, index) => Container(
-                    width: 18,
-                    margin: const EdgeInsets.symmetric(horizontal: 2),
-                    child: Center(
-                      child: _buildLine(),
-                    ))
+            child: Center(
+              child: ListView.separated(
+                  shrinkWrap: true,
+                  controller: _headerProgressBarController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: itemsWithEnabledProgressLine.length,
+                  itemBuilder: (_, index) => InkResponse(
+                        onTap: () => widget.onStepTapped?.call(index),
+                        child: Opacity(
+                            opacity: _isCurrent(index) ? 1 : 0.4,
+                            child: _buildIcon(index)),
+                      ),
+                  separatorBuilder: (_, index) => Container(
+                      width: 18,
+                      margin: const EdgeInsets.symmetric(horizontal: 2),
+                      child: Center(
+                        child: _buildLine(),
+                      ))
+              ),
             ),
           ),
         Expanded(

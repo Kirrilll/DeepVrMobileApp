@@ -74,7 +74,7 @@ class BookingModel with ChangeNotifier {
 
   void init({Booking? initialBooking}){
     Booking booking = Booking.copyWith(
-      _state.booking,
+      Booking.initial(),
       name: locator<AuthenticationService>().user.login,
       phone: locator<AuthenticationService>().user.phone
     );
