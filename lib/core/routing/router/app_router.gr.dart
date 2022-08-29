@@ -12,36 +12,39 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i5;
-import 'package:flutter/material.dart' as _i19;
+import 'package:flutter/material.dart' as _i20;
 
+import '../../../domain/models/booking.dart' as _i22;
 import '../../../features/achievements/ui/screens/all_achievements_screen.dart'
-    as _i16;
-import '../../../features/achievements/ui/screens/my_achievements_screen.dart'
     as _i17;
+import '../../../features/achievements/ui/screens/my_achievements_screen.dart'
+    as _i18;
 import '../../../features/authentication/ui/screens/signin.dart' as _i6;
 import '../../../features/authentication/ui/screens/signup.dart' as _i7;
 import '../../../features/booking/ui/screens/booking_page.dart' as _i15;
-import '../../../features/games/ui/screens/games_main.dart' as _i18;
+import '../../../features/booking/ui/screens/successful_screen.dart' as _i16;
+import '../../../features/games/ui/screens/games_main.dart' as _i19;
 import '../../../features/profile/ui/screens/about_screen.dart' as _i12;
 import '../../../features/profile/ui/screens/feedback_screen.dart' as _i13;
 import '../../../features/profile/ui/screens/profile_main.dart' as _i8;
-import '../../../features/profile/ui/screens/profile_settings_main.dart' as _i11;
+import '../../../features/profile/ui/screens/profile_settings_main.dart'
+    as _i11;
 import '../../../features/profile/ui/screens/profile_statuses.dart' as _i9;
 import '../../../features/profile/ui/screens/purchase_history.dart' as _i10;
 import '../../../features/profile/ui/screens/update_screen.dart' as _i14;
 import '../../ui/screens/home_screen.dart' as _i3;
-import '../wrappers/home_wrapper_screen.dart' as _i1;
 import '../../ui/screens/splash_screen.dart' as _i2;
+import '../guards/route_duplicate_guard.dart' as _i21;
 import '../wrappers/account_router_wrapper.dart' as _i4;
-import '../guards/route_duplicate_guard.dart' as _i20;
+import '../wrappers/home_wrapper_screen.dart' as _i1;
 
 class AppRouter extends _i5.RootStackRouter {
   AppRouter(
-      {_i19.GlobalKey<_i19.NavigatorState>? navigatorKey,
+      {_i20.GlobalKey<_i20.NavigatorState>? navigatorKey,
       required this.routeDuplicateGuard})
       : super(navigatorKey);
 
-  final _i20.RouteDuplicateGuard routeDuplicateGuard;
+  final _i21.RouteDuplicateGuard routeDuplicateGuard;
 
   @override
   final Map<String, _i5.PageFactory> pagesMap = {
@@ -53,7 +56,7 @@ class AppRouter extends _i5.RootStackRouter {
       return _i5.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i2.SplashScreen());
     },
-    HomeScreenRoute.name: (routeData) {
+    HomeRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i3.HomeScreen());
     },
@@ -122,20 +125,28 @@ class AppRouter extends _i5.RootStackRouter {
           routeData: routeData, child: const _i14.UpdateScreen());
     },
     BookingPageRoute.name: (routeData) {
+      final args = routeData.argsAs<BookingPageRouteArgs>(
+          orElse: () => const BookingPageRouteArgs());
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i15.BookingPage());
+          routeData: routeData,
+          child: _i15.BookingPage(
+              key: args.key, initialBooking: args.initialBooking));
+    },
+    SuccessfulScreenRoute.name: (routeData) {
+      return _i5.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i16.SuccessfulScreen());
     },
     AllAchievementsScreenRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i16.AllAchievementsScreen());
+          routeData: routeData, child: const _i17.AllAchievementsScreen());
     },
     MyAchievementsScreenRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i17.MyAchievementsScreen());
+          routeData: routeData, child: const _i18.MyAchievementsScreen());
     },
     GamesMainScreenRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i18.GamesMainScreen());
+          routeData: routeData, child: const _i19.GamesMainScreen());
     }
   };
 
@@ -149,21 +160,18 @@ class AppRouter extends _i5.RootStackRouter {
               fullMatch: true),
           _i5.RouteConfig(SplashScreenRoute.name,
               path: 'splash', parent: HomeWrapperScreenRoute.name),
-          _i5.RouteConfig(HomeScreenRoute.name,
+          _i5.RouteConfig(HomeRoute.name,
               path: 'home',
               parent: HomeWrapperScreenRoute.name,
               children: [
                 _i5.RouteConfig('#redirect',
                     path: '',
-                    parent: HomeScreenRoute.name,
+                    parent: HomeRoute.name,
                     redirectTo: 'account',
                     fullMatch: true),
                 _i5.RouteConfig(AccountRouter.name,
                     path: 'account',
-                    parent: HomeScreenRoute.name,
-                    guards: [
-                      routeDuplicateGuard
-                    ],
+                    parent: HomeRoute.name,
                     children: [
                       _i5.RouteConfig(AuthenticationRouter.name,
                           path: 'auth',
@@ -214,20 +222,16 @@ class AppRouter extends _i5.RootStackRouter {
                     ]),
                 _i5.RouteConfig(BookingRouter.name,
                     path: 'booking',
-                    parent: HomeScreenRoute.name,
-                    guards: [
-                      routeDuplicateGuard
-                    ],
+                    parent: HomeRoute.name,
                     children: [
                       _i5.RouteConfig(BookingPageRoute.name,
-                          path: '', parent: BookingRouter.name)
+                          path: '', parent: BookingRouter.name),
+                      _i5.RouteConfig(SuccessfulScreenRoute.name,
+                          path: 'successful', parent: BookingRouter.name)
                     ]),
                 _i5.RouteConfig(AchievementsRouter.name,
                     path: 'achievements',
-                    parent: HomeScreenRoute.name,
-                    guards: [
-                      routeDuplicateGuard
-                    ],
+                    parent: HomeRoute.name,
                     children: [
                       _i5.RouteConfig(AllAchievementsScreenRoute.name,
                           path: '', parent: AchievementsRouter.name),
@@ -237,10 +241,7 @@ class AppRouter extends _i5.RootStackRouter {
                     ]),
                 _i5.RouteConfig(GamesRouter.name,
                     path: 'games',
-                    parent: HomeScreenRoute.name,
-                    guards: [
-                      routeDuplicateGuard
-                    ],
+                    parent: HomeRoute.name,
                     children: [
                       _i5.RouteConfig(GamesMainScreenRoute.name,
                           path: '', parent: GamesRouter.name)
@@ -270,11 +271,11 @@ class SplashScreenRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.HomeScreen]
-class HomeScreenRoute extends _i5.PageRouteInfo<void> {
-  const HomeScreenRoute({List<_i5.PageRouteInfo>? children})
-      : super(HomeScreenRoute.name, path: 'home', initialChildren: children);
+class HomeRoute extends _i5.PageRouteInfo<void> {
+  const HomeRoute({List<_i5.PageRouteInfo>? children})
+      : super(HomeRoute.name, path: 'home', initialChildren: children);
 
-  static const String name = 'HomeScreenRoute';
+  static const String name = 'HomeRoute';
 }
 
 /// generated route for
@@ -419,14 +420,40 @@ class UpdateScreenRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i15.BookingPage]
-class BookingPageRoute extends _i5.PageRouteInfo<void> {
-  const BookingPageRoute() : super(BookingPageRoute.name, path: '');
+class BookingPageRoute extends _i5.PageRouteInfo<BookingPageRouteArgs> {
+  BookingPageRoute({_i20.Key? key, _i22.Booking? initialBooking})
+      : super(BookingPageRoute.name,
+            path: '',
+            args:
+                BookingPageRouteArgs(key: key, initialBooking: initialBooking));
 
   static const String name = 'BookingPageRoute';
 }
 
+class BookingPageRouteArgs {
+  const BookingPageRouteArgs({this.key, this.initialBooking});
+
+  final _i20.Key? key;
+
+  final _i22.Booking? initialBooking;
+
+  @override
+  String toString() {
+    return 'BookingPageRouteArgs{key: $key, initialBooking: $initialBooking}';
+  }
+}
+
 /// generated route for
-/// [_i16.AllAchievementsScreen]
+/// [_i16.SuccessfulScreen]
+class SuccessfulScreenRoute extends _i5.PageRouteInfo<void> {
+  const SuccessfulScreenRoute()
+      : super(SuccessfulScreenRoute.name, path: 'successful');
+
+  static const String name = 'SuccessfulScreenRoute';
+}
+
+/// generated route for
+/// [_i17.AllAchievementsScreen]
 class AllAchievementsScreenRoute extends _i5.PageRouteInfo<void> {
   const AllAchievementsScreenRoute()
       : super(AllAchievementsScreenRoute.name, path: '');
@@ -435,7 +462,7 @@ class AllAchievementsScreenRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i17.MyAchievementsScreen]
+/// [_i18.MyAchievementsScreen]
 class MyAchievementsScreenRoute extends _i5.PageRouteInfo<void> {
   const MyAchievementsScreenRoute()
       : super(MyAchievementsScreenRoute.name, path: 'myachievements');
@@ -444,7 +471,7 @@ class MyAchievementsScreenRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i18.GamesMainScreen]
+/// [_i19.GamesMainScreen]
 class GamesMainScreenRoute extends _i5.PageRouteInfo<void> {
   const GamesMainScreenRoute() : super(GamesMainScreenRoute.name, path: '');
 

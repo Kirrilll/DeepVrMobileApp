@@ -5,7 +5,9 @@ class TabsObserver extends AutoRouterObserver{
 
   @override
   void didChangeTabRoute(TabPageRoute route, TabPageRoute previousRoute) {
+    switch(route.path){
 
+    }
   }
 
 }

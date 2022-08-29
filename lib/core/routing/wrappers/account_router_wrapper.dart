@@ -21,7 +21,7 @@ class _AccountRouterWrapperState extends State<AccountRouterWrapper> {
       child: Consumer<AuthenticationService>(
         builder: (_, model, __) => AutoRouter.declarative(
             routes: (_) => model.isAuthenticated
-                ? [ProfileRouter()]
+                ? [const ProfileRouter()]
                 : [const AuthenticationRouter()]
         ),
       ),

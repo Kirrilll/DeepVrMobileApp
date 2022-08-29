@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
       //   data: MediaQueryData(
       //     textScaleFactor: scaleUtil.getTextScaleFactor()
       //   ),
-        child:AutoTabsScaffold(
+        child: AutoTabsScaffold(
           backgroundColor: Theme.of(context).backgroundColor,
           routes: const [
             GamesRouter(),
@@ -49,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                   isActive: router.activeIndex == 2
               ),
               TabNavButton(
-                  navToNamed: () => router.navigateNamed('account'),
+                  navToNamed:() => router.navigateNamed('account'),
                   iconPath: 'assets/icons/nav_profile_icon.png',
                   label: 'Аккаунт',
                   isActive: router.activeIndex == 3

@@ -15,7 +15,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
 
-  final _appRouter = AppRouter(routeDuplicateGuard: RouteDuplicateGuard());
+  final _appRouter = AppRouter(routeDuplicateGuard: RouteDuplicateGuard(),);
   //TODO do ui responsive
   @override
   void initState() {

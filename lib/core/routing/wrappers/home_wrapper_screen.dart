@@ -14,7 +14,7 @@ class HomeWrapperScreen extends StatelessWidget {
         future: locator.allReady(),
         builder: (_, snapshot) => AutoRouter.declarative(
             routes: (_) => snapshot.hasData
-                ? [const HomeScreenRoute()]
+                ? [const HomeRoute()]
                 : [const SplashScreenRoute()]
         )
     );

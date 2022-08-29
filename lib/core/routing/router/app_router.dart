@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:deepvr/core/routing/wrappers/account_router_wrapper.dart';
 import 'package:deepvr/core/routing/guards/route_duplicate_guard.dart';
+import 'package:deepvr/features/booking/ui/screens/successful_screen.dart';
 import 'package:deepvr/features/profile/ui/screens/about_screen.dart';
 import 'package:deepvr/features/achievements/ui/screens/all_achievements_screen.dart';
 import 'package:deepvr/features/booking/ui/screens/booking_page.dart';
@@ -18,17 +19,12 @@ import 'package:deepvr/features/authentication/ui/screens/signin.dart';
 import 'package:deepvr/features/authentication/ui/screens/signup.dart';
 import 'package:deepvr/core/ui/screens/splash_screen.dart';
 import 'package:deepvr/features/profile/ui/screens/update_screen.dart';
-import 'package:deepvr/features/profile/ui/templates/profile_template.dart';
-import 'package:flutter/cupertino.dart';
 
 const _accountRoute = AutoRoute(
     initial: true,
     path: 'account',
     name: 'AccountRouter',
     page: AccountRouterWrapper,
-    guards: [
-      RouteDuplicateGuard
-    ],
     children: [
       AutoRoute(
           path: 'auth',
@@ -62,15 +58,16 @@ const _accountRoute = AutoRoute(
 
 const _bookingRoute = AutoRoute(
     path: 'booking',
-    guards: [RouteDuplicateGuard],
     name: 'BookingRouter',
     page: EmptyRouterPage,
-    children: [AutoRoute(path: '', page: BookingPage)]);
+    children: [
+      AutoRoute(path: '', page: BookingPage),
+      AutoRoute(path: 'successful', page: SuccessfulScreen)
+    ]);
 
 const _achievementsRoute = AutoRoute(
     path: 'achievements',
     name: 'AchievementsRouter',
-    guards: [RouteDuplicateGuard],
     page: EmptyRouterPage,
     children: [
       AutoRoute(path: '', page: AllAchievementsScreen),
@@ -79,7 +76,6 @@ const _achievementsRoute = AutoRoute(
 
 const _gamesRoute = AutoRoute(
     path: 'games',
-    guards: [RouteDuplicateGuard],
     name: 'GamesRouter',
     page: EmptyRouterPage,
     children: [AutoRoute(path: '', page: GamesMainScreen)]);
@@ -96,6 +92,7 @@ const _gamesRoute = AutoRoute(
       ),
       AutoRoute(
           path: 'home',
+          name: 'HomeRoute',
           page: HomeScreen,
           children: [_accountRoute, _bookingRoute, _achievementsRoute, _gamesRoute]
       ),

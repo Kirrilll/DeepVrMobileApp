@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:deepvr/features/booking/data/entities/game_type.dart';
 import 'package:deepvr/features/booking/data/repositories/booking_repository.dart';
 import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
@@ -23,6 +24,13 @@ class BookingModel with ChangeNotifier {
   String? _errorMessage;
   final BookingHelper _bookingHelper = locator<BookingHelper>();
   final BookingRepository _bookingService = locator<BookingRepository>();
+  final AuthenticationService _authenticationService = locator<AuthenticationService>();
+
+  BookingModel(){
+    _initPersonalData();
+    _authenticationService.addListener(() =>_initPersonalData());
+  }
+
   List<BookingStep> get steps => _steps;
   bool get isBooked => _state.isBooked;
   int get stepIndex => _state.stepIndex;
@@ -54,33 +62,35 @@ class BookingModel with ChangeNotifier {
   set phone(String? phone) => updateBooking(_bookingHelper.setPhone(phone, _state.booking));
   set comment(String? comment) => updateBooking(_bookingHelper.setComment(comment, _state.booking));
 
-  void init(){
-    Booking initialBooking = Booking.copyWith(
-        _state.booking,
-        phone: locator<AuthenticationService>().user.phone,
-        name: locator<AuthenticationService>().user.login
+  void _initPersonalData(){
+    updateBooking(
+        Booking.copyWith(
+            _state.booking,
+            name: _authenticationService.user.login ?? '',
+            phone: _authenticationService.user.phone ?? ''
+        )
+    );
+  }
+
+  void init({Booking? initialBooking}){
+    Booking booking = Booking.copyWith(
+      _state.booking,
+      name: locator<AuthenticationService>().user.login,
+      phone: locator<AuthenticationService>().user.phone
     );
 
-    int lastFinishedStepIndex = _steps.lastIndexWhere((step) => step.isFinished(_state.booking));
+    int lastFinishedStepIndex = _steps.lastIndexWhere((step) => step.isFinished(booking));
 
-    if(_state.isBooked){
-      _state =  BookingState.initial().copyWith(
-          booking: Booking.copyWith(
-              Booking.initial(),
-              phone: initialBooking.phone,
-              name: initialBooking.name
-          )
-      );
-      return;
-    }
     _setState(_state.copyWith(
         stepIndex: lastFinishedStepIndex == -1 ? 0: lastFinishedStepIndex,
-        booking: initialBooking)
+        booking: booking,
+        bookingStatus: FetchingState.idle
+      )
     );
 
   }
 
-  void next() {
+  void next(BuildContext context) {
     if (_state.stepIndex == _steps.length - 1) {
       _setState(_state.copyWith(bookingStatus: FetchingState.loading));
       _bookingService.book({
@@ -91,8 +101,8 @@ class BookingModel with ChangeNotifier {
         "user_name": name,
       }, selectedGame!.id).then((res) {
         if (res!.error == 0) {
-          _setState(_state.copyWith(
-              isBooked: true, bookingStatus: FetchingState.successful));
+          context.router.pushNamed('successful');
+          init();
         } else {
           _errorMessage = res.errorText;
           _setState(_state.copyWith(bookingStatus: FetchingState.error));
@@ -132,7 +142,7 @@ class BookingModel with ChangeNotifier {
     }
   }
 
-  void updateBooking(Booking booking, {GameType? selectedType}) {
+  void updateBooking(Booking booking) {
     _setState(_state.copyWith(booking: booking));
   }
 }

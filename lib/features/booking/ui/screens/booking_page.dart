@@ -1,52 +1,59 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:deepvr/core/domain/locator.dart';
 import 'package:deepvr/domain/view_models/booking_model.dart';
-import 'package:deepvr/features/booking/ui/screens/successful_screen.dart';
 import 'package:deepvr/core/ui/shared/default_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../core/usecases/special_types/tuple.dart';
+import '../../../../domain/models/booking.dart';
 import '../widgets/custom_stepper.dart';
 
-class BookingPage extends StatelessWidget {
-  const BookingPage({Key? key}) : super(key: key);
 
+//TODO срочно рефакторить
+class BookingPage extends StatefulWidget {
+  const BookingPage({
+    Key? key,
+    this.initialBooking
+  }) : super(key: key);
+
+  final Booking? initialBooking;
   static final BookingModel _bookingModel = locator<BookingModel>();
 
+  @override
+  State<BookingPage> createState() => _BookingPageState();
+}
 
+class _BookingPageState extends State<BookingPage> {
   VoidCallback _onStepContinue(BuildContext context) {
     return () {
         FocusScope.of(context).unfocus();
-        _bookingModel.next();
+        BookingPage._bookingModel.next(context);
     };
   }
 
   VoidCallback? _onStepCancel(BuildContext context) {
-    return _bookingModel.mayBack
+    return BookingPage._bookingModel.mayBack
         ? () {
             FocusScope.of(context).unfocus();
-            _bookingModel.back();
+            BookingPage._bookingModel.back();
           }
         : null;
   }
+
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: locator<BookingModel>(),
-      child: Selector<BookingModel, Tuple<int, bool>>(
-        selector: (_, model) => Tuple(item1: model.stepIndex, item2: model.isBooked),
-          builder: (context, tuple, _) {
-        return tuple.item2
-            ? const SuccessfulScreen()
-        : CustomStepper(
+      child: Selector<BookingModel, int>(
+        selector: (_, model) => model.stepIndex,
+          builder: (context, stepIndex, _) {
+        return  CustomStepper(
           type: StepperType.horizontal,
-          currentStep: tuple.item1,
-          steps: _bookingModel.steps,
+          currentStep: stepIndex,
+          steps: BookingPage._bookingModel.steps,
           onStepContinue: _onStepContinue(context),
           onStepCancel: _onStepCancel(context),
-          controlsBuilder: _bookingModel.steps[tuple.item1].isControlPanelShow
+          controlsBuilder: BookingPage._bookingModel.steps[stepIndex].isControlPanelShow
               ? (context, details) {
                   return Container(
                     clipBehavior: Clip.hardEdge,
@@ -63,8 +70,7 @@ class BookingPage extends StatelessWidget {
                           selector: (_, model) => model.mayNext,
                           builder: (_, mayNext, __) => Expanded(
                             child: DefaultButton(
-                              actTitle:
-                              tuple.item1 == _bookingModel.steps.length - 1
+                              actTitle: stepIndex == BookingPage._bookingModel.steps.length - 1
                                       ? 'Готово'
                                       : "Далее",
                               actionCallback: details.onStepContinue,

@@ -45,7 +45,7 @@ void setup() {
   locator.registerLazySingleton(() => GamesService());
 
   //Бронирование
-  locator.registerLazySingleton(() => BookingModel());
+  locator.registerSingletonWithDependencies(() => BookingModel(), dependsOn: [AuthenticationService]);
   locator.registerLazySingleton(() => BookingHelper());
   locator.registerLazySingleton(() => GameTypeModel()..getGameTypes());
   locator.registerLazySingleton(() => CalendarModel());
