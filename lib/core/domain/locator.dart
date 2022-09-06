@@ -1,4 +1,8 @@
+import 'package:deepvr/core/routing/guards/route_duplicate_guard.dart';
+import 'package:deepvr/core/routing/router/app_router.gr.dart';
+import 'package:deepvr/features/achievements/domain/view_models/achievement_model.dart';
 import 'package:deepvr/features/authentication/data/repositories/authentication_repository.dart';
+import 'package:deepvr/features/authentication/domain/view_models/authentication_model.dart';
 import 'package:deepvr/features/profile/data/repositories/profile_repository.dart';
 import 'package:deepvr/features/authentication/domain/services/authentication_service.dart';
 import 'package:deepvr/domain/view_models/game_types_model.dart';
@@ -29,6 +33,7 @@ void setup() {
 
   //Аунтефикация
   locator.registerSingletonAsync(() => AuthenticationService().init(), dependsOn: [StorageService]);
+  locator.registerSingletonWithDependencies(() => AuthenticationModel(), dependsOn: [AuthenticationService]);
   locator.registerLazySingleton(() => AuthenticationRepository());
   locator.registerFactory(() => RegistrationModel());
   locator.registerFactory(() => LoginModel());
@@ -51,4 +56,12 @@ void setup() {
   locator.registerLazySingleton(() => CalendarModel());
   locator.registerLazySingleton(() => BookingGamesModel());
 
+  //Достижения
+  locator.registerLazySingleton(() => AchievementModel());
+
+  //Навигация
+  locator.registerSingleton(AppRouter(
+      routeDuplicateGuard: RouteDuplicateGuard(),
+  )
+  );
 }

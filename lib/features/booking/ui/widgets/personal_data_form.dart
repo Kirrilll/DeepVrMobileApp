@@ -8,6 +8,9 @@ import 'package:provider/provider.dart';
 import '../../../../core/domain/locator.dart';
 import '../../../../core/usecases/helpers/validation_helper.dart';
 import '../../../../core/ui/shared/custom_checkbox.dart';
+
+//TODO пофиксить штуку с формами
+
 class PersonalDataForm extends StatefulWidget {
   const PersonalDataForm({
     Key? key,
@@ -76,16 +79,18 @@ class _PersonalDataFormState extends State<PersonalDataForm> {
             height: 64,
             child: DefaultButton(
                 actTitle: 'Применить',
-                actionCallback: () => print('применить')))
+                actionCallback: () => print('применить')
+            )
+        )
       ],
     );
   }
   @override
   Widget build(BuildContext context) {
-    final phone = Provider.of<BookingModel>(context, listen: true).phone;
-    final name = Provider.of<BookingModel>(context, listen: true).name;
-    _nameController.text = name;
-    _phoneController.text = phone;
+    // final phone = Provider.of<BookingModel>(context, listen: true).phone;
+    // final name = Provider.of<BookingModel>(context, listen: true).name;
+    // _nameController.text = name;
+    // _phoneController.text = phone;
     return SingleChildScrollView(
         child:  Form(
               autovalidateMode: AutovalidateMode.always,

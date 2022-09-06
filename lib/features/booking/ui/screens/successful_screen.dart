@@ -3,13 +3,11 @@ import 'package:deepvr/core/ui/shared/default_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/domain/locator.dart';
-
 class SuccessfulScreen extends StatelessWidget {
   const SuccessfulScreen({Key? key}) : super(key: key);
 
   VoidCallback navToProfile(BuildContext context) {
-    return () => context.navigateNamedTo('profile');
+    return () => context.navigateNamedTo('account');
   }
 
   @override

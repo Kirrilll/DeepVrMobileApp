@@ -12,39 +12,42 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i5;
-import 'package:flutter/material.dart' as _i20;
+import 'package:flutter/material.dart' as _i22;
 
-import '../../../domain/models/booking.dart' as _i22;
+import '../../../domain/models/booking.dart' as _i24;
 import '../../../features/achievements/ui/screens/all_achievements_screen.dart'
-    as _i17;
+    as _i19;
 import '../../../features/achievements/ui/screens/my_achievements_screen.dart'
     as _i18;
-import '../../../features/authentication/ui/screens/signin.dart' as _i6;
-import '../../../features/authentication/ui/screens/signup.dart' as _i7;
-import '../../../features/booking/ui/screens/booking_page.dart' as _i15;
-import '../../../features/booking/ui/screens/successful_screen.dart' as _i16;
-import '../../../features/games/ui/screens/games_main.dart' as _i19;
-import '../../../features/profile/ui/screens/about_screen.dart' as _i12;
-import '../../../features/profile/ui/screens/feedback_screen.dart' as _i13;
-import '../../../features/profile/ui/screens/profile_main.dart' as _i8;
+import '../../../features/achievements/ui/screens/unauth_achievements_screen.dart'
+    as _i20;
+import '../../../features/authentication/ui/screens/signin.dart' as _i7;
+import '../../../features/authentication/ui/screens/signup.dart' as _i8;
+import '../../../features/booking/ui/screens/booking_page.dart' as _i16;
+import '../../../features/booking/ui/screens/successful_screen.dart' as _i17;
+import '../../../features/games/ui/screens/games_main.dart' as _i21;
+import '../../../features/profile/ui/screens/about_screen.dart' as _i13;
+import '../../../features/profile/ui/screens/feedback_screen.dart' as _i14;
+import '../../../features/profile/ui/screens/profile_main.dart' as _i9;
 import '../../../features/profile/ui/screens/profile_settings_main.dart'
-    as _i11;
-import '../../../features/profile/ui/screens/profile_statuses.dart' as _i9;
-import '../../../features/profile/ui/screens/purchase_history.dart' as _i10;
-import '../../../features/profile/ui/screens/update_screen.dart' as _i14;
+    as _i12;
+import '../../../features/profile/ui/screens/profile_statuses.dart' as _i10;
+import '../../../features/profile/ui/screens/purchase_history.dart' as _i11;
+import '../../../features/profile/ui/screens/update_screen.dart' as _i15;
 import '../../ui/screens/home_screen.dart' as _i3;
 import '../../ui/screens/splash_screen.dart' as _i2;
-import '../guards/route_duplicate_guard.dart' as _i21;
+import '../guards/route_duplicate_guard.dart' as _i23;
 import '../wrappers/account_router_wrapper.dart' as _i4;
+import '../wrappers/achievements_router_wrapper.dart' as _i6;
 import '../wrappers/home_wrapper_screen.dart' as _i1;
 
 class AppRouter extends _i5.RootStackRouter {
   AppRouter(
-      {_i20.GlobalKey<_i20.NavigatorState>? navigatorKey,
+      {_i22.GlobalKey<_i22.NavigatorState>? navigatorKey,
       required this.routeDuplicateGuard})
       : super(navigatorKey);
 
-  final _i21.RouteDuplicateGuard routeDuplicateGuard;
+  final _i23.RouteDuplicateGuard routeDuplicateGuard;
 
   @override
   final Map<String, _i5.PageFactory> pagesMap = {
@@ -70,7 +73,7 @@ class AppRouter extends _i5.RootStackRouter {
     },
     AchievementsRouter.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i5.EmptyRouterPage());
+          routeData: routeData, child: const _i6.AchievementsRouterWrapper());
     },
     GamesRouter.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
@@ -86,23 +89,23 @@ class AppRouter extends _i5.RootStackRouter {
     },
     SignInScreenRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i6.SignInScreen());
+          routeData: routeData, child: const _i7.SignInScreen());
     },
     SignUpScreenRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i7.SignUpScreen());
+          routeData: routeData, child: const _i8.SignUpScreen());
     },
     ProfileMainRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i8.ProfileMain());
+          routeData: routeData, child: const _i9.ProfileMain());
     },
     ProfileStatusesRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i9.ProfileStatuses());
+          routeData: routeData, child: const _i10.ProfileStatuses());
     },
     PurchaseHistoryRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i10.PurchaseHistory());
+          routeData: routeData, child: const _i11.PurchaseHistory());
     },
     SettingsRouter.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
@@ -110,43 +113,48 @@ class AppRouter extends _i5.RootStackRouter {
     },
     SettingsMainRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i11.SettingsMain());
+          routeData: routeData, child: const _i12.SettingsMain());
     },
     AboutScreenRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i12.AboutScreen());
+          routeData: routeData, child: const _i13.AboutScreen());
     },
     FeedbackScreenRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i13.FeedbackScreen());
+          routeData: routeData, child: const _i14.FeedbackScreen());
     },
     UpdateScreenRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i14.UpdateScreen());
+          routeData: routeData, child: const _i15.UpdateScreen());
     },
     BookingPageRoute.name: (routeData) {
       final args = routeData.argsAs<BookingPageRouteArgs>(
           orElse: () => const BookingPageRouteArgs());
       return _i5.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i15.BookingPage(
+          child: _i16.BookingPage(
               key: args.key, initialBooking: args.initialBooking));
     },
     SuccessfulScreenRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i16.SuccessfulScreen());
-    },
-    AllAchievementsScreenRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i17.AllAchievementsScreen());
+          routeData: routeData, child: const _i17.SuccessfulScreen());
     },
     MyAchievementsScreenRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i18.MyAchievementsScreen());
     },
+    AllAchievementsScreenRoute.name: (routeData) {
+      return _i5.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i19.AllAchievementsScreen());
+    },
+    UnauthorizedAchievementsScreenRoute.name: (routeData) {
+      return _i5.MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: const _i20.UnauthorizedAchievementsScreen());
+    },
     GamesMainScreenRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i19.GamesMainScreen());
+          routeData: routeData, child: const _i21.GamesMainScreen());
     }
   };
 
@@ -233,11 +241,13 @@ class AppRouter extends _i5.RootStackRouter {
                     path: 'achievements',
                     parent: HomeRoute.name,
                     children: [
-                      _i5.RouteConfig(AllAchievementsScreenRoute.name,
-                          path: '', parent: AchievementsRouter.name),
                       _i5.RouteConfig(MyAchievementsScreenRoute.name,
-                          path: 'myachievements',
-                          parent: AchievementsRouter.name)
+                          path: '', parent: AchievementsRouter.name),
+                      _i5.RouteConfig(AllAchievementsScreenRoute.name,
+                          path: 'allachievements',
+                          parent: AchievementsRouter.name),
+                      _i5.RouteConfig(UnauthorizedAchievementsScreenRoute.name,
+                          path: 'unauthorized', parent: AchievementsRouter.name)
                     ]),
                 _i5.RouteConfig(GamesRouter.name,
                     path: 'games',
@@ -297,7 +307,7 @@ class BookingRouter extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.EmptyRouterPage]
+/// [_i6.AchievementsRouterWrapper]
 class AchievementsRouter extends _i5.PageRouteInfo<void> {
   const AchievementsRouter({List<_i5.PageRouteInfo>? children})
       : super(AchievementsRouter.name,
@@ -335,7 +345,7 @@ class ProfileRouter extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.SignInScreen]
+/// [_i7.SignInScreen]
 class SignInScreenRoute extends _i5.PageRouteInfo<void> {
   const SignInScreenRoute() : super(SignInScreenRoute.name, path: 'signin');
 
@@ -343,7 +353,7 @@ class SignInScreenRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.SignUpScreen]
+/// [_i8.SignUpScreen]
 class SignUpScreenRoute extends _i5.PageRouteInfo<void> {
   const SignUpScreenRoute() : super(SignUpScreenRoute.name, path: 'signup');
 
@@ -351,7 +361,7 @@ class SignUpScreenRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.ProfileMain]
+/// [_i9.ProfileMain]
 class ProfileMainRoute extends _i5.PageRouteInfo<void> {
   const ProfileMainRoute() : super(ProfileMainRoute.name, path: '');
 
@@ -359,7 +369,7 @@ class ProfileMainRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.ProfileStatuses]
+/// [_i10.ProfileStatuses]
 class ProfileStatusesRoute extends _i5.PageRouteInfo<void> {
   const ProfileStatusesRoute()
       : super(ProfileStatusesRoute.name, path: 'statuses');
@@ -368,7 +378,7 @@ class ProfileStatusesRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i10.PurchaseHistory]
+/// [_i11.PurchaseHistory]
 class PurchaseHistoryRoute extends _i5.PageRouteInfo<void> {
   const PurchaseHistoryRoute()
       : super(PurchaseHistoryRoute.name, path: 'history');
@@ -386,7 +396,7 @@ class SettingsRouter extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i11.SettingsMain]
+/// [_i12.SettingsMain]
 class SettingsMainRoute extends _i5.PageRouteInfo<void> {
   const SettingsMainRoute() : super(SettingsMainRoute.name, path: '');
 
@@ -394,7 +404,7 @@ class SettingsMainRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i12.AboutScreen]
+/// [_i13.AboutScreen]
 class AboutScreenRoute extends _i5.PageRouteInfo<void> {
   const AboutScreenRoute() : super(AboutScreenRoute.name, path: 'about');
 
@@ -402,7 +412,7 @@ class AboutScreenRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i13.FeedbackScreen]
+/// [_i14.FeedbackScreen]
 class FeedbackScreenRoute extends _i5.PageRouteInfo<void> {
   const FeedbackScreenRoute()
       : super(FeedbackScreenRoute.name, path: 'feedback');
@@ -411,7 +421,7 @@ class FeedbackScreenRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i14.UpdateScreen]
+/// [_i15.UpdateScreen]
 class UpdateScreenRoute extends _i5.PageRouteInfo<void> {
   const UpdateScreenRoute() : super(UpdateScreenRoute.name, path: 'update');
 
@@ -419,9 +429,9 @@ class UpdateScreenRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i15.BookingPage]
+/// [_i16.BookingPage]
 class BookingPageRoute extends _i5.PageRouteInfo<BookingPageRouteArgs> {
-  BookingPageRoute({_i20.Key? key, _i22.Booking? initialBooking})
+  BookingPageRoute({_i22.Key? key, _i24.Booking? initialBooking})
       : super(BookingPageRoute.name,
             path: '',
             args:
@@ -433,9 +443,9 @@ class BookingPageRoute extends _i5.PageRouteInfo<BookingPageRouteArgs> {
 class BookingPageRouteArgs {
   const BookingPageRouteArgs({this.key, this.initialBooking});
 
-  final _i20.Key? key;
+  final _i22.Key? key;
 
-  final _i22.Booking? initialBooking;
+  final _i24.Booking? initialBooking;
 
   @override
   String toString() {
@@ -444,7 +454,7 @@ class BookingPageRouteArgs {
 }
 
 /// generated route for
-/// [_i16.SuccessfulScreen]
+/// [_i17.SuccessfulScreen]
 class SuccessfulScreenRoute extends _i5.PageRouteInfo<void> {
   const SuccessfulScreenRoute()
       : super(SuccessfulScreenRoute.name, path: 'successful');
@@ -453,25 +463,34 @@ class SuccessfulScreenRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i17.AllAchievementsScreen]
-class AllAchievementsScreenRoute extends _i5.PageRouteInfo<void> {
-  const AllAchievementsScreenRoute()
-      : super(AllAchievementsScreenRoute.name, path: '');
-
-  static const String name = 'AllAchievementsScreenRoute';
-}
-
-/// generated route for
 /// [_i18.MyAchievementsScreen]
 class MyAchievementsScreenRoute extends _i5.PageRouteInfo<void> {
   const MyAchievementsScreenRoute()
-      : super(MyAchievementsScreenRoute.name, path: 'myachievements');
+      : super(MyAchievementsScreenRoute.name, path: '');
 
   static const String name = 'MyAchievementsScreenRoute';
 }
 
 /// generated route for
-/// [_i19.GamesMainScreen]
+/// [_i19.AllAchievementsScreen]
+class AllAchievementsScreenRoute extends _i5.PageRouteInfo<void> {
+  const AllAchievementsScreenRoute()
+      : super(AllAchievementsScreenRoute.name, path: 'allachievements');
+
+  static const String name = 'AllAchievementsScreenRoute';
+}
+
+/// generated route for
+/// [_i20.UnauthorizedAchievementsScreen]
+class UnauthorizedAchievementsScreenRoute extends _i5.PageRouteInfo<void> {
+  const UnauthorizedAchievementsScreenRoute()
+      : super(UnauthorizedAchievementsScreenRoute.name, path: 'unauthorized');
+
+  static const String name = 'UnauthorizedAchievementsScreenRoute';
+}
+
+/// generated route for
+/// [_i21.GamesMainScreen]
 class GamesMainScreenRoute extends _i5.PageRouteInfo<void> {
   const GamesMainScreenRoute() : super(GamesMainScreenRoute.name, path: '');
 

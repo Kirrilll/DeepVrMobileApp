@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:deepvr/features/booking/data/repositories/booking_repository.dart';
 import 'package:deepvr/core/routing/router/app_router.gr.dart';
-import 'package:deepvr/core/routing/guards/route_duplicate_guard.dart';
 import 'package:deepvr/core/routing/observers/tabs_observer.dart';
 import 'package:flutter/material.dart';
 import '../../domain/locator.dart';
@@ -14,8 +13,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-
-  final _appRouter = AppRouter(routeDuplicateGuard: RouteDuplicateGuard(),);
+  final _appRouter = locator<AppRouter>();
   //TODO do ui responsive
   @override
   void initState() {
@@ -45,7 +43,6 @@ class _AppState extends State<App> {
         _appRouter,
         navigatorObservers: () => [TabsObserver()]
       ),
-
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }

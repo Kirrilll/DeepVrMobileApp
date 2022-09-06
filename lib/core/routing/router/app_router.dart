@@ -2,6 +2,8 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:deepvr/core/routing/wrappers/account_router_wrapper.dart';
 import 'package:deepvr/core/routing/guards/route_duplicate_guard.dart';
+import 'package:deepvr/core/routing/wrappers/achievements_router_wrapper.dart';
+import 'package:deepvr/features/achievements/ui/screens/unauth_achievements_screen.dart';
 import 'package:deepvr/features/booking/ui/screens/successful_screen.dart';
 import 'package:deepvr/features/profile/ui/screens/about_screen.dart';
 import 'package:deepvr/features/achievements/ui/screens/all_achievements_screen.dart';
@@ -68,10 +70,11 @@ const _bookingRoute = AutoRoute(
 const _achievementsRoute = AutoRoute(
     path: 'achievements',
     name: 'AchievementsRouter',
-    page: EmptyRouterPage,
+    page: AchievementsRouterWrapper,
     children: [
-      AutoRoute(path: '', page: AllAchievementsScreen),
-      AutoRoute(path: 'myachievements', page: MyAchievementsScreen)
+      AutoRoute(path: '', page: MyAchievementsScreen),
+      AutoRoute(path: 'allachievements', page: AllAchievementsScreen),
+      AutoRoute(path: 'unauthorized', page:  UnauthorizedAchievementsScreen)
     ]);
 
 const _gamesRoute = AutoRoute(

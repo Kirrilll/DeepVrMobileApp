@@ -20,7 +20,7 @@ class FetchingItem<T>{
   @override
   int get hashCode => fetchingState.hashCode ^ item.hashCode;
 
-  FetchingItem copyWith({
+  FetchingItem<T> copyWith({
     FetchingState? fetchingState,
     T? item,
   }) {
