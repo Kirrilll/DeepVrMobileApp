@@ -67,13 +67,26 @@ const _bookingRoute = AutoRoute(
       AutoRoute(path: 'successful', page: SuccessfulScreen)
     ]);
 
-const _achievementsRoute = AutoRoute(
+const _achievementsRoute = CustomRoute(
     path: 'achievements',
     name: 'AchievementsRouter',
     page: AchievementsRouterWrapper,
+    transitionsBuilder: TransitionsBuilders.noTransition,
     children: [
-      AutoRoute(path: '', page: MyAchievementsScreen),
-      AutoRoute(path: 'allachievements', page: AllAchievementsScreen),
+      CustomRoute(
+          path: '',
+          page: MyAchievementsScreen,
+          transitionsBuilder: TransitionsBuilders.noTransition,
+          durationInMilliseconds: 0,
+          reverseDurationInMilliseconds: 0
+      ),
+      CustomRoute(
+          path: 'allachievements',
+          page: AllAchievementsScreen,
+          transitionsBuilder: TransitionsBuilders.noTransition,
+          durationInMilliseconds: 0,
+          reverseDurationInMilliseconds: 0
+      ),
       AutoRoute(path: 'unauthorized', page:  UnauthorizedAchievementsScreen)
     ]);
 
@@ -84,7 +97,7 @@ const _gamesRoute = AutoRoute(
     children: [AutoRoute(path: '', page: GamesMainScreen)]);
 
 @MaterialAutoRouter(replaceInRouteName: 'Screen,Page,Route', routes: [
-  AutoRoute(
+  CustomRoute(
     path: '/',
     page: HomeWrapperScreen,
     children: [

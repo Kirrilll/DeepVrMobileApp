@@ -52,8 +52,11 @@ class AppRouter extends _i5.RootStackRouter {
   @override
   final Map<String, _i5.PageFactory> pagesMap = {
     HomeWrapperScreenRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i1.HomeWrapperScreen());
+      return _i5.CustomPage<dynamic>(
+          routeData: routeData,
+          child: const _i1.HomeWrapperScreen(),
+          opaque: true,
+          barrierDismissible: false);
     },
     SplashScreenRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
@@ -72,8 +75,12 @@ class AppRouter extends _i5.RootStackRouter {
           routeData: routeData, child: const _i5.EmptyRouterPage());
     },
     AchievementsRouter.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i6.AchievementsRouterWrapper());
+      return _i5.CustomPage<dynamic>(
+          routeData: routeData,
+          child: const _i6.AchievementsRouterWrapper(),
+          transitionsBuilder: _i5.TransitionsBuilders.noTransition,
+          opaque: true,
+          barrierDismissible: false);
     },
     GamesRouter.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
@@ -140,12 +147,24 @@ class AppRouter extends _i5.RootStackRouter {
           routeData: routeData, child: const _i17.SuccessfulScreen());
     },
     MyAchievementsScreenRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i18.MyAchievementsScreen());
+      return _i5.CustomPage<dynamic>(
+          routeData: routeData,
+          child: const _i18.MyAchievementsScreen(),
+          transitionsBuilder: _i5.TransitionsBuilders.noTransition,
+          durationInMilliseconds: 0,
+          reverseDurationInMilliseconds: 0,
+          opaque: true,
+          barrierDismissible: false);
     },
     AllAchievementsScreenRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i19.AllAchievementsScreen());
+      return _i5.CustomPage<dynamic>(
+          routeData: routeData,
+          child: const _i19.AllAchievementsScreen(),
+          transitionsBuilder: _i5.TransitionsBuilders.noTransition,
+          durationInMilliseconds: 0,
+          reverseDurationInMilliseconds: 0,
+          opaque: true,
+          barrierDismissible: false);
     },
     UnauthorizedAchievementsScreenRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(

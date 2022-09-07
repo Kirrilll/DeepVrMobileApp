@@ -1,22 +1,14 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:deepvr/core/routing/router/app_router.gr.dart';
-import 'package:deepvr/core/usecases/helpers/booking_helper.dart';
 import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
-import 'package:deepvr/domain/models/booking.dart';
 import 'package:deepvr/features/games/ui/widgets/event_card.dart';
 import 'package:deepvr/features/games/ui/widgets/games_container.dart';
 import 'package:deepvr/features/games/data/entities/game.dart';
 import 'package:deepvr/features/games/domain/view_models/games_model.dart';
-import 'package:deepvr/domain/view_models/booking_model.dart';
-import 'package:deepvr/core/ui/shared/bottom_modal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
-import '../../../booking/ui/widgets/game_type_card.dart';
+import '../../../../core/usecases/helpers/bottom_sheet_helper.dart';
 import '../../../../core/domain/locator.dart';
-import '../../../../core/ui/shared/default_button.dart';
+import '../widgets/games_bottom_sheet_builder.dart';
 
 class GamesMainScreen extends StatefulWidget {
   const GamesMainScreen({Key? key}) : super(key: key);
@@ -26,20 +18,14 @@ class GamesMainScreen extends StatefulWidget {
 }
 
 class _GamesMainScreenState extends State<GamesMainScreen> {
+
+  final _bottomSheetHelper = const BottomSheetHelper();
+
   void Function(Game) _showGameProfile(BuildContext context) {
-    return (game) => showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        backgroundColor: Colors.transparent,
-        builder: (context) => game.video == null
-            ? GameBottomModalSheet(game: game)
-            : YoutubePlayerBuilder(
-                player: YoutubePlayer(
-                  controller: YoutubePlayerController(
-                      initialVideoId: YoutubePlayer.convertUrlToId(game.video!)!,
-                      flags: const YoutubePlayerFlags(autoPlay: false, loop: true)),
-                ),
-                builder: (context, player) => GameBottomModalSheet(game: game, player: player)));
+    return (game) => _bottomSheetHelper.buildDefaultScrollableBottomSheet(
+        context,
+        GamesBottomSheetBuilder.buildBody(context, game)
+    )();
   }
 
   final TextStyle _headerStyle = const TextStyle(
@@ -93,15 +79,6 @@ class _GamesMainScreenState extends State<GamesMainScreen> {
               ),
               const SizedBox(height: 16),
               Expanded(
-              //     child: Consumer<GamesModel>(
-              //   builder: (_, model, __) =>
-              //       model.gamesFetchingStatus == FetchingState.successful
-              //           ? GamesContainer(
-              //               games: model.games!,
-              //               action: _showGameProfile(context)
-              //       )
-              //           : const Center(child: CircularProgressIndicator()),
-              // )
                 child: StreamBuilder<List<Game>>(
                   stream: locator<GamesModel>().gamesStream,
                   builder: (_, snapshot) {
@@ -124,125 +101,3 @@ class _GamesMainScreenState extends State<GamesMainScreen> {
   }
 }
 
-class GameBottomModalSheet extends StatelessWidget {
-  const GameBottomModalSheet({Key? key, required this.game, this.player})
-      : super(key: key);
-
-  final Game game;
-  final Widget? player;
-
-  void _selectGame(Game game, BuildContext context) {
-    var bookingModel = locator<BookingModel>();
-    bookingModel.selectedType = game.gameType;
-    bookingModel.selectedGame = game;
-    bookingModel.init();
-    Navigator.of(context).pop();
-    context.router.navigate(const BookingRouter());
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BottomModal(children: [
-      SingleChildScrollView(
-        child: SizedBox(
-         // height: MediaQuery.of(context).size.height * 0.85,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 28),
-              Text(game.title),
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TypeLimitation(
-                      name: (game.guestMin ?? game.gameType.guestMin).toString() +
-                          '-' +
-                          (game.guestMax ?? game.gameType.guestMax).toString(),
-                      iconPath: 'assets/icons/console.png'),
-                  TypeLimitation(
-                      name: game.ageLimit != null
-                          ? game.ageLimit.toString() + '+'
-                          : 'Без ограничения',
-                      iconPath: 'assets/icons/vrglasses.png'),
-                  TypeLimitation(
-                    name: (game.timeDuration ?? game.gameType.timeDuration)
-                            .toString() +
-                        ' мин.',
-                    iconPath: 'assets/icons/clock.png',
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              player ?? const Text('Видео по этой игре еще невыоложенно'),
-              const SizedBox(height: 12),
-              const Text('Здесь картинки'),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: RichText(
-                        text: TextSpan(
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                            children: [
-                          const TextSpan(
-                              text: 'Жанр: ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xFFF5F5F5))),
-                          TextSpan(
-                              text: game.genre ?? 'Нет жанра',
-                              style: const TextStyle(color: Color(0xFFABAFE5)))
-                        ])),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: RichText(
-                        text: TextSpan(
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                            children: [
-                          const TextSpan(
-                              text: 'Зал: ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xFFF5F5F5))),
-                          TextSpan(
-                              text: game.gameType.title,
-                              style: const TextStyle(color: Color(0xFFABAFE5)))
-                        ])),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32),
-              Text(
-                game.description ?? 'Нет описания',
-                style: const TextStyle(
-                  color: Color(0xFFABAFE5),
-                  fontSize: 13,
-                ),
-              ),
-              //const Spacer(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 22),
-                child: DefaultButton(
-                    actionCallback: () {
-                      _selectGame(game, context);
-                      // Navigator.of(context).pop();
-                      // locator<RoutesModel>().navigateToNamed(RoutesModel.booking);
-                    },
-                    actTitle: 'Забронировать'),
-              ),
-            ],
-          ),
-        ),
-      )
-    ]);
-  }
-}

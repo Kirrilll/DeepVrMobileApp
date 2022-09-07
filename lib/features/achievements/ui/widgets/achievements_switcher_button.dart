@@ -10,7 +10,7 @@ class AchievementsSwitcherButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkResponse(
+    return GestureDetector(
       onTap: switchScreen,
       child: Container(
         decoration: const BoxDecoration(
@@ -56,7 +56,7 @@ class _SwitcherButton extends StatelessWidget {
             text,
             textAlign: TextAlign.center,
             style: const TextStyle(
-                fontWeight: FontWeight.w600, fontSize: 16, color: Colors.white),
+                fontWeight: FontWeight.w600, fontSize: 16, color: Color(0xFFABAFE5)),
           );
   }
 }
