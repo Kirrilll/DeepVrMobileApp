@@ -17,8 +17,19 @@ class AchievementCard extends StatelessWidget {
     return GestureDetector(
       onTap: _bottomSheetHelper.buildDefaultScrollableBottomSheet(
           context,
-          AchievementsBottomModalBuilder.buildBody(context, achievement)
+          (context) => AchievementsBottomModalBuilder.buildBody(context, achievement)
       ),
+      // onTap: () => showStickyFlexibleBottomSheet(
+      //     isSafeArea: true,
+      //     anchors: [0, 0.8, 1],
+      //     useRootNavigator: true,
+      //     minHeight: 0.8,
+      //     initHeight: 0.8,
+      //     headerHeight: 36,
+      //     context: context,
+      //     headerBuilder: (context, offset) =>  const Center(child: Text('Header')),
+      //     bodyBuilder:(context, offset) => SliverChildListDelegate(AchievementsBottomModalBuilder.buildBody(context, achievement))
+      // ),
       child: Container(
         height: 85,
         alignment: Alignment.center,

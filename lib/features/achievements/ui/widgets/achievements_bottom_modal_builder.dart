@@ -53,7 +53,7 @@ class AchievementsBottomModalBuilder{
               fontSize: 13,
             ),
           ),
-          //const Spacer(),
+          const SizedBox(height: 20),
           DefaultButton(
               actTitle: 'Скопировать промокод',
               actionCallback: _buildButtonAction(context)

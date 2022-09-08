@@ -1,5 +1,4 @@
 import 'package:bottom_sheet/bottom_sheet.dart';
-import 'package:deepvr/features/achievements/ui/widgets/achievements_bottom_modal_builder.dart';
 import 'package:flutter/cupertino.dart';
 
 typedef BodyBuilder = SliverChildDelegate Function(BuildContext, double);
@@ -24,7 +23,7 @@ class BottomSheetHelper {
 
   VoidCallback buildDefaultScrollableBottomSheet(
     BuildContext context,
-    List<Widget> content,
+    List<Widget> Function(BuildContext) builder,
   ) =>
       () => showStickyFlexibleBottomSheet(
           decoration: const BoxDecoration(
@@ -46,7 +45,8 @@ class BottomSheetHelper {
                       child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: content)
+                          children: builder(context)
+                      )
                   )
                 ],
               ));

@@ -24,7 +24,7 @@ class _GamesMainScreenState extends State<GamesMainScreen> {
   void Function(Game) _showGameProfile(BuildContext context) {
     return (game) => _bottomSheetHelper.buildDefaultScrollableBottomSheet(
         context,
-        GamesBottomSheetBuilder.buildBody(context, game)
+        (context) => GamesBottomSheetBuilder.buildBody(context, game)
     )();
   }
 
