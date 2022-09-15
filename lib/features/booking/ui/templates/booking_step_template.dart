@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/ui/shared/default_button.dart';
+import '../screens/booking_page.dart';
+
+//Прокидывать builder панели навигации, с колбэками mayNext, mayBack, onNext, onNextAsync
 class BookingStepTemplate extends StatelessWidget {
   const BookingStepTemplate({
     Key? key,
@@ -13,6 +17,7 @@ class BookingStepTemplate extends StatelessWidget {
   final Widget content;
   final int stepNumber;
   final String stepTitle;
+
 
 
   @override

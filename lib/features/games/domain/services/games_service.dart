@@ -22,10 +22,12 @@ class GamesService{
     return _gamesFuture.asStream();
   }
 
-  Stream<List<Game>> gamesByTypeId(int id){
-    return games
+  Stream<List<Game>> gamesByTypeId(int? id){
+    return id != null
+        ? games
         .map((games) => games
-              .where((game) => game.gameTypeId == id).toList());
+              .where((game) => game.gameTypeId == id).toList())
+        : games;
   }
 
 

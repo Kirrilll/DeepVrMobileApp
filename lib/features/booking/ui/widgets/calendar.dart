@@ -1,15 +1,27 @@
 import 'package:deepvr/domain/models/month.dart';
+import 'package:deepvr/features/booking/domain/view_models/calendar_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../domain/view_models/calendar_model.dart';
 import 'month_item.dart';
 
 class Calendar extends StatefulWidget {
-  const Calendar({Key? key, required this.months}) : super(key: key);
+  const Calendar({
+    Key? key,
+    required this.months,
+    required this.monthIndex,
+    required this.setMonthIndex
+  }) : super(key: key);
+
+  Calendar.fromModel({Key? key, required CalendarModel model}):
+        months = model.months,
+        monthIndex = model.monthIndex,
+        setMonthIndex = model.setMonthIndex,
+        super(key: key);
 
   final List<Month> months;
+  final void Function(int) setMonthIndex;
+  final int monthIndex;
 
   @override
   _CalendarState createState() => _CalendarState();
@@ -24,10 +36,10 @@ class _CalendarState extends State<Calendar> {
     super.dispose();
   }
 
-  void Function()? next(CalendarModel model) {
+  VoidCallback? next(CalendarModel model) {
     if (model.mayNext) {
       return () {
-        model.setMonthIndex(model.selectedMonthIndex + 1);
+        model.setMonthIndex(model.monthIndex + 1);
         _calendarController.nextPage(
             duration: const Duration(milliseconds: 300), curve: Curves.ease);
       };
@@ -35,10 +47,10 @@ class _CalendarState extends State<Calendar> {
     return null;
   }
 
-  void Function()? previous(CalendarModel model) {
+  VoidCallback? previous(CalendarModel model) {
     if (model.mayBack) {
       return () {
-        model.setMonthIndex(model.selectedMonthIndex - 1);
+        model.setMonthIndex(model.monthIndex - 1);
         _calendarController.previousPage(
             duration: const Duration(milliseconds: 300), curve: Curves.ease);
       };
@@ -72,9 +84,9 @@ class _CalendarState extends State<Calendar> {
                               color: Colors.white,
                             )),
                         Text(
-                          model.selectedMonthIndex > 0
+                          model.monthIndex > 0
                               ? widget
-                              .months[model.selectedMonthIndex - 1].monthName
+                              .months[model.monthIndex - 1].monthName
                               : '',
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.secondary,
@@ -86,7 +98,7 @@ class _CalendarState extends State<Calendar> {
                   ),
                   Center(
                     child: Text(
-                      '${widget.months[model.selectedMonthIndex].monthName} ${widget.months[model.selectedMonthIndex].year} г.',
+                      '${widget.months[model.monthIndex].monthName} ${widget.months[model.monthIndex].year} г.',
                       style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -99,7 +111,7 @@ class _CalendarState extends State<Calendar> {
                       children: [
                         Text(
                           model.mayNext
-                              ? widget.months[model.selectedMonthIndex + 1].monthName
+                              ? widget.months[model.monthIndex + 1].monthName
                               : '',
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.secondary,
@@ -150,8 +162,7 @@ class _CalendarState extends State<Calendar> {
               controller: _calendarController,
               scrollDirection: Axis.horizontal,
               itemCount: widget.months.length,
-              itemBuilder: (context, index) =>
-                  MonthItem(month: widget.months[index])),
+              itemBuilder: (context, index) => MonthItem(month: widget.months[index])),
         ),
       ],
     );

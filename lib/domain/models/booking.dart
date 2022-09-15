@@ -13,7 +13,9 @@ class Booking {
   String? phone;
   String? name;
   String? comment;
-  bool? isAgree;
+  String? promoCode;
+  int? discountPercent;
+
 
   Booking.initial() {
     selectedType = null;
@@ -26,17 +28,6 @@ class Booking {
     phone = null;
   }
 
-  Booking(
-      this.selectedType,
-      this.selectedGame,
-      this.guestCount,
-      this.selectedDate,
-      this.selectedTime,
-      this.isAgree,
-      this.phone,
-      this.name,
-      this.comment);
-
   factory Booking.copyWith(Booking booking,
       {GameType? selectedType,
       Game? selectedGame,
@@ -46,35 +37,56 @@ class Booking {
       bool? isAgree,
       String? name,
       String? phone,
-      String? comment}) {
+      String? comment,
+        String? promoCode,
+        int? discountPercent
+      }) {
     return Booking(
-        selectedType ?? booking.selectedType,
-        selectedGame ?? booking.selectedGame,
-        guestCount ?? booking.guestCount,
-        selectedDate ?? booking.selectedDate,
-        selectedTime ?? booking.selectedTime,
-        isAgree ?? booking.isAgree,
-        phone ?? booking.phone,
-        name ?? booking.name,
-        comment ?? booking.comment
+      selectedType: selectedType ?? booking.selectedType,
+      selectedGame: selectedGame ?? booking.selectedGame,
+      guestCount: guestCount ?? booking.guestCount,
+      selectedDate: selectedDate ?? booking.selectedDate,
+      selectedTime: selectedTime ?? booking.selectedTime,
+      phone: phone ?? booking.phone,
+      name: name ?? booking.name,
+      comment: comment ?? booking.comment,
+      promoCode: promoCode ?? booking.promoCode,
+      discountPercent: discountPercent ?? booking.discountPercent,
     );
 
 
   }
 
+  Booking({
+    this.selectedType,
+    this.selectedGame,
+    this.guestCount,
+    this.selectedDate,
+    this.selectedTime,
+    this.phone,
+    this.name,
+    this.comment,
+    this.promoCode,
+    this.discountPercent,
+  });
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Booking &&
-          runtimeType == other.runtimeType &&
-          selectedType == other.selectedType &&
-          selectedGame == other.selectedGame &&
-          guestCount == other.guestCount &&
-          selectedDate == other.selectedDate &&
-          selectedTime == other.selectedTime &&
-          phone == other.phone &&
-          name == other.name &&
-          isAgree == other.isAgree;
+          (other is Booking &&
+              runtimeType == other.runtimeType &&
+              selectedType == other.selectedType &&
+              selectedGame == other.selectedGame &&
+              guestCount == other.guestCount &&
+              selectedDate == other.selectedDate &&
+              selectedTime == other.selectedTime &&
+              phone == other.phone &&
+              name == other.name &&
+              comment == other.comment &&
+              promoCode == other.promoCode &&
+              discountPercent == other.discountPercent
+          );
+
 
   @override
   int get hashCode =>
@@ -85,5 +97,51 @@ class Booking {
       selectedTime.hashCode ^
       phone.hashCode ^
       name.hashCode ^
-      isAgree.hashCode;
+      comment.hashCode ^
+      promoCode.hashCode ^
+      discountPercent.hashCode;
+
+
+  @override
+  String toString() {
+    return 'Booking{' +
+        ' selectedType: $selectedType,' +
+        ' selectedGame: $selectedGame,' +
+        ' guestCount: $guestCount,' +
+        ' selectedDate: $selectedDate,' +
+        ' selectedTime: $selectedTime,' +
+        ' phone: $phone,' +
+        ' name: $name,' +
+        ' comment: $comment,' +
+        ' promoCode: $promoCode,' +
+        ' discountPercent: $discountPercent,' +
+        '}';
+  }
+
+
+  Booking copyWith({
+    GameType? selectedType,
+    Game? selectedGame,
+    int? guestCount,
+    Date? selectedDate,
+    Time? selectedTime,
+    String? phone,
+    String? name,
+    String? comment,
+    String? promoCode,
+    int? discountPercent,
+  }) {
+    return Booking(
+      selectedType: selectedType ?? this.selectedType,
+      selectedGame: selectedGame ?? this.selectedGame,
+      guestCount: guestCount ?? this.guestCount,
+      selectedDate: selectedDate ?? this.selectedDate,
+      selectedTime: selectedTime ?? this.selectedTime,
+      phone: phone ?? this.phone,
+      name: name ?? this.name,
+      comment: comment ?? this.comment,
+      promoCode: promoCode ?? this.promoCode,
+      discountPercent: discountPercent ?? this.discountPercent,
+    );
+  }
 }

@@ -1,12 +1,9 @@
-import 'package:deepvr/domain/models/date.dart';
-import 'package:deepvr/domain/models/booking.dart';
 import 'package:deepvr/core/domain/locator.dart';
-import 'package:deepvr/domain/view_models/booking_model.dart';
+import 'package:deepvr/domain/models/date.dart';
+import 'package:deepvr/features/booking/domain/view_models/calendar_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../domain/view_models/calendar_model.dart';
 
 
 class DateItem extends StatelessWidget {
@@ -43,12 +40,12 @@ class DateItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return !isEmpty
-        ? Selector<BookingModel, Date?>(
+        ? Selector<CalendarModel, Date?>(
             selector: (_, model) => model.selectedDate,
             shouldRebuild: (prev, next) => next == date || prev == date,
             builder: (context, selectedDate, _) => ElevatedButton(
                 onPressed: date!.availableTime.isNotEmpty
-                    ? () => locator<BookingModel>().selectedDate = date
+                    ? () => locator<CalendarModel>().setDate(date)
                     : null,
                 style: ElevatedButton.styleFrom(
                     primary: _buildBackgroundColor(),

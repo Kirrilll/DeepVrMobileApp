@@ -1,39 +1,31 @@
+import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/features/booking/domain/view_models/game_type_model.dart';
+import 'package:deepvr/features/booking/domain/view_models/guest_count_model.dart';
+import 'package:deepvr/features/booking/domain/view_models/personal_data_model.dart';
+import 'package:deepvr/features/booking/domain/view_models/results_model.dart';
+import 'package:deepvr/features/booking/domain/view_models/time_model.dart';
 
-import 'package:deepvr/features/booking/ui/screens/successful_screen.dart';
-import 'package:deepvr/core/usecases/helpers/validation_helper.dart';
-
+import '../../../features/booking/domain/view_models/booking_games_model.dart';
+import '../../../features/booking/domain/view_models/calendar_model.dart';
 import '../../../features/booking/ui/screens/booking_result_screen.dart';
 import '../../../features/booking/ui/screens/calendar_screen.dart';
-import '../../../features/booking/ui/screens/personal_data_screen.dart';
 import '../../../features/booking/ui/screens/game_page.dart';
 import '../../../features/booking/ui/screens/game_type_screen.dart';
+import '../../../features/booking/ui/screens/personal_data_screen.dart';
 import '../../../features/booking/ui/screens/players_counter_screen.dart';
 import '../../../domain/models/booking_step.dart';
 import '../../../features/booking/ui/screens/time_picker_screen.dart';
 
 
-List<BookingStep> bookingSteps = [
-  BookingStep.standard(content: const GameTypesPage(), isFinished: (booking) => booking.selectedType!=null),
-  BookingStep.standard(content: const GameCardPage(), isFinished: (booking) => booking.selectedGame!= null),
-  BookingStep.standard(content: const PlayersCounterPage(), isFinished: (booking) => booking.guestCount!=null),
-  BookingStep.standard(content: const CalendarScreen(), isFinished: (booking) => booking.selectedDate!= null),
-  BookingStep.standard(content: const TimeScreen(), isFinished: (booking) => booking.selectedTime!= null),
-  BookingStep.standard(
-      content: const PersonalDataScreen(),
-      isFinished: (booking) => (booking.isAgree ?? false) &&
-          ValidationHelper.validatePhone(booking.phone ?? '') == null &&
-          (booking.name?.isNotEmpty ?? false)
-  ),
-  BookingStep(const BookingResultScreen(), true, false, (booking) => bookingSteps.sublist(0, bookingSteps.length-1)
-      .map((step) => step.isFinished(booking))
-      .reduce((value, element) => value && element)
-  ),
-];
-
-class StepsSelector {
-  static BookingStep get gameType => bookingSteps[0];
-  static BookingStep get games => bookingSteps[1];
-  static BookingStep get counter => bookingSteps[2];
-  static BookingStep get date => bookingSteps[3];
-  static BookingStep get time => bookingSteps[4];
+class BookingConfiguration{
+  final List<BookingStep> bookingSteps = [
+    BookingStep.standard(content: const GameTypesPage(), viewModel: locator<GameTypeModel>()),
+    BookingStep.standard(content: const GameCardPage(), viewModel: locator<BookingGamesModel>()),
+    BookingStep.standard(content: const PlayersCounterPage(), viewModel: locator<GuestModel>()),
+    BookingStep.standard(content: const CalendarScreen(), viewModel:  locator<CalendarModel>()),
+    BookingStep.standard(content: const TimeScreen(), viewModel: locator<TimeModel>()),
+    BookingStep.standard(content: const PersonalDataScreen(), viewModel:  locator<PersonalDataModel>()),
+    BookingStep(const BookingResultScreen(), true, false, locator<ResultsModel>())
+  ];
 }
+

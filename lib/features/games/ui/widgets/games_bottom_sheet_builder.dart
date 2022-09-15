@@ -5,16 +5,15 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../../../core/domain/locator.dart';
 import '../../../../core/routing/router/app_router.gr.dart';
 import '../../../../core/ui/shared/default_button.dart';
-import '../../../../domain/view_models/booking_model.dart';
 import '../../../booking/ui/widgets/game_type_card.dart';
 import '../../data/entities/game.dart';
 
 class GamesBottomSheetBuilder {
   static void _selectGame(Game game, BuildContext context) {
-    var bookingModel = locator<BookingModel>();
-    bookingModel.selectedType = game.gameType;
-    bookingModel.selectedGame = game;
-    bookingModel.init();
+    // var bookingModel = locator<BookingModel>();
+    // bookingModel.selectedType = game.gameType;
+    // bookingModel.selectedGame = game;
+    // bookingModel.init();
     Navigator.of(context).pop();
     context.router.navigate(const BookingRouter());
   }

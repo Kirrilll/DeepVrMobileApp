@@ -1,11 +1,9 @@
 import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/features/booking/domain/view_models/time_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../domain/models/booking.dart';
 import '../../../../domain/models/time.dart';
-import '../../../../domain/view_models/booking_model.dart';
 
 class TimeItem extends StatelessWidget {
   const TimeItem({Key? key, required this.time}) : super(key: key);
@@ -14,7 +12,7 @@ class TimeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<BookingModel, Time?>(
+    return Selector<TimeModel, Time?>(
         selector: (_, model) => model.selectedTime,
         shouldRebuild: (prev, next) => prev == time || next == time,
         builder: (context, selectedTime, _) =>
@@ -27,7 +25,7 @@ class TimeItem extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10))),
-              onPressed: () => locator<BookingModel>().selectedTime = time,
+              onPressed: () => locator<TimeModel>().selectTime(time),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,

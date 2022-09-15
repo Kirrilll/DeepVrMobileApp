@@ -1,10 +1,6 @@
 import 'package:deepvr/features/games/data/entities/game.dart';
-import 'package:deepvr/domain/models/booking.dart';
-import 'package:deepvr/domain/view_models/booking_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import '../../../booking/ui/widgets/selectable_item.dart';
 
 class GameCard extends StatelessWidget {

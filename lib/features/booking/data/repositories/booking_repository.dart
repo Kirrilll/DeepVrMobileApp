@@ -1,9 +1,11 @@
 import 'dart:developer';
 import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/domain/models/booking.dart';
 import 'package:deepvr/features/booking/data/entities/game_type.dart';
 import 'package:deepvr/features/booking/data/entities/request.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../../domain/models/booking_information.dart';
 import '../entities/booking_calendar.dart';
 
 class BookingRepository{
@@ -44,5 +46,12 @@ class BookingRepository{
       return Request.requestFromJson(response.body);
     }
     return null;
+  }
+
+  Future<BookingInformation?> getBookingInformation(Booking booking) async{
+    return await Future.delayed(
+        const Duration(milliseconds: 500),
+            () => BookingInformation.fromBooking(booking)
+    );
   }
 }

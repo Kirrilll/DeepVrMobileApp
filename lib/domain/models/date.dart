@@ -21,7 +21,7 @@ class Date{
 
   @override
   String toString() {
-    return date.toString().substring(0, 9);
+    return date.toString().substring(0, 10);
   }
 
   @override
