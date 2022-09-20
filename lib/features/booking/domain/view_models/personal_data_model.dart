@@ -1,5 +1,6 @@
 import 'package:deepvr/core/usecases/helpers/validation_helper.dart';
-import 'package:deepvr/features/booking/domain/interfaces/i_booking_model.dart';
+import 'package:deepvr/features/booking/usecases/interfaces/i_booking_model.dart';
+import 'package:deepvr/features/booking/usecases/updating_keys.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../core/domain/locator.dart';
@@ -17,8 +18,9 @@ class PersonalDataModel with ChangeNotifier implements IBookingModel {
   bool _isAgree = false;
 
   PersonalDataModel() {
-    init();
-    _authenticationService.addListener(init);
+    initUserData();
+    _authenticationService.addListener(initUserData);
+    _bookingService.addListener(init);
     _nameController.addListener(notifyListeners);
     _phoneController.addListener(notifyListeners);
   }
@@ -37,7 +39,14 @@ class PersonalDataModel with ChangeNotifier implements IBookingModel {
   GlobalKey<FormState> get formState => _formState;
   bool get isAgree => _isAgree;
 
-  void init() {
+  void init(){
+    initUserData();
+    _commentController.text = '';
+    _isAgree = false;
+    notifyListeners();
+  }
+
+  void initUserData() {
     _nameController.text = _authenticationService.user.login ?? '';
     _phoneController.text = _authenticationService.user.phone ?? '';
   }
@@ -59,15 +68,17 @@ class PersonalDataModel with ChangeNotifier implements IBookingModel {
         _bookingService.booking.phone != _phoneController.text ||
         _bookingService.booking.comment != _commentController.text){
       _bookingService.updateBooking(
-          Booking.copyWith(_bookingService.booking,
+          _bookingService.booking.copyWith(
               name: _nameController.value.text,
               phone: _phoneController.value.text,
               comment: _commentController.value.text
-          ),
-          this);
+          ), getUpdatingKey());
     }
   }
 
   @override
   Future<void> onNextAsync() async {}
+
+  @override
+  String getUpdatingKey() => personalDataKey;
 }

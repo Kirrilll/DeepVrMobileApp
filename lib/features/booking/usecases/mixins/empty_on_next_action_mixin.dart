@@ -1,4 +1,4 @@
-import 'package:deepvr/features/booking/domain/interfaces/i_booking_model.dart';
+import 'package:deepvr/features/booking/usecases/interfaces/i_booking_model.dart';
 
 mixin EmptyOnNextMixin on IBookingModel {
   @override

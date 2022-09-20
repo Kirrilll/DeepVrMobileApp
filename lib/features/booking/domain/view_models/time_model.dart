@@ -1,11 +1,11 @@
 import 'package:deepvr/core/domain/locator.dart';
 import 'package:deepvr/domain/models/booking.dart';
-import 'package:deepvr/features/booking/domain/interfaces/i_booking_model.dart';
+import 'package:deepvr/features/booking/usecases/interfaces/i_booking_model.dart';
 import 'package:deepvr/features/booking/domain/services/booking_service.dart';
+import 'package:deepvr/features/booking/usecases/updating_keys.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../domain/models/time.dart';
-import 'calendar_model.dart';
 
 class TimeModel with ChangeNotifier implements IBookingModel{
 
@@ -14,8 +14,12 @@ class TimeModel with ChangeNotifier implements IBookingModel{
 
   TimeModel(){
     _bookingService.addListener(() {
-      if(_bookingService.lastChangeItemName is CalendarModel){
-        selectTime(null);
+      switch(_bookingService.updatingKey){
+        case calendarKey:
+          selectTime(null);
+          break;
+        case cascadeUpdateKey:
+          notifyListeners();
       }
     });
   }
@@ -24,7 +28,7 @@ class TimeModel with ChangeNotifier implements IBookingModel{
   List<Time> get availableTime => _bookingService.booking.selectedDate?.availableTime ?? List.empty();
 
   void selectTime(Time? time){
-    _bookingService.updateBooking(_bookingService.booking..selectedTime = time, this);
+    _bookingService.updateBooking(_bookingService.booking..selectedTime = time, getUpdatingKey());
     notifyListeners();
   }
 
@@ -40,5 +44,8 @@ class TimeModel with ChangeNotifier implements IBookingModel{
   Future<void> onNextAsync() async {
     return;
   }
+
+  @override
+  String getUpdatingKey() => timeKey;
 
 }

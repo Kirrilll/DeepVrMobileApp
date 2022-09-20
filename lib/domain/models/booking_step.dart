@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../features/booking/domain/interfaces/i_booking_model.dart';
+import '../../features/booking/usecases/interfaces/i_booking_model.dart';
 
 class BookingStep{
   Widget content;

@@ -5,6 +5,7 @@ import 'package:deepvr/features/achievements/domain/view_models/achievement_mode
 import 'package:deepvr/features/authentication/data/repositories/authentication_repository.dart';
 import 'package:deepvr/features/authentication/domain/view_models/authentication_model.dart';
 import 'package:deepvr/features/booking/domain/services/booking_service.dart';
+import 'package:deepvr/features/booking/domain/view_models/booking_model.dart';
 import 'package:deepvr/features/booking/domain/view_models/game_type_model.dart';
 import 'package:deepvr/features/booking/domain/view_models/guest_count_model.dart';
 import 'package:deepvr/features/booking/domain/view_models/personal_data_model.dart';
@@ -54,7 +55,7 @@ void setup() {
 
   //Бронирование
   locator.registerLazySingleton(() => BookingService());
-  //locator.registerLazySingleton(() => BookingHelper());
+  locator.registerLazySingleton(() => BookingModel());
   locator.registerLazySingleton(() => GameTypeModel());
   locator.registerLazySingleton(() => TimeModel());
   locator.registerLazySingleton(() => GuestModel());

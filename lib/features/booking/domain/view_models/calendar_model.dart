@@ -4,9 +4,10 @@ import 'package:deepvr/domain/models/date.dart';
 import 'package:deepvr/domain/models/month.dart';
 import 'package:deepvr/features/booking/data/entities/booking_calendar.dart';
 import 'package:deepvr/features/booking/data/repositories/booking_repository.dart';
-import 'package:deepvr/features/booking/domain/interfaces/i_booking_model.dart';
+import 'package:deepvr/features/booking/usecases/interfaces/i_booking_model.dart';
 import 'package:deepvr/features/booking/domain/view_models/booking_games_model.dart';
 import 'package:deepvr/features/booking/domain/view_models/guest_count_model.dart';
+import 'package:deepvr/features/booking/usecases/updating_keys.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../core/domain/locator.dart';
@@ -32,8 +33,17 @@ class CalendarModel with ChangeNotifier, FetchMixin  implements IBookingModel{
   CalendarModel(){
     loadCalendar();
     _bookingService.addListener(() {
-      if(_bookingService.lastChangeItemName is BookingGamesModel
-      || _bookingService.lastChangeItemName is GuestModel){
+
+      switch(_bookingService.updatingKey){
+        case guestKey:
+          loadCalendar();
+          setDate(null);
+          break;
+        case cascadeUpdateKey:
+          notifyListeners();
+      }
+
+      if(_bookingService.updatingKey == guestKey || _bookingService.updatingKey == gamesKey){
         loadCalendar();
         setDate(null);
       }
@@ -48,7 +58,7 @@ class CalendarModel with ChangeNotifier, FetchMixin  implements IBookingModel{
   }
 
   void setDate(Date? date){
-    _bookingService.updateBooking(_bookingService.booking..selectedDate = date, this);
+    _bookingService.updateBooking(_bookingService.booking..selectedDate = date, getUpdatingKey());
     notifyListeners();
   }
 
@@ -78,4 +88,7 @@ class CalendarModel with ChangeNotifier, FetchMixin  implements IBookingModel{
 
   @override
   Future<void> onNextAsync() async {}
+
+  @override
+  String getUpdatingKey() => calendarKey;
 }

@@ -1,6 +1,7 @@
 import 'package:deepvr/domain/models/booking.dart';
-import 'package:deepvr/features/booking/domain/interfaces/i_booking_model.dart';
+import 'package:deepvr/features/booking/usecases/interfaces/i_booking_model.dart';
 import 'package:deepvr/features/booking/domain/view_models/booking_games_model.dart';
+import 'package:deepvr/features/booking/usecases/updating_keys.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../core/domain/locator.dart';
@@ -19,13 +20,28 @@ class GuestModel with ChangeNotifier implements IBookingModel {
 
   GuestModel(){
     _bookingService.addListener(() {
-      if(_bookingService.lastChangeItemName is BookingGamesModel){
-        _guestMin = _bookingService.booking.selectedGame?.guestMin ?? _bookingService.booking.selectedType!.guestMin;
-        _guestMax = _bookingService.booking.selectedGame?.guestMax ?? _bookingService.booking.selectedType!.guestMax;
-        _guestCount = _guestMin;
-        notifyListeners();
+      switch(_bookingService.updatingKey){
+        case gamesKey:
+          initCount();
+          notifyListeners();
+          break;
+        case cascadeUpdateKey:
+          if(_bookingService.booking.selectedGame != null) {
+            initCount();
+          }
+          else{
+            _guestCount = 0;
+          }
+          notifyListeners();
+          break;
       }
     });
+  }
+
+  void initCount(){
+    _guestMin = _bookingService.booking.selectedGame?.guestMin ?? _bookingService.booking.selectedType!.guestMin;
+    _guestMax = _bookingService.booking.selectedGame?.guestMax ?? _bookingService.booking.selectedType!.guestMax;
+    _guestCount = _guestMin;
   }
 
   void increment(){
@@ -44,14 +60,19 @@ class GuestModel with ChangeNotifier implements IBookingModel {
   }
 
   @override
-  bool isFinished() => true;
+  bool isFinished() => _guestCount != 0;
 
   @override
   void onNext() {
-    _bookingService.updateBooking(Booking.copyWith(_bookingService.booking, guestCount: _guestCount), this);
+    if(_bookingService.booking.guestCount != _guestCount){
+      _bookingService.updateBooking(_bookingService.booking.copyWith(guestCount: _guestCount), getUpdatingKey());
+    }
   }
 
   @override
   Future<void> onNextAsync() async {}
+
+  @override
+  String getUpdatingKey() => guestKey;
 
 }

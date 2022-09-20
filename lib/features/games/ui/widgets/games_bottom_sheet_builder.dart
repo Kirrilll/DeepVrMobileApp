@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:deepvr/domain/models/booking.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -9,13 +10,17 @@ import '../../../booking/ui/widgets/game_type_card.dart';
 import '../../data/entities/game.dart';
 
 class GamesBottomSheetBuilder {
+  //Перемещаться и передавать Booking
   static void _selectGame(Game game, BuildContext context) {
-    // var bookingModel = locator<BookingModel>();
-    // bookingModel.selectedType = game.gameType;
-    // bookingModel.selectedGame = game;
-    // bookingModel.init();
+
     Navigator.of(context).pop();
-    context.router.navigate(const BookingRouter());
+    final appRouter = locator<AppRouter>();
+    context.router.navigate(const BookingRouter())
+        .then((value) => appRouter.push(BookingPageRoute(
+        initialBooking: Booking(
+            selectedGame: game,
+            selectedType: game.gameType)
+    )));
   }
 
   static List<Widget> _buildModalContent(

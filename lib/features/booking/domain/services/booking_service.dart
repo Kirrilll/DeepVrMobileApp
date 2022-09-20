@@ -1,23 +1,19 @@
 import 'dart:core';
 import 'package:deepvr/domain/models/booking.dart';
-import 'package:deepvr/features/booking/data/entities/game_type.dart';
-import 'package:deepvr/features/booking/domain/interfaces/i_booking_model.dart';
-import 'package:deepvr/features/booking/domain/view_models/game_type_model.dart';
 import 'package:flutter/material.dart';
 
-//За авторизацией следит PersonalDataModel
-//Каждая модель следуит за определнными параметрами обновления
+
 class BookingService with ChangeNotifier{
+  String _updatingKey = '';
   Booking _booking = Booking.initial();
-  IBookingModel? _lastChangedModel;
+
 
   Booking get booking => _booking;
-  IBookingModel? get lastChangeItemName => _lastChangedModel;
+  String get updatingKey => _updatingKey;
 
-
-  void updateBooking(Booking booking, IBookingModel model){
+  void updateBooking(Booking booking, String updatingKey){
+    _updatingKey = updatingKey;
     _booking = booking;
-    _lastChangedModel = model;
     notifyListeners();
   }
 }

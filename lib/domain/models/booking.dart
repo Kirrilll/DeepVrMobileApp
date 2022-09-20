@@ -17,46 +17,6 @@ class Booking {
   int? discountPercent;
 
 
-  Booking.initial() {
-    selectedType = null;
-    selectedGame = null;
-    guestCount = null;
-    selectedDate = null;
-    selectedTime = null;
-    comment = null;
-    name = null;
-    phone = null;
-  }
-
-  factory Booking.copyWith(Booking booking,
-      {GameType? selectedType,
-      Game? selectedGame,
-      int? guestCount,
-      Date? selectedDate,
-      Time? selectedTime,
-      bool? isAgree,
-      String? name,
-      String? phone,
-      String? comment,
-        String? promoCode,
-        int? discountPercent
-      }) {
-    return Booking(
-      selectedType: selectedType ?? booking.selectedType,
-      selectedGame: selectedGame ?? booking.selectedGame,
-      guestCount: guestCount ?? booking.guestCount,
-      selectedDate: selectedDate ?? booking.selectedDate,
-      selectedTime: selectedTime ?? booking.selectedTime,
-      phone: phone ?? booking.phone,
-      name: name ?? booking.name,
-      comment: comment ?? booking.comment,
-      promoCode: promoCode ?? booking.promoCode,
-      discountPercent: discountPercent ?? booking.discountPercent,
-    );
-
-
-  }
-
   Booking({
     this.selectedType,
     this.selectedGame,
@@ -70,23 +30,34 @@ class Booking {
     this.discountPercent,
   });
 
+  Booking.initial(){
+    selectedType = null;
+    selectedGame = null;
+    guestCount = null;
+    selectedDate = null;
+    selectedTime = null;
+    phone = null;
+    name = null;
+    comment = null;
+    promoCode = null;
+    discountPercent = null;
+  }
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          (other is Booking &&
-              runtimeType == other.runtimeType &&
-              selectedType == other.selectedType &&
-              selectedGame == other.selectedGame &&
-              guestCount == other.guestCount &&
-              selectedDate == other.selectedDate &&
-              selectedTime == other.selectedTime &&
-              phone == other.phone &&
-              name == other.name &&
-              comment == other.comment &&
-              promoCode == other.promoCode &&
-              discountPercent == other.discountPercent
-          );
-
+      (other is Booking &&
+          runtimeType == other.runtimeType &&
+          selectedType == other.selectedType &&
+          selectedGame == other.selectedGame &&
+          guestCount == other.guestCount &&
+          selectedDate == other.selectedDate &&
+          selectedTime == other.selectedTime &&
+          phone == other.phone &&
+          name == other.name &&
+          comment == other.comment &&
+          promoCode == other.promoCode &&
+          discountPercent == other.discountPercent);
 
   @override
   int get hashCode =>
@@ -100,7 +71,6 @@ class Booking {
       comment.hashCode ^
       promoCode.hashCode ^
       discountPercent.hashCode;
-
 
   @override
   String toString() {
@@ -117,7 +87,6 @@ class Booking {
         ' discountPercent: $discountPercent,' +
         '}';
   }
-
 
   Booking copyWith({
     GameType? selectedType,
@@ -144,4 +113,5 @@ class Booking {
       discountPercent: discountPercent ?? this.discountPercent,
     );
   }
+
 }

@@ -2,14 +2,18 @@ import 'package:deepvr/core/routing/router/app_router.gr.dart';
 import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
 import 'package:deepvr/domain/models/booking.dart';
 import 'package:deepvr/features/booking/data/repositories/booking_repository.dart';
-import 'package:deepvr/features/booking/domain/interfaces/i_booking_model.dart';
+import 'package:deepvr/features/booking/usecases/interfaces/i_booking_model.dart';
 import 'package:deepvr/features/booking/domain/services/booking_service.dart';
+import 'package:deepvr/features/booking/usecases/updating_keys.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../core/domain/locator.dart';
 import '../../../../domain/models/booking_information.dart';
 import 'result_state.dart';
 
+
+//TODO нормально обрабатывать ошибку
+//Вызывать модалку ошибки
 class ResultsModel with ChangeNotifier implements IBookingModel{
   ResultState _resultState = ResultState(fetchingStatus: FetchingState.idle);
   final _bookingService = locator<BookingService>();
@@ -72,12 +76,12 @@ class ResultsModel with ChangeNotifier implements IBookingModel{
       "user_name": booking.name,
     }, booking.selectedGame!.id);
     if(res?.error == 0){
-      _bookingService.updateBooking(Booking.initial() , this);
+      await locator<AppRouter>().pushNamed('successful');
       setState(_resultState.copyWith(fetchingStatus: FetchingState.idle));
-      locator<AppRouter>().pushNamed('successful');
+      _bookingService.updateBooking(Booking.initial(), getUpdatingKey());
     }
     else{
-      setState(_resultState.copyWith(fetchingStatus: FetchingState.error, errorMessage: 'Не удалось забронировать'));
+      setState(_resultState.copyWith(fetchingStatus: FetchingState.error, errorMessage: res?.errorText ?? 'Нет соединения'));
     }
   }
 
@@ -91,5 +95,8 @@ class ResultsModel with ChangeNotifier implements IBookingModel{
   Future<void> onNextAsync() async {
     await book();
   }
+
+  @override
+  String getUpdatingKey() => cascadeUpdateKey;
 
 }
