@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:deepvr/core/ui/widgets/error_panel.dart';
 import 'package:deepvr/features/authentication/data/entities/registration.dart';
 import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
 import 'package:deepvr/features/authentication/domain/view_models/registration_model.dart';
@@ -20,19 +21,34 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+
+  final _viewModel = locator<RegistrationModel>();
+
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _repeatPasswordController = TextEditingController();
   final TextEditingController _loginController = TextEditingController();
   final TextEditingController _mailController = TextEditingController();
+  final GlobalKey<FormState> _formState = GlobalKey<FormState>();
 
   void navigateToSignIn(BuildContext context) => context.router.pop();
+  void navigateToError(BuildContext context, String message) =>
+      showDialog(context: context, builder: (_) => ErrorPanel(message: message));
 
-  final GlobalKey<FormState> _formState = GlobalKey<FormState>();
+  @override
+  void initState() {
+    _viewModel.addListener(() {
+      if(_viewModel.signUpStatus == FetchingState.error){
+        navigateToError(context, _viewModel.message);
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: locator<RegistrationModel>(),
+      value: _viewModel,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Center(
@@ -50,15 +66,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fontSize: 46,
                         color: Colors.white),
                   ),
-                  Builder(builder: (context){
-                    if(model.signUpStatus == FetchingState.error){
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 20),
-                        child: const Text('Ошибка'),
-                      );
-                    }
-                    return const SizedBox();
-                  }),
+                  // Builder(builder: (context){
+                  //   if(model.signUpStatus == FetchingState.error){
+                  //     return Container(
+                  //       margin: const EdgeInsets.only(bottom: 20),
+                  //       child: const Text('Ошибка'),
+                  //     );
+                  //   }
+                  //   return const SizedBox();
+                  // }),
                   const SizedBox(height: 24),
                   Form(
                     key: _formState,

@@ -1,4 +1,5 @@
 import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/core/ui/widgets/error_panel.dart';
 import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
 import 'package:deepvr/features/booking/domain/view_models/results_model.dart';
 import 'package:deepvr/features/booking/ui/screens/booking_information_screen.dart';
@@ -24,7 +25,11 @@ class BookingResultScreen extends StatelessWidget {
                   case FetchingState.idle:
                     return  const SizedBox();
                   case FetchingState.error:
-                    return Center(child: Text(state.errorMessage ?? ''));
+                    showDialog(
+                        context: context,
+                        builder: (_) => ErrorPanel(message: state.errorMessage ?? 'Нет соединения' )
+                    );
+                    return const SizedBox();
                   case FetchingState.loading:
                     return const Center(child: CircularProgressIndicator());
                   default:
