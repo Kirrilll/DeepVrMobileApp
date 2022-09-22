@@ -52,7 +52,7 @@ class DateItem extends StatelessWidget {
                     onSurface: const Color(0xFF0F0f1D),
                     alignment: Alignment.topLeft,
                     padding: const EdgeInsets.all(6),
-                    fixedSize: const Size(43, 43),
+                    //fixedSize: const Size(43, 43),
                     shape: null,
                     side: selectedDate != null && selectedDate == date
                         ? const BorderSide(color: Color(0XFF8556FF), width: 2)

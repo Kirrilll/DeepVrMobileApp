@@ -18,25 +18,33 @@ class TimeScreen extends StatelessWidget {
       child: BookingStepTemplate(
           stepNumber: 5,
           content: Consumer<TimeModel>(
-              builder: (context, model, _) =>
-                  Align(
-                      alignment: Alignment.topCenter,
-                      child: SingleChildScrollView(
-                        child: Wrap(
-                          spacing: 16,
-                          runSpacing: 16,
-                          children: model.availableTime
-                              .map((time) => SizedBox(
-                                    child: TimeItem(time: time),
-                                    height: 52,
-                                    width: 162,
-                                  ))
-                              .toList(),
-                        ),
+              builder: (context, model, _) => Align(
+                    alignment: Alignment.topCenter,
+                    child: GridView(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 162,
+                        mainAxisSpacing: 16,
+                        crossAxisSpacing: 16,
+                            childAspectRatio: 3
                       ),
-                    )
-
-    ),
+                      children: model.availableTime
+                          .map((time) => TimeItem(time: time))
+                          .toList(),
+                      // child: SingleChildScrollView(
+                      //   child: Wrap(
+                      //     spacing: 16,
+                      //     runSpacing: 16,
+                      //     children: model.availableTime
+                      //         .map((time) => SizedBox(
+                      //               child: TimeItem(time: time),
+                      //               height: 52,
+                      //               width: 162,
+                      //             ))
+                      //         .toList(),
+                      //   ),
+                    ),
+                  )),
           stepTitle: 'Выберите подходящее время'),
     );
   }

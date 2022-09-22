@@ -22,7 +22,7 @@ class TimeItem extends StatelessWidget {
                       ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).colorScheme.secondaryContainer,
                   elevation: 20,
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10))),
               onPressed: () => locator<TimeModel>().selectTime(time),

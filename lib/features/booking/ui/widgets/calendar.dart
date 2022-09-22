@@ -28,44 +28,29 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  final PageController _calendarController = PageController();
 
-  @override
-  void dispose() {
-    _calendarController.dispose();
-    super.dispose();
-  }
-
-  VoidCallback? next(CalendarModel model) {
+  VoidCallback? buildNext(CalendarModel model) {
     if (model.mayNext) {
-      return () {
-        model.setMonthIndex(model.monthIndex + 1);
-        _calendarController.nextPage(
-            duration: const Duration(milliseconds: 300), curve: Curves.ease);
-      };
+      return () => model.setMonthIndex(model.monthIndex + 1);
     }
     return null;
   }
 
-  VoidCallback? previous(CalendarModel model) {
+  VoidCallback? buildPrev(CalendarModel model) {
     if (model.mayBack) {
-      return () {
-        model.setMonthIndex(model.monthIndex - 1);
-        _calendarController.previousPage(
-            duration: const Duration(milliseconds: 300), curve: Curves.ease);
-      };
+      return () => model.setMonthIndex(model.monthIndex - 1);
     }
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Consumer<CalendarModel>(
-          builder: (_, model, __) => ConstrainedBox(
+    return Consumer<CalendarModel>(
+      builder: (_, model, __) => Column(
+        children: [
+          ConstrainedBox(
             constraints: const BoxConstraints(
-              maxWidth: 343,
+              maxWidth: 343
             ),
             child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,27 +58,27 @@ class _CalendarState extends State<Calendar> {
                 children: [
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Row(
-                      children: [
-                        InkResponse(
-                          radius: 8,
-                            onTap: previous(model),
-                            child: const Icon(
-                              Icons.arrow_back_ios_outlined,
-                              size: 20,
-                              color: Colors.white,
-                            )),
-                        Text(
-                          model.monthIndex > 0
-                              ? widget
-                              .months[model.monthIndex - 1].monthName
-                              : '',
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.secondary,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500),
-                        )
-                      ],
+                    child: InkWell(
+                      onTap: buildPrev(model),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.arrow_back_ios_outlined,
+                            size: 20,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            model.monthIndex > 0
+                                ? widget
+                                .months[model.monthIndex - 1].monthName
+                                : '',
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   Center(
@@ -107,64 +92,66 @@ class _CalendarState extends State<Calendar> {
                   ),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Row(
-                      children: [
-                        Text(
-                          model.mayNext
-                              ? widget.months[model.monthIndex + 1].monthName
-                              : '',
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.secondary,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500),
-                        ),
-                       // const SizedBox(width: 10),
-                        InkResponse(
-                            onTap: next(model),
-                            child: const Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              size: 20,
-                              color: Colors.white,
-                            )),
-                       // const SizedBox(width: 10),
-                      ],
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(15),
+                      onTap: buildNext(model),
+                      child: Row(
+                        children: [
+                          Text(
+                            model.mayNext
+                                ? widget.months[model.monthIndex + 1].monthName
+                                : '',
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500),
+                          ),
+                         // const SizedBox(width: 10),
+                          const Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            size: 20,
+                            color: Colors.white,
+                          ),
+                         // const SizedBox(width: 10),
+                        ],
+                      ),
                     ),
                   ),
                 ]),
           ),
-        ),
-        //Дни недели
-        const SizedBox(height: 37),
-        ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 343
+          //Дни недели
+          const SizedBox(height: 37),
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: 343
+            ),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: const [
+                  DayOfWeek(dayOfWeek: 'ПН'),
+                  DayOfWeek(dayOfWeek: 'ВТ'),
+                  DayOfWeek(dayOfWeek: 'СР'),
+                  DayOfWeek(dayOfWeek: 'ЧТ'),
+                  DayOfWeek(dayOfWeek: 'ПТ'),
+                  DayOfWeek(dayOfWeek: 'СБ'),
+                  DayOfWeek(dayOfWeek: 'ВС'),
+                ]),
           ),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
-                DayOfWeek(dayOfWeek: 'ПН'),
-                DayOfWeek(dayOfWeek: 'ВТ'),
-                DayOfWeek(dayOfWeek: 'СР'),
-                DayOfWeek(dayOfWeek: 'ЧТ'),
-                DayOfWeek(dayOfWeek: 'ПТ'),
-                DayOfWeek(dayOfWeek: 'СБ'),
-                DayOfWeek(dayOfWeek: 'ВС'),
-              ]),
-        ),
-        const SizedBox(height: 36),
-        ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 343,
-            maxHeight: 243
+          const SizedBox(height: 36),
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: 343
+            ),
+            child: Stack(
+              children: [for (int i =0; i < widget.months.length; i++)
+                Visibility(
+                    visible: i == model.monthIndex,
+                    child: MonthItem(month: widget.months[i])
+                )],
+            ),
           ),
-          child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: _calendarController,
-              scrollDirection: Axis.horizontal,
-              itemCount: widget.months.length,
-              itemBuilder: (context, index) => MonthItem(month: widget.months[index])),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

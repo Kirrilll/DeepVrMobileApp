@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:deepvr/domain/models/booking.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../../core/domain/locator.dart';
@@ -12,7 +13,6 @@ import '../../data/entities/game.dart';
 class GamesBottomSheetBuilder {
   //Перемещаться и передавать Booking
   static void _selectGame(Game game, BuildContext context) {
-
     Navigator.of(context).pop();
     final appRouter = locator<AppRouter>();
     context.router.navigate(const BookingRouter())
@@ -28,7 +28,18 @@ class GamesBottomSheetBuilder {
           required Game game,
           Widget? player}) =>
       [
-        Text(game.title),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            game.title,
+            textAlign: TextAlign.start,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 32,
+              fontWeight: FontWeight.w700
+            ),
+          ),
+        ),
         const SizedBox(height: 12),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,7 +53,7 @@ class GamesBottomSheetBuilder {
             TypeLimitation(
                 name: game.ageLimit != null
                     ? game.ageLimit.toString() + '+'
-                    : 'Без ограничения',
+                    : '0+',
                 iconPath: 'assets/icons/vrglasses.png'),
             TypeLimitation(
               name:

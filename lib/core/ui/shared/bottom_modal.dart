@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
-//TODO скролл выплывающее окошко
 class BottomModal extends StatelessWidget {
   const BottomModal({
     Key? key,

@@ -20,13 +20,16 @@ class SuccessfulScreen extends StatelessWidget {
             const SizedBox(height: 16),
             const Image(image: AssetImage('assets/images/done.png')),
             const SizedBox(height: 39),
-            const Text(
-                'ВАША БРОНЬ ПРИНЯТА!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 46,
-                fontWeight: FontWeight.w700,
-                color: Colors.white
+            const FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                  'ВАША БРОНЬ ПРИНЯТА!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 46,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white
+                ),
               ),
             ),
             const SizedBox(height: 39),

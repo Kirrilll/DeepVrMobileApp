@@ -1,6 +1,4 @@
 import 'package:deepvr/domain/models/date.dart';
-import 'package:deepvr/core/usecases/utils/scale_util.dart';
-import 'package:deepvr/core/domain/locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -37,31 +35,23 @@ class MonthItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(
-        maxWidth: 343,
-        maxHeight: 243
-      ),
-      child: SingleChildScrollView(
-        child: StreamBuilder<List<Widget>>(
-          stream: _daysStream(),
-          builder: (context, snapshot) {
-            return snapshot.hasData
-                ? GridView.builder(
-              shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 7,
-                  mainAxisSpacing: 7,
-                  crossAxisSpacing: 7,
-                ),
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) => snapshot.data![index]
-            )
-            : const Center(child: CircularProgressIndicator());
-          }
-        ),
-      ),
+    return StreamBuilder<List<Widget>>(
+      stream: _daysStream(),
+      builder: (context, snapshot) {
+        return snapshot.hasData
+            ? GridView.builder(
+          shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 7,
+              mainAxisSpacing: 7,
+              crossAxisSpacing: 7,
+            ),
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) => snapshot.data![index]
+        )
+        : const Center(child: CircularProgressIndicator());
+      }
     );
   }
 }

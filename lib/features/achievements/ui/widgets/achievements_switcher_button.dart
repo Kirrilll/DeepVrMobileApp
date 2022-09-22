@@ -39,7 +39,7 @@ class _SwitcherButton extends StatelessWidget {
     return isActive
         ? Container(
             alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 13),
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(11)),
                 gradient: LinearGradient(

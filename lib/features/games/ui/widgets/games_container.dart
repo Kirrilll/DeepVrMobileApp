@@ -25,38 +25,38 @@ class _GamesContainerState extends State<GamesContainer> {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.topCenter,
-      child: SingleChildScrollView(
-        child: Wrap(
-          spacing: 20,
-          runSpacing: 20,
-          runAlignment: WrapAlignment.center,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: widget.games
-              .map((game) => SizedBox(
-                    height: 216,
-                    width: 162,
-                    child: GameCard(
-                        gameModel: game,
-                        isSelected: game.id == widget.selectedId,
-                        action: () => widget.action(game)),
-                  ))
-              .toList(),
-        ),
-      ),
-    );
-    // return GridView.builder(
-    //     itemCount: widget.games.length,
-    //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-    //       crossAxisCount: 2,
-    //       mainAxisSpacing: 20,
-    //       crossAxisSpacing: 20,
-    //       childAspectRatio: 0.75
+    //   child: SingleChildScrollView(
+    //     child: Wrap(
+    //       spacing: 20,
+    //       runSpacing: 20,
+    //       runAlignment: WrapAlignment.center,
+    //       crossAxisAlignment: WrapCrossAlignment.center,
+    //       children: widget.games
+    //           .map((game) => SizedBox(
+    //                 height: 216,
+    //                 width: 162,
+    //                 child: GameCard(
+    //                     gameModel: game,
+    //                     isSelected: game.id == widget.selectedId,
+    //                     action: () => widget.action(game)),
+    //               ))
+    //           .toList(),
     //     ),
-    //     itemBuilder: (_, index) => GameCard(
-    //       gameModel: widget.games[index],
-    //       action: () => widget.action(widget.games[index]),
-    //       isSelected: widget.games[index].id == widget.selectedId,
-    //     )
+    //   ),
     // );
+     child: GridView.builder(
+        itemCount: widget.games.length,
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 162,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
+            childAspectRatio: 0.75
+        ),
+        itemBuilder: (_, index) => GameCard(
+          gameModel: widget.games[index],
+          action: () => widget.action(widget.games[index]),
+          isSelected: widget.games[index].id == widget.selectedId,
+        )
+    ));
   }
 }

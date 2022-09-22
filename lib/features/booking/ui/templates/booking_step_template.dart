@@ -29,15 +29,18 @@ class BookingStepTemplate extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 16),
-          Text(
-              stepTitle,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
-              letterSpacing: 1,
-              fontFamily: 'Bebas',
-              fontWeight: FontWeight.w700,
-              fontSize: 46,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+                stepTitle,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                letterSpacing: 1,
+                fontFamily: 'Bebas',
+                fontWeight: FontWeight.w700,
+                fontSize: 46,
+              ),
             ),
           ),
           const SizedBox(height: 16),

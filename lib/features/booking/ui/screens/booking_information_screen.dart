@@ -21,13 +21,19 @@ class BookingInformationScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
         const SizedBox(height: 43),
-        const Text(
-          'БРОНИРОВАНИЕ',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 46,
-              fontWeight: FontWeight.w700,
-              color: Colors.white),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              'БРОНИРОВАНИЕ',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 46,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white),
+            ),
+          ),
         ),
         const SizedBox(height: 35),
         Padding(
