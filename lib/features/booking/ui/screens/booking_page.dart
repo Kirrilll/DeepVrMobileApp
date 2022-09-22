@@ -1,5 +1,4 @@
-import 'package:deepvr/core/domain/locator.dart';
-import 'package:deepvr/core/usecases/configurations/booking_step_config.dart';
+import 'package:deepvr/core/di/locator.dart';
 import 'package:deepvr/core/ui/shared/default_button.dart';
 import 'package:deepvr/features/booking/domain/services/booking_service.dart';
 import 'package:deepvr/features/booking/domain/view_models/booking_model.dart';

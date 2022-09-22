@@ -1,4 +1,4 @@
-import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/core/di/locator.dart';
 import 'package:deepvr/domain/models/date.dart';
 import 'package:deepvr/features/booking/domain/view_models/calendar_model.dart';
 import 'package:flutter/cupertino.dart';

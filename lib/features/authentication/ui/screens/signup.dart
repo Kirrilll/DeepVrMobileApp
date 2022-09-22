@@ -5,11 +5,10 @@ import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
 import 'package:deepvr/features/authentication/domain/view_models/registration_model.dart';
 import 'package:deepvr/core/usecases/helpers/validation_helper.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import '../../../../core/domain/locator.dart';
+import '../../../../core/di/locator.dart';
 import '../../../../core/ui/shared/default_button.dart';
 import '../../../../core/ui/shared/default_formfield.dart';
 

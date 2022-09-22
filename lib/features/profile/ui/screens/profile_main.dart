@@ -16,7 +16,7 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/usecases/special_types/fetching_state.dart';
-import '../../../../core/domain/locator.dart';
+import '../../../../core/di/locator.dart';
 import '../../../../core/ui/shared/default_button.dart';
 
 class ProfileMain extends StatefulWidget {

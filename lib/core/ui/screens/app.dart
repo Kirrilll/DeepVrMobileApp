@@ -3,7 +3,7 @@ import 'package:deepvr/features/booking/data/repositories/booking_repository.dar
 import 'package:deepvr/core/routing/router/app_router.gr.dart';
 import 'package:deepvr/core/routing/observers/tabs_observer.dart';
 import 'package:flutter/material.dart';
-import '../../domain/locator.dart';
+import '../../di/locator.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);

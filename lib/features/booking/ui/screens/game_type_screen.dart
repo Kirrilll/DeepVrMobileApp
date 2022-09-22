@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/domain/locator.dart';
+import '../../../../core/di/locator.dart';
 import '../../domain/view_models/game_type_model.dart';
 import '../widgets/game_type_card.dart';
 

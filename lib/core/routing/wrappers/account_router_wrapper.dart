@@ -5,7 +5,7 @@ import 'package:deepvr/features/authentication/domain/view_models/authentication
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../domain/locator.dart';
+import '../../di/locator.dart';
 
 class AccountRouterWrapper extends StatefulWidget {
   const AccountRouterWrapper({Key? key}) : super(key: key);

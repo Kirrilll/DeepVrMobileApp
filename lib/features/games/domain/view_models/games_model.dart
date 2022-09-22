@@ -1,12 +1,11 @@
 import 'dart:async';
 
-import 'package:deepvr/features/booking/data/entities/game_type.dart';
 import 'package:deepvr/domain/models/event.dart';
 import 'package:deepvr/features/games/domain/services/games_service.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../data/entities/game.dart';
-import '../../../../core/domain/locator.dart';
+import '../../../../core/di/locator.dart';
 import '../../../../core/usecases/special_types/fetching_state.dart';
 
 class GamesState {

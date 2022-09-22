@@ -1,4 +1,4 @@
-import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/core/di/locator.dart';
 import 'package:deepvr/core/usecases/mixins/fetch_mixin.dart';
 import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
 import 'package:deepvr/features/booking/data/entities/game_type.dart';

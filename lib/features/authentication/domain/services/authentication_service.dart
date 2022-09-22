@@ -7,7 +7,7 @@ import 'package:deepvr/features/profile/data/entities/default_response.dart';
 import 'package:deepvr/features/profile/data/repositories/profile_repository.dart';
 import 'package:deepvr/features/local_storage/services/storge_service.dart';
 import 'package:deepvr/domain/models/user.dart';
-import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/core/di/locator.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../data/entities/login.dart';

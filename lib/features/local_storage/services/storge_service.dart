@@ -1,5 +1,3 @@
-
-import 'package:deepvr/core/domain/locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

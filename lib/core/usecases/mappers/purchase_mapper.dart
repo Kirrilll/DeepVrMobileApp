@@ -2,7 +2,7 @@ import 'package:deepvr/features/booking/domain/view_models/game_type_model.dart'
 import 'package:deepvr/features/games/domain/services/games_service.dart';
 import 'package:deepvr/features/profile/data/entities/client_purchase.dart';
 import 'package:deepvr/domain/models/purchase.dart';
-import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/core/di/locator.dart';
 
 import '../../../features/games/data/entities/game.dart';
 

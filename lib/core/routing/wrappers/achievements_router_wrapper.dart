@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../../features/achievements/domain/view_models/achievement_model.dart';
 import '../../../features/achievements/ui/widgets/achievements_switcher_button.dart';
-import '../../domain/locator.dart';
+import '../../di/locator.dart';
 import '../../usecases/special_types/fetching_state.dart';
 
 class AchievementsRouterWrapper extends StatefulWidget {

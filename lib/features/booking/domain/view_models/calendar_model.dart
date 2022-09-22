@@ -10,7 +10,7 @@ import 'package:deepvr/features/booking/domain/view_models/guest_count_model.dar
 import 'package:deepvr/features/booking/usecases/updating_keys.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../../core/domain/locator.dart';
+import '../../../../core/di/locator.dart';
 import '../services/booking_service.dart';
 
 //Модель хранит данные от которых она зависит

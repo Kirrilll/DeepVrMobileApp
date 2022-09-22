@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../../../core/domain/locator.dart';
+import '../../../../core/di/locator.dart';
 import '../../../../core/routing/router/app_router.gr.dart';
 import '../../../../core/ui/shared/default_button.dart';
 import '../../../booking/ui/widgets/game_type_card.dart';

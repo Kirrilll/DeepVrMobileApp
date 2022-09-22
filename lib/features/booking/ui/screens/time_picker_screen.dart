@@ -3,7 +3,7 @@ import 'package:deepvr/features/booking/ui/templates/booking_step_template.dart'
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../core/domain/locator.dart';
+import '../../../../core/di/locator.dart';
 import '../widgets/time_item.dart';
 
 class TimeScreen extends StatelessWidget {

@@ -4,7 +4,7 @@ import 'package:deepvr/features/booking/domain/view_models/booking_games_model.d
 import 'package:deepvr/features/booking/usecases/updating_keys.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../../core/domain/locator.dart';
+import '../../../../core/di/locator.dart';
 import '../services/booking_service.dart';
 
 class GuestModel with ChangeNotifier implements IBookingModel {

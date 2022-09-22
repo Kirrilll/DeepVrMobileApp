@@ -1,4 +1,4 @@
-import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/core/di/locator.dart';
 import 'package:deepvr/core/ui/widgets/error_panel.dart';
 import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
 import 'package:deepvr/features/booking/domain/view_models/results_model.dart';
@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../domain/view_models/result_state.dart';
+import '../../domain/states/result_state.dart';
 
 //TODO нормально хэндлить ошибку
 //TODO вызывать метод getBooking

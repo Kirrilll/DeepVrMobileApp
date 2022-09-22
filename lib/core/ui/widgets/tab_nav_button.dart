@@ -2,7 +2,7 @@
 import 'package:deepvr/core/usecases/utils/scale_util.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/locator.dart';
+import '../../di/locator.dart';
 
 class TabNavButton extends StatelessWidget {
   const TabNavButton(

@@ -1,5 +1,4 @@
-import 'package:deepvr/core/domain/locator.dart';
-import 'package:deepvr/domain/models/booking.dart';
+import 'package:deepvr/core/di/locator.dart';
 import 'package:deepvr/features/booking/usecases/interfaces/i_booking_model.dart';
 import 'package:deepvr/features/booking/domain/services/booking_service.dart';
 import 'package:deepvr/features/booking/usecases/updating_keys.dart';

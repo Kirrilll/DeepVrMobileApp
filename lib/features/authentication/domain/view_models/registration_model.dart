@@ -7,7 +7,7 @@ import 'package:deepvr/domain/models/user.dart';
 import 'package:deepvr/features/authentication/domain/services/authentication_service.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../../core/domain/locator.dart';
+import '../../../../core/di/locator.dart';
 
 class RegistrationModel with ChangeNotifier {
   FetchingState _signUpStatus = FetchingState.idle;

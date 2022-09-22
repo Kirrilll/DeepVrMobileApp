@@ -5,7 +5,7 @@ import 'package:deepvr/features/achievements/data/repositories/achievement_repos
 import 'package:deepvr/features/authentication/domain/services/authentication_service.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../../core/domain/locator.dart';
+import '../../../../core/di/locator.dart';
 
 class AchievementModel with ChangeNotifier{
   final AchievementRepository _achievementRepository = AchievementRepository();

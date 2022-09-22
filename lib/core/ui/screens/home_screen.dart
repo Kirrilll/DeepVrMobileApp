@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:deepvr/core/usecases/utils/scale_util.dart';
-import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/core/di/locator.dart';
 import 'package:deepvr/core/routing/router/app_router.gr.dart';
 import 'package:flutter/material.dart';
 import '../widgets/tab_nav_bar.dart';

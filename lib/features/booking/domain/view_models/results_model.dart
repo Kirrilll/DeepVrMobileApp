@@ -7,9 +7,9 @@ import 'package:deepvr/features/booking/domain/services/booking_service.dart';
 import 'package:deepvr/features/booking/usecases/updating_keys.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../../core/domain/locator.dart';
+import '../../../../core/di/locator.dart';
 import '../../../../domain/models/booking_information.dart';
-import 'result_state.dart';
+import '../states/result_state.dart';
 
 
 //TODO нормально обрабатывать ошибку

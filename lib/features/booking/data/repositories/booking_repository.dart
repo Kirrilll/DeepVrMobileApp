@@ -1,5 +1,4 @@
-import 'dart:developer';
-import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/core/di/locator.dart';
 import 'package:deepvr/domain/models/booking.dart';
 import 'package:deepvr/features/booking/data/entities/game_type.dart';
 import 'package:deepvr/features/booking/data/entities/request.dart';

@@ -3,8 +3,7 @@ import 'package:deepvr/features/booking/usecases/interfaces/i_booking_model.dart
 import 'package:deepvr/features/booking/usecases/updating_keys.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../../core/domain/locator.dart';
-import '../../../../domain/models/booking.dart';
+import '../../../../core/di/locator.dart';
 import '../../../authentication/domain/services/authentication_service.dart';
 import '../services/booking_service.dart';
 

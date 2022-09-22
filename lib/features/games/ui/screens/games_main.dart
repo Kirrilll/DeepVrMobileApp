@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/usecases/helpers/bottom_sheet_helper.dart';
-import '../../../../core/domain/locator.dart';
+import '../../../../core/di/locator.dart';
 import '../widgets/games_bottom_sheet_builder.dart';
 
 class GamesMainScreen extends StatefulWidget {

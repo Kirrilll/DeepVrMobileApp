@@ -1,12 +1,9 @@
-import 'package:deepvr/features/profile/data/entities/default_response.dart';
-import 'package:deepvr/features/profile/data/entities/loyalty_status.dart';
 import 'package:deepvr/features/profile/data/repositories/profile_repository.dart';
 import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
 import 'package:deepvr/domain/models/profile_status.dart';
-import 'package:deepvr/features/authentication/domain/services/authentication_service.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../../core/domain/locator.dart';
+import '../../../../core/di/locator.dart';
 
 class ProfileStatusesModel with ChangeNotifier{
   List<ProfileStatus> _statuses = List.empty(growable: true);

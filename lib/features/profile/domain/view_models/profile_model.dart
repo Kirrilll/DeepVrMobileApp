@@ -3,7 +3,7 @@ import 'package:deepvr/features/profile/data/repositories/profile_repository.dar
 import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
 import 'package:deepvr/domain/models/bonus.dart';
 import 'package:deepvr/features/authentication/domain/services/authentication_service.dart';
-import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/core/di/locator.dart';
 import 'package:flutter/cupertino.dart';
 
 class ProfileModel with ChangeNotifier{

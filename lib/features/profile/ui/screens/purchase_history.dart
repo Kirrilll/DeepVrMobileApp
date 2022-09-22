@@ -5,9 +5,7 @@ import 'package:deepvr/features/profile/ui/widgets/purchase_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../domain/models/purchase.dart';
-import '../../../../core/domain/locator.dart';
+import '../../../../core/di/locator.dart';
 
 
 class PurchaseHistory extends StatelessWidget {

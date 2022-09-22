@@ -3,7 +3,7 @@ import 'package:deepvr/core/routing/router/app_router.gr.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/locator.dart';
+import '../../di/locator.dart';
 
 class HomeWrapperScreen extends StatelessWidget {
   const HomeWrapperScreen({Key? key}) : super(key: key);

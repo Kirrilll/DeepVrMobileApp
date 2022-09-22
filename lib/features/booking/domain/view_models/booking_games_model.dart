@@ -5,7 +5,7 @@ import 'package:deepvr/features/booking/usecases/updating_keys.dart';
 import 'package:deepvr/features/games/data/entities/game.dart';
 import 'package:deepvr/features/games/domain/services/games_service.dart';
 import 'package:flutter/material.dart';
-import '../../../../core/domain/locator.dart';
+import '../../../../core/di/locator.dart';
 import '../../../../core/usecases/mixins/fetch_mixin.dart';
 
 class BookingGamesModel with ChangeNotifier, FetchMixin implements IBookingModel {

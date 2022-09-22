@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:deepvr/features/authentication/data/entities/login.dart';
 import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
 import 'package:deepvr/features/authentication/domain/services/authentication_service.dart';
-import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/core/di/locator.dart';
 import 'package:flutter/cupertino.dart';
 
 class LoginModel with ChangeNotifier {

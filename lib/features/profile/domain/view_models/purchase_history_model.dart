@@ -1,6 +1,6 @@
 import 'package:deepvr/features/profile/data/repositories/profile_repository.dart';
 import 'package:deepvr/features/authentication/domain/services/authentication_service.dart';
-import 'package:deepvr/core/domain/locator.dart';
+import 'package:deepvr/core/di/locator.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../core/usecases/mappers/purchase_mapper.dart';
