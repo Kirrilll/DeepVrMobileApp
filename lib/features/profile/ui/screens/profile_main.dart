@@ -31,14 +31,14 @@ class _ProfileMainState extends State<ProfileMain> {
 
   @override
   void initState() {
-    locator<ProfileModel>().getBonuses();
-    locator<PurchaseHistoryModel>().getPurchaseHistory();
-
-    //Должно сработать 1 раз
-    final profileStatusesModel = locator<ProfileStatusesModel>();
-    if (profileStatusesModel.fetchingStatus == FetchingState.idle) {
-      profileStatusesModel.getStatuses();
-    }
+    // locator<ProfileModel>().getBonuses();
+    // locator<PurchaseHistoryModel>().getPurchaseHistory();
+    //
+    // //Должно сработать 1 раз
+    // final profileStatusesModel = locator<ProfileStatusesModel>();
+    // if (profileStatusesModel.fetchingStatus == FetchingState.idle) {
+    //   profileStatusesModel.getStatuses();
+    // }
     _promoCodeController = TextEditingController();
     super.initState();
   }
@@ -139,7 +139,7 @@ class _ProfileMainState extends State<ProfileMain> {
                       ? Padding(
                           padding: const EdgeInsets.only(top: 8),
                           child: Text(
-                            model.errorMessage!,
+                            model.errorMessage,
                             textAlign: TextAlign.start,
                             style: const TextStyle(
                                 color: Color(0xFFEE6E7E), fontSize: 14),

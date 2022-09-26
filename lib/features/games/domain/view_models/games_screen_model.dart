@@ -44,7 +44,6 @@ class GamesModel with ChangeNotifier {
   GamesState _state = GamesState.initial();
   final GamesService _gamesService = locator<GamesService>();
 
-
   FetchingState get gamesFetchingStatus => _state.gamesFetchingStatus;
   List<Event>? get events => _state.events;
   Stream<List<Game>> get gamesStream => _gamesService.games;

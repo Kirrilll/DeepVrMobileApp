@@ -14,17 +14,6 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final _appRouter = locator<AppRouter>();
-  //TODO do ui responsive
-  @override
-  void initState() {
-    super.initState();
-    locator<BookingRepository>().init('https://srt.vrbook.creatrix-digital.ru/api/');
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

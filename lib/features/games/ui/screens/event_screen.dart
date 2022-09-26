@@ -14,8 +14,7 @@ class EventScreen extends StatefulWidget {
   State<EventScreen> createState() => _EventScreenState();
 }
 
-class _EventScreenState extends State<EventScreen>
-    with SingleTickerProviderStateMixin {
+class _EventScreenState extends State<EventScreen> with SingleTickerProviderStateMixin {
   int _currPageIndex = 0;
   late final List<bool> pagesLoadedList = List.filled(widget.pages.length, false);
   late final AnimationController _animationController;
@@ -130,23 +129,25 @@ class _EventContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
         builder: (context) => isReady
-            ? Stack(
-                fit: StackFit.expand,
-                children: [
-                  ...<Widget>[
-                    for (int pageIndex = 0;
-                        pageIndex < imagesUrls.length;
-                        pageIndex++)
-                      Visibility(
-                        visible: currPageIndex == pageIndex,
-                        child: Image(
-                          image: NetworkImage(imagesUrls[pageIndex]),
-                          fit: BoxFit.fill,
-                        ),
-                      )
-                  ]
-                ],
-              )
+            ? InkResponse(
+              child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    ...<Widget>[
+                      for (int pageIndex = 0;
+                          pageIndex < imagesUrls.length;
+                          pageIndex++)
+                        Visibility(
+                          visible: currPageIndex == pageIndex,
+                          child: Image(
+                            image: NetworkImage(imagesUrls[pageIndex]),
+                            fit: BoxFit.fill,
+                          ),
+                        )
+                    ]
+                  ],
+                ),
+            )
             : const ColoredBox(
               color: Colors.black,
               child: Center(

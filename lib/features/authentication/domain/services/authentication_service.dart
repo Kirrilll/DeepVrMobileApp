@@ -11,7 +11,6 @@ import 'package:deepvr/core/di/locator.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../data/entities/login.dart';
-import '../../data/entities/user_info.dart';
 
 class AuthenticationService with ChangeNotifier{
   final StorageService _storageService =  locator<StorageService>();

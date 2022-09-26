@@ -9,9 +9,8 @@ import 'package:deepvr/features/profile/ui/screens/about_screen.dart';
 import 'package:deepvr/features/achievements/ui/screens/all_achievements_screen.dart';
 import 'package:deepvr/features/booking/ui/screens/booking_page.dart';
 import 'package:deepvr/features/profile/ui/screens/feedback_screen.dart';
-import 'package:deepvr/features/games/ui/screens/games_main.dart';
+import 'package:deepvr/features/games/ui/screens/games_screen.dart';
 import 'package:deepvr/core/ui/screens/home_screen.dart';
-import 'package:deepvr/core/routing/wrappers/home_wrapper_screen.dart';
 import 'package:deepvr/features/achievements/ui/screens/my_achievements_screen.dart';
 import 'package:deepvr/features/profile/ui/screens/profile_main.dart';
 import 'package:deepvr/features/profile/ui/screens/profile_settings_main.dart';
@@ -19,7 +18,6 @@ import 'package:deepvr/features/profile/ui/screens/profile_statuses.dart';
 import 'package:deepvr/features/profile/ui/screens/purchase_history.dart';
 import 'package:deepvr/features/authentication/ui/screens/signin.dart';
 import 'package:deepvr/features/authentication/ui/screens/signup.dart';
-import 'package:deepvr/core/ui/screens/splash_screen.dart';
 import 'package:deepvr/features/profile/ui/screens/update_screen.dart';
 
 const _accountRoute = AutoRoute(
@@ -78,16 +76,14 @@ const _achievementsRoute = CustomRoute(
           page: MyAchievementsScreen,
           transitionsBuilder: TransitionsBuilders.noTransition,
           durationInMilliseconds: 0,
-          reverseDurationInMilliseconds: 0
-      ),
+          reverseDurationInMilliseconds: 0),
       CustomRoute(
           path: 'allachievements',
           page: AllAchievementsScreen,
           transitionsBuilder: TransitionsBuilders.noTransition,
           durationInMilliseconds: 0,
-          reverseDurationInMilliseconds: 0
-      ),
-      AutoRoute(path: 'unauthorized', page:  UnauthorizedAchievementsScreen)
+          reverseDurationInMilliseconds: 0),
+      AutoRoute(path: 'unauthorized', page: UnauthorizedAchievementsScreen)
     ]);
 
 const _gamesRoute = AutoRoute(
@@ -97,22 +93,16 @@ const _gamesRoute = AutoRoute(
     children: [AutoRoute(path: '', page: GamesMainScreen)]);
 
 @MaterialAutoRouter(replaceInRouteName: 'Screen,Page,Route', routes: [
-  CustomRoute(
-    path: '/',
-    page: HomeWrapperScreen,
-    children: [
-      AutoRoute(
-          initial: true,
-          path: 'splash',
-          page: SplashScreen
-      ),
-      AutoRoute(
-          path: 'home',
-          name: 'HomeRoute',
-          page: HomeScreen,
-          children: [_accountRoute, _bookingRoute, _achievementsRoute, _gamesRoute]
-      ),
-    ]
-  )
+  AutoRoute(
+      path: 'home',
+      name: 'HomeRoute',
+      page: HomeScreen,
+      initial: true,
+      children: [
+        _accountRoute,
+        _bookingRoute,
+        _achievementsRoute,
+        _gamesRoute
+    ]),
 ])
 class $AppRouter {}

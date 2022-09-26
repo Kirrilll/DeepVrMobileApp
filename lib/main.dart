@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 //TODO жестко отреFUCKторить все приложение
 void main() async {
   setup();
+  WidgetsFlutterBinding.ensureInitialized();
+  await locator.allReady();
   runApp(const App());
 }
 

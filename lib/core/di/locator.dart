@@ -14,13 +14,14 @@ import 'package:deepvr/features/booking/domain/view_models/time_model.dart';
 import 'package:deepvr/features/profile/data/repositories/profile_repository.dart';
 import 'package:deepvr/features/authentication/domain/services/authentication_service.dart';
 import 'package:deepvr/features/authentication/domain/view_models/login_model.dart';
+import 'package:deepvr/features/profile/domain/services/profile_service.dart';
 import 'package:deepvr/features/profile/domain/view_models/profile_model.dart';
 import 'package:deepvr/features/profile/domain/view_models/purchase_history_model.dart';
 import 'package:deepvr/features/authentication/domain/view_models/registration_model.dart';
 import 'package:deepvr/features/profile/domain/view_models/statuses_model.dart';
 import 'package:deepvr/features/booking/domain/view_models/booking_games_model.dart';
 import 'package:deepvr/features/games/domain/services/games_service.dart';
-import 'package:deepvr/features/games/domain/view_models/games_model.dart';
+import 'package:deepvr/features/games/domain/view_models/games_screen_model.dart';
 import 'package:deepvr/features/booking/data/repositories/booking_repository.dart';
 import 'package:deepvr/core/usecases/utils/scale_util.dart';
 import 'package:deepvr/core/usecases/mappers/purchase_mapper.dart';
@@ -33,7 +34,7 @@ GetIt locator = GetIt.instance;
 void setup() {
   locator.registerSingleton(ScaleUtil());
   locator.registerSingletonAsync(() => StorageService().init());
-  locator.registerSingleton<BookingRepository>(BookingRepository(), signalsReady: true);
+  locator.registerSingleton<BookingRepository>(BookingRepository());
 
   //Аунтефикация
   locator.registerSingletonAsync(() => AuthenticationService().init(), dependsOn: [StorageService]);
@@ -44,8 +45,9 @@ void setup() {
 
   //Профиль
   locator.registerLazySingleton(() => ProfileRepository());
-  locator.registerSingletonWithDependencies(() => ProfileModel(), dependsOn: [AuthenticationService]);
-  locator.registerSingletonWithDependencies(() => PurchaseHistoryModel(), dependsOn: [AuthenticationService]);
+  locator.registerSingletonWithDependencies(() => ProfileService(), dependsOn: [AuthenticationService]);
+  locator.registerSingletonWithDependencies(() => ProfileModel(), dependsOn: [ProfileService]);
+  locator.registerSingletonWithDependencies(() => PurchaseHistoryModel(), dependsOn: [ProfileService]);
   locator.registerSingletonWithDependencies(() => ProfileStatusesModel(), dependsOn: [AuthenticationService]);
   locator.registerLazySingleton(() => PurchaseMapper());
 

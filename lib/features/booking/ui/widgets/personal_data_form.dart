@@ -1,5 +1,6 @@
 import 'package:deepvr/core/ui/shared/bottom_modal.dart';
 import 'package:deepvr/core/ui/shared/default_button.dart';
+import 'package:deepvr/core/usecases/special_types/tuple.dart';
 import 'package:deepvr/features/booking/domain/view_models/personal_data_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -231,18 +232,28 @@ class _PersonalDataFormState extends State<PersonalDataForm> {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const CustomCheckbox(),
-                          const SizedBox(width: 17),
-                          Text('Списать до 20% баллами',
-                              style: TextStyle(
-                                  color: Theme.of(context).colorScheme.secondary,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  letterSpacing: 0.34))
-                        ],
+                      Consumer<PersonalDataModel>(
+                        builder: (_, model, __) {
+                          if(model.isCanUseBonuses){
+                            return Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CustomCheckbox(
+                                  isSelected: model.isActivateBonuses,
+                                  action: model.setActivateBonuses,
+                                ),
+                                const SizedBox(width: 17),
+                                Text('Списать до ${model.bonusesPercent} баллами',
+                                    style: TextStyle(
+                                        color: Theme.of(context).colorScheme.secondary,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        letterSpacing: 0.34))
+                              ],
+                            );
+                          }
+                          return const SizedBox();
+                        },
                       ),
                       const SizedBox(height: 32)
                     ],

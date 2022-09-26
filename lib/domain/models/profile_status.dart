@@ -7,6 +7,11 @@ class ProfileStatus{
   final int bonusPercent;
 
   ProfileStatus({required this.id ,required this.imgPath, required this.title, required this.bonusPercent});
+  ProfileStatus.unidentified():
+        id = -1,
+        imgPath = 'assets/images/status.png',
+        title = 'Unidentified',
+        bonusPercent = 0;
 
   factory ProfileStatus.fromEntity(LoyaltyStatus loyaltyStatus) => ProfileStatus(
       id: loyaltyStatus.id,

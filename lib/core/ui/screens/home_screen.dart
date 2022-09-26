@@ -16,10 +16,6 @@ class HomeScreen extends StatelessWidget {
     scaleUtil.init(MediaQuery.of(context).size);
 
     return SafeArea(
-      // child: MediaQuery(
-      //   data: MediaQueryData(
-      //     textScaleFactor: scaleUtil.getTextScaleFactor()
-      //   ),
         child: AutoTabsScaffold(
           backgroundColor: Theme.of(context).backgroundColor,
           routes: const [

@@ -2,7 +2,7 @@ import 'package:deepvr/core/usecases/special_types/fetching_state.dart';
 import 'package:deepvr/features/games/ui/widgets/event_card.dart';
 import 'package:deepvr/features/games/ui/widgets/games_container.dart';
 import 'package:deepvr/features/games/data/entities/game.dart';
-import 'package:deepvr/features/games/domain/view_models/games_model.dart';
+import 'package:deepvr/features/games/domain/view_models/games_screen_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

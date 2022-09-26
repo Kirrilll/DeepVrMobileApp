@@ -10,13 +10,7 @@ import '../entities/booking_calendar.dart';
 class BookingRepository{
   bool isInit = false;
   final _client = http.Client();
-  late String _apiUrl;
-
-  void init(String api) async {
-    _apiUrl = api;
-    locator.signalReady(this);
-    isInit = true;
-  }
+  final String _apiUrl = 'https://srt.vrbook.creatrix-digital.ru/api/';
 
   Future<List<GameType>?> getGameTypes() async {
     var uri = Uri.parse(_apiUrl + 'gameTypes');
