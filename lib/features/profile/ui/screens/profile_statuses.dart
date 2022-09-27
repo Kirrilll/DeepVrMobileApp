@@ -9,8 +9,20 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/di/locator.dart';
 
-class ProfileStatuses extends StatelessWidget {
+class ProfileStatuses extends StatefulWidget {
   const ProfileStatuses({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileStatuses> createState() => _ProfileStatusesState();
+}
+
+class _ProfileStatusesState extends State<ProfileStatuses> {
+
+  @override
+  void initState() {
+    super.initState();
+    locator<ProfileStatusesModel>().getStatuses();
+  }
 
   @override
   Widget build(BuildContext context) {
